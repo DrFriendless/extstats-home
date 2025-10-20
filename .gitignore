@@ -1,0 +1,6 @@
+.astro
+.idea
+.env
+node_modules
+/public/FAQWidget/
+*.iml

@@ -1,0 +1,24 @@
+---
+import For from './For.astro';
+
+interface Link {
+    style: string;
+    link: string;
+    name: string;
+    items: Link[];
+}
+
+const { link } = Astro.props;
+---
+<div class="navbar-menu">
+    <a class={`navbar-button ${link.style}`} href={`${link.link}`}>{link.name}</a>
+    <div class="navbar-dropdown">
+        <For each={link.items}>{
+            (item: Link) =>
+            <a class={`navbar-button ${link.style}`} href={item.link}>
+                {item.name}
+            </a>
+        }
+        </For>
+    </div>
+</div>
