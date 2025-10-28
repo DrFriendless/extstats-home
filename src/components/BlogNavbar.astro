@@ -1,6 +1,5 @@
 ---
 import Menu from './Menu.astro';
-import GeekMenu from './GeekMenu.astro';
 
 export interface SubMenu extends MenuItem {
     style: string;
@@ -29,9 +28,8 @@ const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html",
 ---
 <div role="navigation" class="extstats-navbar">
     <a class="go-button" href="/" role="button"><img src={'/img/go.png'}  height="28px" alt="GO logo from Monopoly"/></a>
-    <GeekMenu/>
-    <a class="navbar-button nav-wartable" href="/wartable.html">War Table</a>
-    <a class="navbar-button nav-ranking" href="/rankings.html">Rankings</a>
+    <a class="navbar-button nav-wartable" href="/about.html">About</a>
+    <a class="navbar-button nav-ranking" href="https://extstats.drfriendless.com">Stats</a>
     <Menu link={blogMenu}/>
     <a class="navbar-button nav-dataprot" href="/dataprotection.html">Privacy</a>
     <Menu link={bggMenu}/>

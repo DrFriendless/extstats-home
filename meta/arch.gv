@@ -1,0 +1,49 @@
+digraph G {
+  compound = true;
+  fontsize = 24;
+
+  "Extstats Angular" [style="filled",fillcolor="aquamarine"];
+  "Extstats Core" [style="filled",fillcolor="aquamarine"];
+  "Extstats Datatable" [style="filled",fillcolor="aquamarine"];
+
+  subgraph cluster_0 {
+    "API" [style="filled",fillcolor="fuchsia"];
+    "Express" [style="filled",fillcolor="bisque"];
+    "Inside Queue" [style="filled",fillcolor="bisque"];
+    "Downloader" [style="filled",fillcolor="bisque"];
+    label = "Extended Stats Serverless";
+  }
+
+  subgraph cluster_1 {
+    {
+      rank = "source";
+      "Admin Widget";
+      "FAQ Widget" [style="filled",fillcolor="chartreuse"];
+      "Geek Widget";
+      "Monthly Widget";
+      "Multiplays Widget";
+      "Owned Collection";
+      "Plays Widget";
+    }
+    { rank = "same";
+      "Ranking Page";
+      "Updates Widget";
+      "User Collection";
+      "User Widget";
+      "War Table" [style="filled",fillcolor="chartreuse"];
+      "Yearly Widget";
+    }
+    label = "Extstats Client";
+  }
+
+  subgraph cluster_2 {
+    label = "Extstats Home";
+    "Astro" [style="filled",fillcolor="bisque"];
+  }
+
+    "Extstats Angular" -> "Extstats Core";
+    "Downloader" -> "Extstats Core" [ltail=cluster_0];
+    "War Table" -> "Extstats Angular" [ltail=cluster_1];
+    "War Table" -> "Extstats Datatable" [ltail=cluster_1];
+    "Astro" -> "FAQ Widget" [ltail=cluster_2,lhead=cluster_1];
+}

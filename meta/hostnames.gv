@@ -1,0 +1,56 @@
+digraph G {
+    compound = true;
+    fontsize = 24;
+
+    subgraph cluster_0 {
+         label = "DNS";
+         "drfriendless.com" [shape=house];
+    }
+
+    subgraph cluster_1 {
+        label = "CloudFront";
+        "www.drfriendless.com" [shape=invtrapezium];
+        "extstats.drfriendless.com" [shape=invtrapezium];
+        "golemrating.drfriendless.com" [shape=invtrapezium];
+    }
+
+    subgraph cluster_2 {
+        label = "Origins";
+        "golemRatingS3" [shape=cylinder];
+        "golemRatingAPI ps5ho6wbp6" [shape=hexagon];
+    }
+
+    subgraph cluster_3 {
+        label = "Origins";
+        "S3-www.drfriendless.com" [shape=cylinder];
+    }
+
+    subgraph cluster_4 {
+        label = "Origins";
+        "S3-extstats.drfriendless.com" [shape=cylinder];
+        "extstatsAPI" [shape=hexagon,style=filled,fillcolor=fuchsia];
+    }
+
+    subgraph cluster_5 {
+        label = "Lambda";
+        "API lambdas" [shape=egg];
+    }
+
+    subgraph cluster_6 {
+        label = "Lambda";
+        "GR lambda" [shape=egg];
+    }
+
+    subgraph cluster_7 {
+        label = "EB2 Server";
+        "Express" [shape=box];
+    }
+
+    "drfriendless.com" -> "extstats.drfriendless.com" [ltail=cluster_0,lhead=cluster_1,arrowhead=none];
+    "golemrating.drfriendless.com" -> "golemRatingAPI ps5ho6wbp6" [ltail=cluster_1,lhead=cluster_2,arrowhead=none];
+    "www.drfriendless.com" -> "S3-www.drfriendless.com" [ltail=cluster_1,lhead=cluster_3,arrowhead=none];
+    "extstats.drfriendless.com" -> "S3-extstats.drfriendless.com" [ltail=cluster_1,lhead=cluster_4,arrowhead=none];
+    "extstatsAPI" -> "API lambdas" [lhead=cluster_5,arrowhead=none];
+    "extstatsAPI" -> "Express" [lhead=cluster_7,arrowhead=none];
+    "golemRatingAPI ps5ho6wbp6" -> "GR lambda" [lhead=cluster_6,arrowhead=none];
+}

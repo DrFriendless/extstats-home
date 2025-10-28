@@ -1,0 +1,36 @@
+digraph G {
+    compound = true;
+    fontsize = 24;
+
+    subgraph cluster_1 {
+        label = "CloudFront";
+        "www.drfriendless.com" [shape=invtrapezium];
+        "extstats.drfriendless.com" [shape=invtrapezium];
+    }
+
+    subgraph cluster_3 {
+        label = "Origins";
+        "WWW S3" [shape=cylinder];
+    }
+
+    subgraph cluster_4 {
+        label = "Origins";
+        "ExtStats S3" [shape=cylinder];
+        "API Gateway" [shape=hexagon,style=filled];
+    }
+
+    subgraph cluster_5 {
+        label = "Lambda";
+        "API lambdas" [shape=egg];
+    }
+
+    subgraph cluster_7 {
+        label = "EC2";
+        "Express" [shape=box];
+    }
+
+    "www.drfriendless.com" -> "WWW S3" [ltail=cluster_1,lhead=cluster_3,arrowhead=none];
+    "extstats.drfriendless.com" -> "ExtStats S3" [ltail=cluster_1,lhead=cluster_4,arrowhead=none];
+    "API Gateway" -> "API lambdas" [lhead=cluster_5,arrowhead=none];
+    "API Gateway" -> "Express" [lhead=cluster_7,arrowhead=none];
+}
