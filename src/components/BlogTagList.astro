@@ -1,0 +1,50 @@
+---
+import {allBlogPosts} from "../code/BlogPost";
+const posts = allBlogPosts();
+const countByTag: Record<string, number> = {};
+
+for (const p of posts) {
+    for (const t of p.tags) {
+        countByTag[t] = (countByTag[t] || 0) + 1;
+    }
+}
+
+interface ToShow {
+    tag: string;
+    count: number;
+}
+const toShow: ToShow[]  = [];
+
+interface Props {
+    required: string[];
+}
+const { required } = Astro.props;
+
+for (const r of required) {
+    if (countByTag[r]) {
+        toShow.push({ tag: r, count: countByTag[r] });
+        delete countByTag[r];
+    }
+}
+if (toShow.length < 10) {
+    const sorted = Object.entries(countByTag).sort((e1, e2) => e2[1] - e1[1]);
+    const toAdd = Math.min(sorted.length, 10 - toShow.length);
+    for (let i=0; i<toAdd; i++) {
+        const e = sorted[i];
+        toShow.push({ tag: e[0], count: e[1] });
+    }
+}
+toShow.sort((ts1, ts2) => {
+    const c = ts2.count - ts1.count;
+    if (c !== 0) return c;
+    if (ts1.tag < ts2.tag) return -1;
+    if (ts1.tag > ts2.tag) return 1;
+    return 0;
+});
+---
+<section style="float: right; width: 160px; min-width: 160px">
+    <h4>Common Tags</h4>
+    <ul>
+        {toShow.map(e => <li><a href=`/tags/${e.tag}` >{e.tag}</a> ({e.count})</li>)}
+    </ul>
+</section>

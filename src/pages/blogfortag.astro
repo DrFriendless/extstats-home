@@ -1,0 +1,17 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+import {allBlogPosts, BlogPost} from "../code/BlogPost";
+import BlogPostList from "../components/BlogPostList.astro";
+
+interface Props {
+    tag?: string;
+}
+
+const { tag = "unspecified" } = Astro.props;
+
+const posts = allBlogPosts().filter(p => p.hasTag(tag)).sort((p1: BlogPost, p2: BlogPost) => p1.compareByPubDate(p2));
+---
+<BlogLayout pageTitle="Extended Stats Blog" tags={[tag]}>
+    <h2>Posts for '{tag}'</h2>
+    <BlogPostList posts={posts}/>
+</BlogLayout>

@@ -1,17 +1,13 @@
 ---
 import BlogLayout from "../layouts/BlogLayout.astro";
+import {allBlogPosts, BlogPost} from "../code/BlogPost";
+import BlogPostList from "../components/BlogPostList.astro";
+
+const rawPosts = allBlogPosts().filter(p => p.isNew());
+const posts = rawPosts.sort((p1: BlogPost, p2: BlogPost) => p1.compareByPubDate(p2));
 ---
-<BlogLayout pageTitle="Extended Stats Blog">
-    <p>The new blog:</p>
-
-    <ul>
-        <li><a href="blog/welcome-back-2025">Welcome Back!</a></li>
-        <li><a href="blog/api-gateway-202510">On API Gateway and CloudFront</a></li>
-    </ul>
-
-    <p>From the old blog:</p>
-
-    <ul>
-        <li><a href="blog/welcome-to-new-users">Welcome to New Users</a></li>
-    </ul>
+<BlogLayout pageTitle="Extended Stats Blog" tags={["meta"]}>
+    <h2>Recent Posts</h2>
+    <BlogPostList posts={posts}/>
 </BlogLayout>
+

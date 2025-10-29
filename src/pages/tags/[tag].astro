@@ -1,0 +1,16 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import {allBlogPosts, allBlogTags, BlogPost} from "../../code/BlogPost";
+import BlogPostList from "../../components/BlogPostList.astro";
+
+export async function getStaticPaths() {
+    return allBlogTags().map(t => { return { params: { tag: t } } });
+}
+
+const { tag } = Astro.params;
+const rawPosts = allBlogPosts().filter(p => p.hasTag(tag));
+const posts = rawPosts.sort((p1: BlogPost, p2: BlogPost) => p1.compareByPubDate(p2));
+---
+<BlogLayout content={ { title: tag, tags: [ tag ], pubDate: undefined, author: "(generated)", description: `Posts with the tag ${tag}` } }>
+    <BlogPostList posts={posts}/>
+</BlogLayout>
