@@ -2,12 +2,14 @@ export class BlogPost {
     private pd: string | undefined;
     url: string;
     title: string;
+    description: string;
     tags: string[];
 
     constructor(private p: any) {
         this.url = p.url;
         this.title = p.frontmatter.title;
         this.tags = p.frontmatter.tags || [];
+        this.description = p.frontmatter.description;
         if (this.tags.length === 0) this.tags.push("unspecified");
     }
 
@@ -25,7 +27,9 @@ export class BlogPost {
     }
 
     compareByPubDate(other: BlogPost): number {
-        return -cmp(this.pubDate(), other.pubDate());
+        let c = -cmp(this.pubDate(), other.pubDate());
+        if (c === 0) c = cmp(this.title, other.title);
+        return c;
     }
 
     isNew(): boolean {
@@ -39,7 +43,7 @@ export class BlogPost {
 function cmp(s1: string, s2: string) {
     if (s1 === s2) return 0;
     if (s1 < s2) return -1;
-    return 0;
+    return 1;
 }
 
 function days(s: string) {
