@@ -1,0 +1,71 @@
+---
+title: 'The Good, the Bad, and the Ugly'
+pubDate: 2025-11-07
+description: 'Unsolicited opinions on how the serverless TypeScript development experience has evolved'
+author: 'DrFriendless'
+tags: ["meta","technology","AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+Since I last blogged I've been wading through some pretty unrewarding muck, by which I mean updating code which is 4 or 5 years old.
+When I was writing that code, "top-level async" wasn't a thing.
+Now it's a thing, and the world is much nicer.
+
+## Top-level Async
+
+Let's do an analogy to explain "top-level async".
+What I love about analogies is how they explain how something works, whilst also being completely wrong about everything.
+
+Let's say you go to the shop to get a hard drive.
+The person at the shop says "I'll have to go out the back to get it. Tell me your address so I can post it to you."
+You say "but I can wait" and the person at the shop says "no you can't, we don't have top-level async."
+So you go home and eventually the hard drives arrive in the mail because your postal address acted as a callback for you.
+
+Top-level async just means you can go to the shop and wait, and there's no postage involved.
+You can wait, or you can go to another shop and come back to pick up the hard drive, and the complete transaction is faster and cleaner.
+
+So anyway, top-level async is a wonderful thing.
+AWS Lambda functions typically go off to the database, or make network calls, which are all asynchronous actions, and being able to use async / await makes everything much cleaner.
+I deleted a lot of code.
+
+## API Gateway
+
+Another nice thing was some of the changes to API Gateway.
+There are now two types of API Gateway - REST and HTTP - whereas it used to just be REST.
+REST has more features, but for the life of me I can't recall any that it has that were useful from a development perspective.
+
+It used to be that when you connected a Lambda to a URL, it would ask if sir would be having the standard integration or the proxy integration?
+And if sir didn't understand what those were, sir would be most confused.
+It turned out that the question was really "do you want to receive the full HTTP request as input to the Lambda, or just the URL and the body?"
+
+These days, it seems there are a variety of ways to invoke Lambdas (via URLs, programmatically, as output from SQS, etc) and AWS decides what you will receive and gives you a nice TypeScript type for it.
+So that is much cleaner these days.
+
+## MySQL
+
+Not so good these days is the MySql library for Node.
+The MySQL library is very reliable, but it only supports callbacks, not async / await.
+You can get an adapter thingy to make it use async / await, but that requires two more libraries.
+And the reason that's not so good is that it hasn't improved in 6 years since I wrote the code.
+
+There is another library that supports async / await by itself, but it has quirks of its own that I wasn't going to buy into.
+
+On the other hand, the MySQL database now has JSON-valued columns, and that's very cool.
+When I first started this project I was thinking about using MongoDB, but I think NoSQL databases are irrelevant in light of the advantages of JSON coming to relational schemas.
+
+## CDK
+
+Another improvement is the AWS CDK.
+"CDK" unsurprisingly stands for Cloud Development Kit, so I sort of assumed that it was like an SDK.
+After all, what else what it would be like?
+
+Well it turns out that it's a declarative thing, where you say "my AWS stack shall be like this, let it be done!" and the CDK will go off and do what has to be done to make that true.
+As opposed to the SDK, where you say "make this! change this! fiddle with this bit!"
+
+So the CDK is a competitor to CloudFormation, the serverless framework, and Terraform.
+As it's built by AWS itself, I have faith that it will be the best going forward.
+So I've started using that, and I feel the finally I am getting the hang of Infrastructure as Code, and I'm even weaning myself off the AWS Console.
+
+The CDK is still a bit frustrating as there are things it can't do.
+For example, if your Lambda uses code from a ZIP file and you update the ZIP file, the CDK doesn't care.
+It got the code from the ZIP file, it has done its job.
+So you have to use the SDK to imperatively fix your stack after the CDK finishes helping you.

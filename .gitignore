@@ -4,4 +4,5 @@
 node_modules
 /public/FAQWidget/
 /public/WarTable/
+/public/RankingTable/
 *.iml
