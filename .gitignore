@@ -5,4 +5,5 @@ node_modules
 /public/FAQWidget/
 /public/WarTable/
 /public/RankingTable/
+/public/GeekWidget/
 *.iml
