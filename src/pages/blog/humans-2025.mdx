@@ -1,0 +1,42 @@
+---
+title: 'Technology is all about Humans'
+pubDate: 2025-11-19
+description: "Technology isn't immune to human weakness"
+author: 'DrFriendless'
+tags: ["meta","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+This is a thing that's been on my mind for the last few weeks as I've been bashing this site back into order.
+And before that, it was on my mind as I was upgrading technologies at work.
+*Technology ages and weakens just as humans do*.
+
+When I started at my job it used some version of Scala.
+In fact it used several versions of Scala, the previous devs were not authoritarian minimalists -
+they seemed to think if it wasn't broke don't fix it, just leave it for the next developer to get bogged down in it.
+So I spent some time deciding which version of Scala the code base used, and which version of Java, and so on.
+And then when I had all the versions sorted-ish, I started upgrading them.
+
+And that would be when I would find that the code used some Scala unit test framework that had been unsupported for five years because the developer had got a new job.
+Or something wanted to modify the bootclasspath, because it was coded for JDK 1.5.
+Or the source code for something didn't exist because it had always been proprietary.
+
+So for a lot of the dependencies, I removed them entirely.
+I rewrote so many unit tests to JMock or Mockito or something (I still can't tell them apart) - frameworks that would last a few years longer.
+I removed or rewrote some libraries.
+I decompiled sourceless code, fixed the method names up, and fixed the bugs in it.
+And I grew to hate dependencies, because they made my code rot.
+
+As technologies evolve, software must be tended or it goes bad.
+Every third-party dependency in the code base is a vulnerability, in that you are awaiting the whim of that third-party every time you need the dependency updated.
+
+I can't find a quote for this, but I read a long time ago that before you adopt a new technology, you'd like the new solution to be 10 times better than the old one.
+(I can find stories about Bill Gross saying something like this, but I don't think he was talking from a developer point of view.)
+That is, you do not disrupt the codebase or introduce a dependency for an incremental improvement.
+Only do so for a vast improvement.
+Adding another potentially weak link to your software for minimal improvement is a poor decision.
+
+This is why I'm not afraid to cast off dependencies - I'd like the weaknesses in my code to be my own problem, thank you very much.
+
+Of course, Extended Stats is a perfect example of what I'm saying.
+The project has evolved from a static site generator written in Python to a serverless-ish dynamic site written in TypeScript, and suffered much neglect and abuse along the way as it is lashed to my own personal preferences and fortune.
+Well, long may the site prosper!

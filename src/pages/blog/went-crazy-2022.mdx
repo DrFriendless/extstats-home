@@ -1,0 +1,22 @@
+---
+title: 'The Downloader Went Crazy So I Shot It'
+pubDate: 2022-07-03
+description: 'Problems with the downloader'
+author: 'DrFriendless'
+tags: ["meta","costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+I’ve just been looking at some problems with the site, and I noticed that the downloader is doing its weird thing. The graph of it looks like this:
+
+<img src='/public/img/blog/crazy-2022-07-03.png'
+     style={'width:75vw;max-width:900px'}
+     alt="Some very scary performance graphs"/>
+
+So for the last week it has been very busy downloading data from BGG. I mean, INSANELY busy. That has probably cost me about $A200, when I should be able to do the work for approximately free.
+
+This happens monthly, but I don’t think it’s usually that bad. But this time I was afraid the bill would get much worse, so I destroyed the downloader completely. I will have to rethink how it works, in light of the fact that the current plan is not working well at all.
+
+For anyone who is thinking this is a bad sign, yes, it is a bad sign. At this point fixing Extended Stats is feeling a lot like work and not a lot like fun.
+
+Postscript: It seems to be something like when I go to update statistics on a bunch of games, the database is unavailable because it is handling too many connections already. So it is failing to update 5000 games in 69 million attempts to write to the database. I think I will need to put the database writes into a queue.
+

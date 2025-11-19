@@ -1,0 +1,31 @@
+---
+title: 'The Rainbow Button'
+pubDate: 2020-06-26
+description: 'Does this say "geek" to you?'
+author: 'DrFriendless'
+tags: ["design"]
+layout: ../../layouts/BlogLayout.astro
+---
+Today I decided to tackle the problem of the Geek button.
+I have known for a long time that there was a bit of a navigability issue, where it was enough to get to the data you wanted, but apart from the navigation bar, all of the pages with features on them were dead-ends. So it was a little bit hard to stay on the site and explore. So I needed some way to get back to the Geek page from the feature pages. I will need more such things as time goes by, but I felt this one was really missing.
+
+The problems were things like:
+
+* what does this button look like?
+* where does it go?
+* how does it work?
+
+These are not usually issues you consider when using a site, unless something is wrong – only then do you notice.
+
+I realised in the last week or so that the way to show what the button did was by colour. Yes, the site has a lot of colours. That’s a deliberate choice, and if you disagree please send me your copy of The Oracle of Delphi. This is a site about games and I feel that it should look like a game rather than say, a newspaper, or a chainsaw massacre. And it should go on the nav bar despite the other problems that would cause (see below).
+
+So I needed to make a colourful button, and I decided on diagonal stripes. I am still not sold on diagonal stripes, but it can be replaced when I get a better idea – I feel that the diagonals don’t interfere with the text, whereas orthogonal shapes might. And as my image editing program is broken on the new laptop, I decided to write a program to generate the image for me.
+
+<img src='/public/img/blog/bands.png'
+     alt="A stripey sort of button in the site's official mishmash of colours"/>
+
+And then it remained to make the button work. Longtime readers with good memories and insomnia may remember me posting about the nav bar and Gatsby and server-side rendering… but let’s say you don’t. The navigation bar and all of the things it does are built on my laptop using software called React and Gatsby, and copied to AWS, and they are mostly static and don’t use JavaScript.
+
+The login button, which is part of that system, uses JavaScript but is also pretty painful to work with. However my problem was that the Geek button (and the page buttons which I dreamed of adding below it) would need to know who the current geek was, and they needed to pick that up from the page (and in particular, from the URL). So I create the rainbow button and its submenu on my laptop, copy that HTML across to AWS, and then when the page runs there’s some JavaScript which looks at the URL, decides whether to show that menu or not, and fills the links into the menu options. It’s somewhere between cunning and gross.
+
+I wonder if some day people will confuse my colour scheme for support the LGBTIQ cause. It’s not, but also I am cool with that if it happens. Most especially if it pisses off some RWNJ deplorable…

@@ -1,0 +1,24 @@
+---
+title: 'Out with the Old, In with the New!'
+pubDate: 2020-06-26
+description: 'Switching databases'
+author: 'DrFriendless'
+tags: ["AWS","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+After dreaming about it for two years or so, I have switched from using a normal MySQL database hosted by AWS to using AWS’s serverless database, Aurora Serverless.
+I expected this to be a mildly traumatic changeover, but all of the trauma was caused by Oracle’s stupidity and nothing at all from AWS or the new database.
+
+I exported the current MySQL database to a dump file, created an Aurora Serverless database, imported the dump file, and told the downloader, the API, and the Express server to use it.
+And it seems to work.
+The only way I can tell the difference is to look at the performance logs in AWS RDS to see which database says it’s doing stuff.
+
+On the other hand I did hope that the switch might help with a performance issue I’d been having, and it didn’t.
+Hmph. Back to the drawing board on that one.
+
+<img src='/public/img/blog/db-usage.png'
+     alt="Database Usage Since Creation"/>
+
+Notice in the graphs, database capacity was high during the initial data import – this was AWS automatically allocating the required capacity.
+The after the import it dropped down again.
+There were some bursts of CPU while I was doing some testing, and the particularly high ones are the troublesome pages I’m debugging.
