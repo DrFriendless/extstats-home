@@ -2,6 +2,7 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Configure from "./Configure.astro";
+import TitleBar from "../components/TitleBar.astro";
 const { pageTitle } = Astro.props;
 ---
 
@@ -20,7 +21,7 @@ const { pageTitle } = Astro.props;
 <body>
 <Header />
 <div style="padding-left: 18px; padding-right: 18px; max-width: 1200px">
-<h1 style="margin-bottom: 40px; margin-top: 20px; font-size: 40px; font-weight: 500">{pageTitle}</h1>
+<TitleBar pageTitle={pageTitle}/>
 <slot />
 </div>
 <Footer />

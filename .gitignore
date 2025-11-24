@@ -6,4 +6,6 @@ node_modules
 /public/WarTable/
 /public/RankingTable/
 /public/GeekWidget/
+/public/PlaysWidget/
+/public/LoginWidget/
 *.iml

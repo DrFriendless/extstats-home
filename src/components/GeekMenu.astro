@@ -24,7 +24,8 @@ const GEEK_SUB_MENUS = [
 
 <script type="text/javascript">
 function showHideGeekButton() {
-    const geek = getQueryVariable("geek");
+    let geek = getQueryVariable("geek");
+    if (!geek) geek = getCookieData("extstatsid");
     if (geek) {
         document.getElementById("geekmenu").classList.remove("hidden");
         document.getElementById("geeklink").setAttribute("href", "/geek.html?geek=" + geek);
@@ -50,6 +51,19 @@ function getQueryVariable(variable) {
     }
     return false;
 }
+
+// https://stackoverflow.com/questions/10730362/get-cookie-by-name
+function getCookieData(cookieName) {
+    const pairs = document.cookie.split("; ");
+    let count = pairs.length;
+    while (count--) {
+        const parts = pairs[count].split("=");
+        if (parts[0] === cookieName) return parts[1];
+    }
+    return false;
+}
+
+window.addEventListener("message", showHideGeekButton);
 
 window.addEventListener("load", () => {
   showHideGeekButton();
