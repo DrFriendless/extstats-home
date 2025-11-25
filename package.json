@@ -14,7 +14,12 @@
   "type": "commonjs",
   "dependencies": {
     "@astrojs/mdx": "^4.3.8",
-    "astro": "^5.15.8",
+    "astro": "^5.16.0",
     "http-proxy-middleware": "^3.0.5"
+  },
+  "devDependencies": {
+    "aws-cdk-lib": "^2.229.0",
+    "constructs": "^10.4.2",
+    "typescript": "^5.9.3"
   }
 }

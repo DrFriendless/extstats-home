@@ -9,3 +9,5 @@ node_modules
 /public/PlaysWidget/
 /public/LoginWidget/
 *.iml
+dist
+cdk.out

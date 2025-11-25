@@ -11,7 +11,7 @@ const { tag = "unspecified" } = Astro.props;
 
 const posts = allBlogPosts().filter(p => p.hasTag(tag)).sort((p1: BlogPost, p2: BlogPost) => p1.compareByPubDate(p2));
 ---
-<BlogLayout pageTitle="Extended Stats Blog" tags={[tag]}>
+<BlogLayout content={ { title: "Extended Stats Blog", pubDate: undefined, tags: [tag], author: "DrFriendless", description: "This is a generated page." } }>
     <h2>Posts for '{tag}'</h2>
     <BlogPostList posts={posts}/>
 </BlogLayout>
