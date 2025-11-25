@@ -6,6 +6,9 @@ export default defineConfig({
     integrations: [
         mdx()
     ],
+    build: {
+        format: "file"
+    },
     vite: {
         server: {
             proxy: {

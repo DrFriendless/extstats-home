@@ -28,15 +28,15 @@ function showHideGeekButton() {
     if (!geek) geek = getCookieData("extstatsid");
     if (geek) {
         document.getElementById("geekmenu").classList.remove("hidden");
-        document.getElementById("geeklink").setAttribute("href", "/geek.html?geek=" + geek);
-        document.getElementById("geekcollection").setAttribute("href", "/collection.html?geek=" + geek);
-        document.getElementById("geekowned").setAttribute("href", "/owned.html?geek=" + geek);
-        document.getElementById("geekfavourites").setAttribute("href", "/favourites.html?geek=" + geek);
-        document.getElementById("geekplays").setAttribute("href", "/plays.html?geek=" + geek);
-        document.getElementById("geekmonthly").setAttribute("href", "/monthly.html?geek=" + geek);
-        document.getElementById("geekyearly").setAttribute("href", "/yearly.html?geek=" + geek);
-        document.getElementById("geekcomparative").setAttribute("href", "/multiplays.html?geek=" + geek);
-        document.getElementById("geekupdates").setAttribute("href", "/updates.html?geek=" + geek);
+        document.getElementById("geeklink").setAttribute("href", "geek.html?geek=" + geek);
+        document.getElementById("geekcollection").setAttribute("href", "collection.html?geek=" + geek);
+        document.getElementById("geekowned").setAttribute("href", "owned.html?geek=" + geek);
+        document.getElementById("geekfavourites").setAttribute("href", "favourites.html?geek=" + geek);
+        document.getElementById("geekplays").setAttribute("href", "plays.html?geek=" + geek);
+        document.getElementById("geekmonthly").setAttribute("href", "monthly.html?geek=" + geek);
+        document.getElementById("geekyearly").setAttribute("href", "yearly.html?geek=" + geek);
+        document.getElementById("geekcomparative").setAttribute("href", "multiplays.html?geek=" + geek);
+        document.getElementById("geekupdates").setAttribute("href", "updates.html?geek=" + geek);
     } else {
         document.getElementById("geekmenu").classList.add("hidden");
     }
