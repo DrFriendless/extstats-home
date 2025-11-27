@@ -7,5 +7,5 @@ interface Props {
 const { posts } = Astro.props;
 ---
 <ul>
-    {posts.map((post: BlogPost) => <li><b>{post.pubDate()}</b> <a href={post.url}>{post.title}</a><br><i>{post.description}</i></li>)}
+    {posts.map((post: BlogPost) => <li><b>{post.pubDate()}</b> <a href={post.url + ".html"}>{post.title}</a><br><i>{post.description}</i></li>)}
 </ul>

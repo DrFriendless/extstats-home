@@ -1,0 +1,123 @@
+---
+title: 'And Another Thing! About API Gateway'
+pubDate: 2025-11-25
+description: 'More techie stuff about how to get API Gateway to do what you want'
+author: 'DrFriendless'
+tags: ["AWS", "technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+Today's project has been to get the first version of the new site up onto the test site - https://test.drfriendless.com
+
+As that site hadn't been touched for years, I just junked the lot of it and started again from rebuilding the infrastructure with the CDK.
+Creating the S3 bucket is trivial:
+
+```js
+defineTestBucket(): IBucket {
+    return new s3.Bucket(this, "testBucket", {
+      bucketName: TEST_BUCKET_NAME,
+      accessControl: BucketAccessControl.PRIVATE
+  });
+}
+```
+
+Then I wanted to create a CloudFront distribution which delegates requests for static resources to that bucket,
+and requests for the API to the API server (I don't currently have a test API server, I just have the one).
+
+The base distribution is easy to define:
+```js
+    const originAccessIdentity = new OriginAccessIdentity(this, 'OriginAccessIdentity');
+    bucket.grantRead(originAccessIdentity);
+
+    const d = new Distribution(this, id, {
+      defaultRootObject: 'index.html',
+      comment: comment,
+      enabled: true,
+      domainNames: [domainName],
+      enableIpv6: true,
+      certificate: STAR_CERT_GLOBAL,
+      defaultBehavior: {
+        origin: S3BucketOrigin.withOriginAccessIdentity(bucket, {
+          originAccessIdentity
+        }),
+      },
+```
+* STAR_CERT_GLOBAL is my certificate for *.drfriendless.com in us-east-1 - AWS requires CloudFront custom domain name certificates to be in that region.
+* domainName is "test.drfriendless.com".
+
+Here's the code to look up STAR_CERT_GLOBAL, as it's not part of this stack:
+```js
+STAR_CERT_GLOBAL = acm.Certificate.fromCertificateArn(this, "starCertGlobal", "arn:aws:acm:us-east-1:...");
+```
+
+The next part, which was the hard part when I set up the main site, is the definition of the CloudFront origin which directs API
+calls to api.drfriendless.com.
+
+```js
+      additionalBehaviors: {
+        "/api/*": {
+          compress: true,
+          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          allowedMethods: AllowedMethods.ALLOW_ALL,
+          cachedMethods: CachedMethods.CACHE_GET_HEAD_OPTIONS,
+          cachePolicy: CachePolicy.CACHING_DISABLED,
+          functionAssociations: [{
+            function: API_REWRITE_FUNCTION!,
+            eventType: FunctionEventType.VIEWER_REQUEST
+          }],
+          originRequestPolicy: OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
+          origin: new HttpOrigin("api.drfriendless.com", {
+            protocolPolicy: OriginProtocolPolicy.HTTPS_ONLY,
+            httpsPort: 443,
+            httpPort: 80,
+          })
+        }
+      }
+    });
+```
+
+The bit about where to put "/api/*" was a bit tricky - it's just a key in the additional behaviours section.
+The origin request policy was very confusing to me, and I only figured it out with the help of the good people of reddit -
+it seems that when CloudFront sees a request for test.drfriendless.com/api/blah, it sends it api.drfriendless.com and
+says "this is for test.drfriendless.com" and api.drfriendless.com says "well that's not me".
+So it's a very weird redirection, but using that exact option for the origin request policy fixes it.
+I cannot understand why that isn't the default in the console.
+
+I also needed to specify a viewer request function, which took a while to get right.
+When a request comes to test.drfriendless.com/api/blah, it needs to go to the API at api.drfriendless.com/blah - that is,
+after the hostname is sorted, I still need to remove the "/api" bit.
+Yes, I could have hosted the functionality at the same URL on the API host, but we do these things not because they are easy, but because we want to learn how to do AWS things.
+
+The viewer request function is just like a Lambda, but as it's used by CloudFront it gets sequestered in its own little part of AWS called CloudFront functions,
+and you have to create it under CloudFront.
+Here's the code:
+```js
+async function handler(event) {
+  var request = event.request;
+  if (request.uri.startsWith('/api/')) {
+      request.uri = request.uri.replace("api/", "");
+  }
+  return request;
+}
+```
+
+Finally, I need to create some DNS records to expose test.drfriendless.com to the world:
+```js
+    new r53.AaaaRecord(this, "aaaa_rec", {
+      recordName: hostName,
+      zone: DRFRIENDLESS_ZONE!,
+      target: r53.RecordTarget.fromAlias(new targets.CloudFrontTarget(d)) });
+    new r53.ARecord(this, "a_rec", {
+      recordName: hostName,
+      zone: DRFRIENDLESS_ZONE!,
+      target: r53.RecordTarget.fromAlias(new targets.CloudFrontTarget(d)) });
+```
+In this case:
+* hostName is "test"
+* zone is defined by this:
+```js
+DRFRIENDLESS_ZONE = r53.HostedZone.fromLookup(this, "drfriendlessCom", { domainName: "drfriendless.com" });
+```
+
+Figuring all this stuff out in the console the first time took me weeks!
+The good news is that replicating it in CDK took me only hours, even though I am a CDK newb.
+So now it's codified forever, and if you are reading this I hope it has helped you as well.

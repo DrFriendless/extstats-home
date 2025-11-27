@@ -9,6 +9,12 @@ export default defineConfig({
     build: {
         format: "file"
     },
+    output: 'static',
+    markdown: {
+        shikiConfig: {
+            theme: 'github-light-default',
+        },
+    },
     vite: {
         server: {
             proxy: {

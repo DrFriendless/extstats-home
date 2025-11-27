@@ -1,11 +1,8 @@
 import * as cdk from 'aws-cdk-lib';
-import {aws_apigatewayv2, type ResourceEnvironment} from 'aws-cdk-lib';
+import { type ResourceEnvironment} from 'aws-cdk-lib';
 import {Construct} from 'constructs';
-import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import {BucketAccessControl, type IBucket} from "aws-cdk-lib/aws-s3";
-import * as iam from "aws-cdk-lib/aws-iam";
-import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as cf from "aws-cdk-lib/aws-cloudfront";
 import {
   AllowedMethods,
@@ -13,7 +10,7 @@ import {
   CachePolicy,
   Distribution,
   FunctionEventType,
-  type IDistribution, type IFunction,
+  type IDistribution,
   OriginAccessIdentity,
   OriginProtocolPolicy,
   OriginRequestPolicy,
