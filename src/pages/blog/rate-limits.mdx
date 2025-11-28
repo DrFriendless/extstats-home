@@ -1,0 +1,48 @@
+---
+title: 'Rate Limits Drive Me Nuts'
+pubDate: 2025-11-28
+description: 'Ponderings on fitting 173 square pegs into 48 round holes'
+author: 'DrFriendless'
+tags: ["meta","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+Today's project has been to get the downloader running again.
+I did some of that in October, but then BGG turned on auth tokens and everything broke, so I have had to revise some of that.
+
+One thing I didn't get going in October was downloading of plays data, as that's the biggest problem and I thought I'd start with the easier ones.
+I was gathering plays data per player, per month - so with 3000 users, 20 years since we started recording plays on BGG - that's about 720,000 queries I make against the BGG API for an update.
+
+BGG kindly asks that I don't do all of those queries at once, not even with an API key.
+So I decided to see if I could cut them down.
+
+In my first experiment, I asked BGG for all the plays for Friendless, ever.
+It said there are 8851 of those, and there are 100 per page.
+(Note, for some, the quantity of plays is more than 1, if you entered them on BGG like that.)
+So I needed to make 89 queries to retrieve them all.
+Let's say 90 queries for 3000 users - 270,000 queries is a bit better.
+
+The paging is a bit of a weakness here - 100 plays isn't very much.
+That's all the data I can retrieve in a single call, so BGG could avoid calls by making that number higher.
+However I'm sure they did not design the API to suit the kind of industrial data exfiltration that I'm attempting, so I have to take what I'm given.
+
+So I wrote my code to retrieve my 90 pages of plays, and it broke.
+On page 38 BGG said "Rate limit exceeded," which is computer talk for "you're doing that too much you'll break my server."
+The BGG XML API guidelines suggest a rate of one call per 5 seconds.
+So 270,000 calls once per 5 seconds, means retrieving the plays data should take 375 hours, or 16 days.
+So when people say "my plays data is wrong", this is why! It's a big job!
+
+So rather than update all plays for a user at once, I need to do it in chunks, and hope that the chunks aren't so big that they blow the rate limit.
+A chunk of 37 pages seemed to be OK earlier today, but BGG was being very nice to let me get that far.
+And then there's the AWS Lambda limit of being allowed to run for only 15 minutes - which is a maximum of 180 pages - and that's time that I'm paying for the Lambda to do nothing!
+And then if I get the chunks small enough that they work, I have to be careful not to run more than one of them at a time, because BGG could still observe me exceeding the rate limit.
+
+It really is a very large problem with a lot of constraints, and it might take a bit to get it all working smoothly.
+At the moment I'm breaking a user's plays into time periods I call "years", which are mostly aligned to real years.
+This is complicated by people who record plays for the date 0000-00-00, and at other times when they didn't actually play.
+
+I figure a year's worth of plays for a really dedicated game is going to be only 4 or 5 pages of data.
+And all the years that are in the past only need to be retrieved once.
+
+While I've been writing this, the code has been chugging away calculating all of the "years" which need to be downloaded for people.
+It says there are 96,251 of them.
+I've written half of the code to process them, I guess I'd better get cracking on the other half.
