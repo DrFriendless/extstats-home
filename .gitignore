@@ -8,6 +8,7 @@ node_modules
 /public/GeekWidget/
 /public/PlaysWidget/
 /public/LoginWidget/
+/public/UpdatesWidget/
 *.iml
 dist
 cdk.out
