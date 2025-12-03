@@ -13,8 +13,8 @@
     "text": ["How many Extended Stats users have rated the game."]
   },
   {
-    "title": "Normalised Ranking",
-    "text": ["This column is not working yet. After I reimplement it I'll remember what it means."]
+    "title": "Normalised Score",
+    "text": ["The normalised score is a score similar to the Extended Stats score - it is the normalised score from all of the users, added up. The normalised score for a user is the number (C - N) / C where C is the number of games the user has rated, and N is the number of games the user has rated strictly higher than this one. This method removes influence of people who just rate games 1 or 10."]
   },
   {
     "title": "Total Plays",
