@@ -1,0 +1,67 @@
+---
+title: 'Technical Stuff'
+pubDate: 2025-12-05
+description: "I'll do some pretty complicated stuff to avoid paying money."
+author: 'DrFriendless'
+tags: ["technology","AWS","costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+I had a dream, Joe.
+Well, it was a bit like a dream.
+A vision came to me in some sort of half-waking delirium of how to cope with all of the plays downloads.
+So it was a bit like a nightmare too.
+
+That was a couple of mornings ago, and on the same morning I remembered I'd better check the Billing.
+Billing is the part of AWS that tells me how much to pay, and why.
+I don't mind paying it, but I hate looking at it in case it says "you owe a million bucks because you fucked up."
+
+<img src='/img/blog/costs 2025-12-05.png'
+     alt="AWS Costs in $US for the past few months"/>
+
+It was up a bit, and in particular the red VPC section was up a lot, so I had to investigate why that was.
+It was because of a thing called VPC Endpoints.
+
+These are a thing that take a bit of head-getting-round.
+AWS has a load of services that are available on the internet, for example Parameter Store - that's a service that lets me store little things I need to remember, for example where I was up to lok at the auth thread on BGG.
+Because that's stored on the internet I can access it from a web server running on the internet.
+
+On the other hand, there are Virtual Private Clouds, which are networks which are separated from the internet.
+They use TCP/IP to talk to each other, but they have their own system of addressing which isn't internet-compatible.
+Like, my wife can tell me at home "put that on the high shelf", but if she says the same thing to the guy at the supermarket she'll get a funny look.
+
+The same thing happens if my code inside a VPC wants to get to the internet, and in particular to an AWS service on the internet -
+it has no knowledge of how to get to the internet, nor of how the service on the internet will figure out what is meant by "the high shelf".
+
+So what a VPC Endpoint is is a tunnel from my VPC, through AWS's internal network, to a service that's exposed on the internet.
+And it just costs maybe 7c per hour, but there are 720 hours in a month, so that $50 if you don't pay attention.
+So I paid attention to that.
+
+The particular problem I had was that I wanted to get some metrics from the database (and hence, needed to be inside the VPC where the database is)
+and write them to CloudWatch Logs (and hence needed to be on the Internet, where CloudWatch Logs is).
+The VPC Endpoint solved the problem, but it's expensive.
+
+<img src='/img/blog/report step function.png'
+     alt="A Step Function to Report on the Database"/>
+
+The alternative I found was a Step Function.
+A Step Function is a state machine where each state is some AWS task.
+In my case, the first state was a Lambda which reads the metrics from the database, and the second was a Lambda which writes the metrics to CloudWatch.
+AWS doesn't care that the first task ran inside the VPC and the second ran on the internet, it has strong magic to do such things.
+So that was a very nice result.
+
+But anyway, back to the nightmare.
+The problem on my mind was downloading plays.
+I have 96000 files of plays to download, with each of 3000 geeks broken up into about 30 years (I've been on BGG for 21 years, OMG).
+I am in a rush to process them all, but BGG is not - it goes mad at me if I ask for more than about 100 plays every few seconds.
+So I can't do all 3000 at a time, I have to spread them out.
+
+My dream was to put those tasks themselves into a queue, and tell the Lambda which executes those tasks that it could only run once at a time.
+That gives me way more control over how much I hassle BGG.
+
+The downloader did not yet have its bits and pieces described in the CDK (kind of a declarative language for building AWS infrastructure),
+so today's job was to do all of that - two queues, five Lambdas, and associated hoohah to tell the Lambda to process the queue but only slowly.
+And as always with AWS, bunches of security configuration which is actually much nicer using CDK than the other options.
+
+So in case you were as frustrated as I am with the lack of improvement on the site, that's what has been happening!
+I feel that the downloader is approaching solidity in a way that will work with BGG's constraints.
+Surely, the next thing must be some cool graphs, right?
