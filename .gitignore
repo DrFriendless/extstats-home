@@ -11,6 +11,7 @@ node_modules
 /public/UpdatesWidget/
 /public/OwnedWidget/
 /public/FavouritesWidget/
+/public/AdminWidget/
 *.iml
 dist
 cdk.out
