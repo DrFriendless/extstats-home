@@ -15,3 +15,4 @@ node_modules
 *.iml
 dist
 cdk.out
+/public/CollectionWidget/
