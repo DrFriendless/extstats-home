@@ -10,6 +10,7 @@ node_modules
 /public/LoginWidget/
 /public/UpdatesWidget/
 /public/OwnedWidget/
+/public/FavouritesWidget/
 *.iml
 dist
 cdk.out
