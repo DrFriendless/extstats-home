@@ -1,0 +1,37 @@
+---
+title: 'The downloader turned a corner'
+pubDate: 2025-12-10
+description: "Sometimes things do work like they're supposed to"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+As I mentioned in my last post, I had a dream or at least a delirium about how the downloader could work better.
+Then I implemented that idea and I pressed Play and I got to wait some days to see whether it worked or not.
+
+Recap: the plan was to put requests for plays downloads into a separate queue so I could limit the number of downloader tasks hitting BGG, and avoid blowing the rate limit.
+
+<img src='/img/blog/turned a corner.png'
+     alt="Accumulated data in the downloader plays queue, over the last few days"/>
+
+As planned, the requests to download plays went onto the new queue, and the new queue started growing in size.
+Then I realised that the downloader was going to notice after 15 minutes that the job hadn't been done, and put that task on the queue again.
+So in fact the same tasks were going to be put onto the queue every 15 minutes, and that would result in the tasks being done over and over.
+
+So I changed the bit that puts tasks onto the queue to only resend after 24 hours.
+That was much better, as in that 24 hour window a lot of stuff could get done.
+Nevertheless as I predicted the queue would get maybe 120 hours behind, it wasn't good enough - tasks would still be duplicated in it.
+So every 24 hours I just told AWS to dump everything in the queue, as I knew they would come back.
+Those are the two giant cliffs the graph falls off.
+
+But then a wonderful thing happened yesterday - the download plays task caught up, and started going faster than the thing putting requests onto the queue.
+That was an enormous relief!
+
+Of course, there are bugs.
+Some of plays files that were downloaded thought they had all the plays, but in actual fact BGG had just got tired of them and I didn't catch that properly.
+So some number of unknown files need to be redone :-(.
+However I can spread that out over a longer time period, without stressing myself or BGG.
+
+In other news, most of the graphics pages are working again.
+I think it's about time to salvage anything I still need from the old version of the site, and put the version that's currently on test onto the real thing.
+And then I will need to set about adding all the people who have been patiently waiting for years to be added to the site.
