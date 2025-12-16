@@ -1,26 +1,7 @@
 ---
 import Menu from './Menu.astro';
+import {bggMenu, devMenu, type SubMenu, userMenu} from "../code/NavBase";
 
-export interface SubMenu extends MenuItem {
-    style: string;
-    items: MenuItem[];
-}
-
-export interface MenuItem {
-    link: string;
-    name: string;
-}
-
-const bggMenu: SubMenu = { name: 'BGG', style: "nav-bgg", link: "", items: [
-        { link: "https://boardgamegeek.com/guild/2938", name: "Guild" },
-        { link: "https://www.boardgamegeek.com/microbadge/6964", name: "Microbadge" },
-        { link: "https://www.boardgamegeek.com/microbadge/33991", name: "Friends" }
-    ]};
-const devMenu: SubMenu = { name: 'Developer', style: 'nav-github', link: "", items: [
-        { link: "https://github.com/DrFriendless/ExtendedStatsServerless", name: "GitHub"},
-        { link: "https://github.com/DrFriendless/ExtendedStatsServerless/blob/master/misc/Dev%20Doco.pdf", name: "Dev Doc" },
-        { link: "admin.html", name: "Admin" }
-    ]};
 const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html", items: [
         // { link: "http://blog.drfriendless.com/2018/09/08/welcome-to-new-users/", name: "Welcome"},
         // { link: "http://blog.drfriendless.com/2018/08/12/what-use-are-users/", name: "Logins"},
@@ -31,7 +12,7 @@ const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html",
     <a class="navbar-button nav-wartable" href="/about.html">About</a>
     <a class="navbar-button nav-ranking" href="https://extstats.drfriendless.com">Stats</a>
     <Menu link={blogMenu}/>
-    <a class="navbar-button nav-dataprot" href="/dataprotection.html">Privacy</a>
+    <Menu link={userMenu}/>
     <Menu link={bggMenu}/>
     <Menu link={devMenu}/>
     <a class="navbar-button nav-patreon" href="https://www.patreon.com/drfriendless">Patreon</a>
