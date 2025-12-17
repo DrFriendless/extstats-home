@@ -1,5 +1,4 @@
 import * as cdk from 'aws-cdk-lib';
-import { type ResourceEnvironment} from 'aws-cdk-lib';
 import {Construct} from 'constructs';
 import * as s3 from "aws-cdk-lib/aws-s3";
 import {BucketAccessControl, type IBucket} from "aws-cdk-lib/aws-s3";
@@ -27,6 +26,7 @@ const TEST_BUCKET_NAME = "test-drfriendless-com";
 let LIVE_BUCKET: s3.IBucket | undefined;
 let TEST_BUCKET: s3.IBucket | undefined;
 let TEST_DISTRIBUTION: cf.IDistribution | undefined;
+let LIVE_DISTRIBUTION: cf.IDistribution | undefined;
 let STAR_CERT: acm.ICertificate | undefined;
 let STAR_CERT_GLOBAL: acm.ICertificate | undefined;
 let DRFRIENDLESS_ZONE: r53.IHostedZone | undefined;
@@ -40,8 +40,16 @@ export class StatsSiteStack extends cdk.Stack {
     });
   }
 
-  defineCloudFront(id: string, bucket: IBucket, domainName: string, hostName: string, comment: string, env: ResourceEnvironment): IDistribution {
-    const originAccessIdentity = new OriginAccessIdentity(this, 'OriginAccessIdentity');
+  defineLiveBucket(): IBucket {
+    return new s3.Bucket(this, "liveBucket", {
+      bucketName: LIVE_BUCKET_NAME,
+      accessControl: BucketAccessControl.PRIVATE
+    });
+  }
+
+  defineCloudFront(id: string, bucket: IBucket, domainName: string, hostName: string, comment: string,
+                   suffix: string): IDistribution {
+    const originAccessIdentity = new OriginAccessIdentity(this, 'OriginAccessIdentity' + suffix);
     bucket.grantRead(originAccessIdentity);
 
     const d = new Distribution(this, id, {
@@ -76,11 +84,11 @@ export class StatsSiteStack extends cdk.Stack {
         }
       }
     });
-    new r53.AaaaRecord(this, "aaaa_rec", {
+    new r53.AaaaRecord(this, "aaaa_rec" + suffix, {
       recordName: hostName,
       zone: DRFRIENDLESS_ZONE!,
       target: r53.RecordTarget.fromAlias(new targets.CloudFrontTarget(d)) });
-    new r53.ARecord(this, "a_rec", {
+    new r53.ARecord(this, "a_rec" + suffix, {
       recordName: hostName,
       zone: DRFRIENDLESS_ZONE!,
       target: r53.RecordTarget.fromAlias(new targets.CloudFrontTarget(d)) });
@@ -89,7 +97,6 @@ export class StatsSiteStack extends cdk.Stack {
 
   lookupExternalResources() {
     // resources external to this stack
-    LIVE_BUCKET = s3.Bucket.fromBucketName(this, "liveBucket", LIVE_BUCKET_NAME);
     STAR_CERT = acm.Certificate.fromCertificateArn(this, "starCert", "arn:aws:acm:ap-southeast-2:067508173724:certificate/aabe3460-bdd1-432c-863e-74514b1fa94b");
     STAR_CERT_GLOBAL = acm.Certificate.fromCertificateArn(this, "starCertGlobal", "arn:aws:acm:us-east-1:067508173724:certificate/c49cd611-6dd6-418f-9323-0c975369bc8a");
     DRFRIENDLESS_ZONE = r53.HostedZone.fromLookup(this, "drfriendlessCom", { domainName: "drfriendless.com" });
@@ -105,7 +112,10 @@ export class StatsSiteStack extends cdk.Stack {
     const env = props?.env!;
     this.lookupExternalResources();
     TEST_BUCKET = this.defineTestBucket();
+    LIVE_BUCKET = this.defineLiveBucket();
     TEST_DISTRIBUTION = this.defineCloudFront("testDistribution", TEST_BUCKET, "test.drfriendless.com", "test",
-        "Test version of the extstats site", { account: env.account!, region: env.region! });
+        "Test version of the extstats site", "");
+    LIVE_DISTRIBUTION = this.defineCloudFront("liveDistribution", LIVE_BUCKET, "extstats.drfriendless.com", "extstats",
+        "Live version of the extstats site", "live");
   }
 }
