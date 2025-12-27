@@ -1,0 +1,14 @@
+Hello Stats Fan! Some time ago, possibly a very long time ago, I received a request from you to add your boardgamegeek account to my BGG Extended Stats site.
+
+Due to technical flaws, I had disabled the site, and due to other things in my life I hadn't got around to fixing it.
+Now I am temporarily unemployed (anyone need a cloud architect in Australia?) and I am getting it all going again.
+So now you have been added!
+
+If you go to https://extstats.drfriendless.com/ there will be a search box under the subheading "Where's My Page?"
+You can type your BGG username in there, and if everything has gone according to plan the page will give you a URL to follow to get to your persona page.
+Most of the features in there are working now, but I plan to fix more and add new ones as I can.
+
+With luck, the site will be stable enough to survive future work and life problems!
+
+
+John

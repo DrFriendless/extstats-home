@@ -33,5 +33,10 @@
     "index": 7,
     "head": "Do I have a personal page or something?",
     "body": "<p>Yes indeed! It's called the Geek Page. Use the search box immediately below here to find it. Then bookmark that URL.</p>"
+  },
+  {
+    "index": 8,
+    "head": "Why can't I comment on blog posts?",
+    "body": "<p>Let's just say you want to do that, you would need an account on this site - see question 3 above. To get an account on this site requires an account on BGG. Just click the Login button, the sign up, and follow the instructions.</p>"
   }
 ]
