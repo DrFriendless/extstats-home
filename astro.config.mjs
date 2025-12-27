@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import {defineConfig, passthroughImageService} from "astro/config";
 import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
@@ -8,6 +8,9 @@ export default defineConfig({
     ],
     build: {
         format: "file"
+    },
+    image: {
+        service: passthroughImageService()
     },
     output: 'static',
     markdown: {

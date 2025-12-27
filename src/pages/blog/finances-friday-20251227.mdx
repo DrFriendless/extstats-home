@@ -1,0 +1,63 @@
+---
+title: 'Finances Friday'
+pubDate: 2025-12-27
+description: "I'll be a grown-up one day, probably"
+author: 'DrFriendless'
+tags: ["AWS","costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import cpd from "/public/img/blog/cost per day 20251227.png";
+import cps from "/public/img/blog/cost per service 20251227.png";
+import dbp from "/public/img/blog/database perf 20251227.png";
+
+Being unemployed, particularly at this time of year, can cause a bloke to lose track of what day it is.
+DrMrsDrFriendless is away overseas so she's not around to tell me either.
+It's up to me to be a grown-up and figure it out by myself.
+
+One discipline I'm trying to instill in myself is the concept of "Finances Friday", where I pay some attention to how much money I've got.
+This is a problem because I hate thinking about such things.
+They do not engage me at all.
+But today is Finances Friday, and as you can see it's a Saturday so it's not really going according to plan yet.
+
+The good news is that when I started this last Friday I discovered an AWS cost that could be avoided, and coded around it.
+Then today I discovered a graph in the AWS Billing section that shows me that that worked.
+Here is the graph of AWS costs per day for the last 4 weeks or so.
+
+<Image src={cpd} alt="AWS costs per day for the last 4 weeks" width={1024} />
+<caption>AWS costs per day for the last 4 weeks</caption>
+<p/>
+
+I don't know for sure what that spike on December 1 was, I think it might have been a domain name registration.
+But as you can see, since the change on about December 19, costs are running about a dollar per day lower.
+Woohoo, it's going to take me longer than before to become poor!
+
+Just to confirm that it was the removal of the VPC endpoint which caused that change, I graphed the costs per hour per service.
+
+<Image src={cps} alt="AWS costs per service per day for the last 2 weeks" width={1024} />
+<caption>AWS costs per service per day for the last 2 weeks</caption>
+<p/>
+
+The colours are hard to discern, but the tallest lines are:
+* kinda blue - Relational Database Service
+* kinda red - Virtual Private Cloud
+* kinda green - EC2 (servers)
+
+The most recent set of lines is smaller because it's for today, which isn't finished yet.
+Otherwise, the graph shows that the VPC costs decreases dramatically, which is what I planned.
+
+The database remains by far the biggest cost.
+I'd love to decrease its size and hence cost, but it's already down at the "you cannot seriously want a database this puny" tier, and AWS doesn't offer much smaller.
+Nevertheless it is performing well.
+
+<Image src={dbp} alt="Database performance for the last month" width={1024} />
+<caption>Database performance for the last month</caption>
+<p/>
+
+One of the problems I had back in the old days was that database contention caused writes from Lambdas to fail, requiring them to be re-run,
+thus increasing write activity and hence database contention.
+The implementation of the inside queue plan using the EC2 and SQS (AWS queueing service) has fixed that.
+What we are afraid of is the green line coming down to the bottom, but as long as the orange line stays low we should be good.
+
+So for this week I'm content with Finances Friday, albeit kinda Saturdayish.
+Let's hope I am as diligent again next week.
