@@ -1,0 +1,11 @@
+---
+interface Props {
+    url: string;
+}
+
+const { url } = Astro.props;
+---
+<link rel="stylesheet" href="/CommentsWidget/styles.css">
+<extstats-comments url={url} readonly="false"></extstats-comments>
+<script is:inline src="/CommentsWidget/polyfills.js" type="module"/>
+<script is:inline src="/CommentsWidget/main.js" type="module"/>
