@@ -1,0 +1,32 @@
+@media print {
+    @page {
+        margin: 0.5cm;
+    }
+    body {
+        font: 12pt Georgia, "Times New Roman", Times, serif;
+    }
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table {
+    width: 100%;
+}
+th.found {
+    width: 47px;
+}
+th.name {
+    width: 300px;
+    word-wrap: normal;
+}
+th.rating {
+    width: 49px;
+}
+th.wtt {
+    width: 40px;
+}
+th.notes {
+    max-width: 99%;
+}
