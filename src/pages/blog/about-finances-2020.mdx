@@ -1,0 +1,44 @@
+---
+title: 'About Finances'
+pubDate: 2020-03-08
+description: "Accounting is kinda terrifying actually"
+author: 'DrFriendless'
+tags: ["costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import screenshot from "/public/img/blog/Screenshot-from-2020-03-08-15-45-35.png";
+
+Oh goodness, wake me up when this post is written, please.
+Money bores me senseless.
+However as some who is seeking donations I feel it’s my duty to be transparent about what those donations are being used for.
+Despite the fact that when the AWS monthly bill comes in I kinda dread reading it.
+
+Anyway, yesterday I mustered the willpower to update my spreadsheet of costs over time.
+It was a bit terrifying.
+
+<Image src={screenshot} alt="Graph of AWS Costs Over Time in $US" width={1024} />
+<caption>Graph of AWS Costs Over Time in $US</caption>
+<p/>
+
+Costs rose very dramatically in October.
+That was when I had the hardware failure and did the lift and shift to get the old site running in the cloud.
+As that required a new EC2 (virtual server) and RDS (database), I knew there would be increased costs.
+Everything else is pretty stable though, but I will keep an eye on DynamoDB and data transfer, as they are increasing.
+
+The site is now costing me in the order of $A170 per month (note that the graph above is in $US, and it’s about $US1 = $A1.5), which is almost enough motivation to do something about.
+Other bits of life are getting in the way though, such as a terminally old dog and so on.
+
+On July 1, which is the start of the new tax year in Australia, I took a payout from Patreon of all the money that was there, and it was $A69.92.
+I declared that on my tax as I am required to do.
+And thanks to all of my lovely patrons for helping me!
+Patreonage has continued to increase slowly – it would probably help if I worked on the site a bit more – so that’s looking good.
+
+I would like to get rid of the lifted and shifted site.
+I’ve had report it’s too slow anyway, and it would cost more to make it faster.
+However there’s an experiment I’d like to conduct on it – to migrate it to new database technology that scales better and could possibly be cheaper.
+It would be informative to me to see how well that goes.
+
+Oh well, the site is not making me rich.
+However if I have to spend long months locked away from the world due to a COVID-19 outbreak, I’ll have plenty to do.
+Thank you all for your support.

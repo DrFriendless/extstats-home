@@ -1,0 +1,92 @@
+---
+title: 'Testing Times'
+pubDate: 2020-06-07
+description: "Automated tests are a whole lot more reliable than remembering what the code was supposed to do"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import normal from "/public/img/blog/define-normal-please.jpeg";
+
+Only three months after the sudden death of our entire industry, work is starting to slow down.
+I’ve dealt with all the requirements the customers suddenly had with respect to refunds, finished all the work we had promised to customers who can still pay us, and have made a couple of the more risky changes that needed to be made.
+For example, I switched our user interface over to use CSS Grid, which OMG is so lovely!
+This is sort of like replacing the skeleton of a living creature, and I am proud to say I did it with only one blindingly stupid mistake.
+
+Now I’m onto the less urgent jobs, i.e. the ones that have been undone for years despite being ticking time bombs.
+So you know, things like minesweeping the front yard, putting locks on the doors, and making sure that for any third party package we know which version of it we’re using (and even better, that it’s a somewhat recent one).
+
+One of the dreary consequences of that last task was dealing with the antiquated version of one of the test frameworks we use.
+We have four different test frameworks which do mostly the same thing.
+I am not a connoisseur of test frameworks, and it seems neither were the developers before me.
+But the particular problem with this one was that the old version of Scala that it wanted clashed with the old version of Scala that we actually use.
+So I wanted to upgrade the testing framework, from the antiquated version to a merely old-fashioned version.
+However there was no documentation for the old-fashioned version, and it seemed to be different to the antiquated version.
+That’s why Earl had to die. I mean, that’s why I had to get rid of it.
+
+Now despite not being a connoisseur, there is one testing framework I admire because it’s not as shit as the others, and that’s Mockito (with JUnit of course).
+So I decided to rewrite a bunch of Scala unit tests into Java using Mockito.
+Well… that was easier said than done. There were a few tricky things built into the Scala framework, so I had to figure out how to replicate the trickery, and Scala itself has some tricky things which are about as entertaining and as useful as Vegemite on the toilet seat.
+But I battled on and got maybe 50 tests rewritten in two days. Now I am an empty husk of a man but still unfairly overweight.
+
+This story is going somewhere. Gradually.
+
+So this weekend I’ve been doing some stuff with the stats website, and one thing I’d like to do is group plays by location.
+I do download the location of plays, but then I normalise those plays and store them in another table, and I did not until today retain the location information.
+And as all of the good charts run from normalised plays data, I had to have it there.
+
+<Image src={normal} alt="Dr Evil asking for a definition of 'normal'" width={800} />
+<caption>I’m glad you asked, Dr Evil.</caption>
+<p/>
+
+A normalised play is a play of an expansion or a base game.
+If the play is of an expansion, and we can figure out what the base game is, then there is also a normalised play for that base game.
+Any plays of expansions for which there are base game plays have at least as many base game plays as expansion plays.
+
+Yeah, that didn’t make any sense.
+Let me explain with board games.
+You record a play of Race for the Galaxy: The Gathering Storm on BGG.
+That is not normalised, because you didn’t record a play of Race for the Galaxy as well.
+We know you must have, but you didn’t say so.
+So part of the normalisation process is recording that play of Race for the Galaxy as well.
+
+Similarly if you record a play of The Lord of the Rings: The Card Game – Nightmare Deck: Shadow and Flame 3 times, then you must have played the Khazad-dûm expansion 3 times, and so you must have played Lord of the Rings: The Card Game 3 times as well.
+So from that play we infer plays of the others.
+When I ask the database “how many times did she play Khazad-dûm?” I don’t need to notice that there are 3 plays of Shadow and Flame, because the database already has it.
+That’s why I do normalisation. It can get a bit complex.
+
+Which is all very well and good except when you add locations in as well.
+Let’s say you record a play of Carcassonne: The River and a play of Carcassonne.
+How many times did you play Carcassonne? At the moment, Extended Stats infers that you played Carcassonne one time, and you used the expansion The River.
+But if you record a play of Carcassonne: The River at home, and a play of Carcassonne on boardgamearena.com, how many times did you play Carcassonne?
+Well, twice, is my guess.
+So that’s what Extended Stats needs to do.
+
+So with the addition of location information, the normalisation algorithm needed to be updated.
+And as I mentioned earlier, it’s a bit of a complex algorithm.
+I’m a pretty bold and capable programmer, but I am also a cautious and not stupid one, so I was wary of messing with the code without being sure I got it right.
+This is what tests are for, so I needed to write some.
+
+The problem was that Extended Stats is written in TypeScript, and I am not familiar with any TypeScript testing frameworks at all.
+So I asked Mr Google, and he said the best one these days is called Jest, so I looked it up and it seemed easy enough (because hey, I spent two days converting Scala tests to Java tests, I know what to expect) so I started to install it.
+
+And that was where it got a bit messy.
+JavaScript documentation (TypeScript is like a fancy new version of JavaScript, but it’s still the same ecosystem) assumes that you know a whole bunch of JavaScript stuff, which I often don’t.
+I’m just a programmer, not stackoverflow.
+So there was a lot of guessing and muddling and maybe some swearing, and when I found the remnants of my previous attempt to use a JavaScript testing framework – mocha – in which I had written the comment “what a fucking retarded ecosystem” – I joyously deleted that.
+But then after learning a few things, I got it to work.
+
+So then I was able to proceed with changing the code to support locations.
+I have that working now, but I haven’t sent it live yet because while I’m on a roll there are some other things I’d like to fix.
+
+Some games have really nasty expansion trees.
+Agricola, for example, has a revised edition.
+Some of the expansions are suitable for either edition.
+So if you record a play of Agricola: Agricola Meets Newdale, I can’t say what base game you played.
+However if you also record a play of Agricola: Farmers of the Moor (revised edition), then I can assume that you played Agricola (revised edition), with two expansions.
+I don’t think my code can handle that yet, so I’m going to make sure it does before I bother deploying a new version.
+
+So that is what I’ve been up to – details details details!
+I’ve also done a couple of new charts recently, which I am quite pleased with, but I haven’t blogged about them.
+The UI work is always nice because it shows concrete results, but the excellence needs to continue all the way down.

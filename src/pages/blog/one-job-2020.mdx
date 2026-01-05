@@ -1,0 +1,48 @@
+---
+title: 'I Had ONE Job'
+pubDate: 2020-06-12
+description: "The COVID dividend wasn't as much fun as I hoped"
+author: 'DrFriendless'
+tags: ["meta","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import gimp from "/public/img/blog/gimp.jpg";
+import snow from "/public/img/blog/sydney frozen.png";
+
+At last, I am getting my COVID dividend. By which I mean, 3 months after my industry collapsed in a screaming insolvent heap, I get a day of leave.
+With any luck there will be a few more to come, as I have a heap due to me.
+
+I have many ambitions for this one day, and at 4pm it looks like I will be achieving basically zero of them, except for a blog post.
+But I did log in to the “Elastic Beanstalk” server.
+I call it that because I had plans to use Elastic Beanstalk to host it, until I found out how much Elastic Beanstalk costs. Now it’s just a tiny EC2 running an Express server.
+
+So I logged in and noticed that there were a lot of upgrades waiting for me to do.
+I have this issue at work as well, and I don’t do the upgrades because we don’t want one mysterious problem to take down the entire company. It’s a small risk, but it’s a real one. Due to some sort of AWS failure we were down for 22 hours once, and many customers got very antsy about that.
+
+So I did the upgrades and rebooted the server.
+Then I ran some graphics software called The Gimp which logged me out and I lost all of my windows.
+And after the trauma of figuring out what was going on there, I forgot that I had ever touched that server.
+
+<Image src={gimp} alt="Unidentified gamer wearing a gimp mask" width={1024} />
+<caption>No, not that gimp!</caption>
+<p/>
+
+
+But what I did not do was restart the server.
+Which meant that when users went to the front page of Extended Stats, the little box where you can search for your user name didn’t work.
+Ooh, bad look.
+
+Luckily a new user emailed me to say that although I had told him that his account was ready, he could not find it.
+
+That feature is about the only part of Extended Stats that can actually be down.
+It and the blog are the only servers.
+Everything else is serverless, and although it can happen that I can screw it up, it can’t be just not started.
+If extstats.drfriendless.com is ever down it’s either because I didn’t pay the bill or AWS os down.
+And if AWS is down, you won’t be worrying about my site because all hell will break loose.
+
+<Image src={snow} alt="Lots of snow, with the Sydney Opera House in the background" width={1024} />
+<caption>AWS is down, as seen from Sydney</caption>
+<p/>
+
+Well, at least y’all know I’m alive. I’m going to go try to do some programming for a bit.

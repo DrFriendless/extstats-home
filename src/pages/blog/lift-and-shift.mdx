@@ -1,0 +1,42 @@
+---
+title: 'Lift and Shift'
+pubDate: 2019-10-13
+description: "Cloud architecture done negligently"
+author: 'DrFriendless'
+tags: ["technology","AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+As mentioned in the previous post, the old Extended Stats server blew a foofoo valve and needs parts.
+The fan I ordered on EBay arrived and when I went to install it I discovered that I’d ordered the wrong size.
+This is one reason I hate hardware.
+Although I love the details of software, the details of hardware bore me senseless.
+Why can’t they just make it out of Lego so I can hack something together rather than having to figure out exactly what thing I want?
+
+Anyway, I ordered another fan and it didn’t arrive yet.
+In the mean time the idea of doing a lift and shift continued to grow in my mind.
+A “lift and shift” in cloud computing is when you take an existing service and dump it in the cloud without adapting it to cloud architecture at all.
+It’s kind of the worst, most expensive, way to get into the cloud, but it’s also the quickest.
+
+Another of the things I use the site for (other than being there for you guys) is experimenting with stuff.
+There’s a type of database that I’d like to try at work, which would be a huge risk for the company, but I can muck with Extended Stats for a few hours without anyone losing too much money.
+I mentioned the idea of experimenting on the stats site to my boss, and I suspect I might be able to get him to throw me some funding… so yeah, that’s gonna happen.
+
+So as you might guess I did the lift and shift.
+It took a few hours, spread over two weekends, as as usual everything in Django seems to have changed between releases.
+And then I had an annoying problem where the web server couldn’t find the code, even though everything was configured perfectly, and that took me a good 3 hours to figure out – my home directory had permissions which prevented the web server from seeing the code!
+Late last night I got that sorted, and the new site started to work.
+
+Then this morning I spent another hour or so getting the downloader to work.
+And then, in a small brain explosion, I told git (the version control system) to undo all of my changes… so then I had to go and fix all the things again, which was not at all what I had planned.
+
+But now it seems that http://stats3.drfriendless.com is working OK.
+You might notice that there’s an S missing from HTTP.
+That’s another problem for me to sort out!
+I’ve come to realise that I don’t particularly enjoy solving AWS configuration problems, so I’m not really looking forward to that one.
+I could do it with a load balancer (which is expensive) or with a CloudFront CDN (which is annoying to configure but I suspect I’m getting OK at it by now).
+Or I could try to do SSL termination in Apache – actually, nah, that’s the sort of thing that will just make more work for me later.
+
+Well, that’s how I spend my weekends!
+I’ve been hearing cries from the crowd asking for utilisation numbers on the new site, and I have no idea why I haven’t done them yet.
+So I might try to do some programming and get those happening.
+I like programming, it’s better than configuring web sites.

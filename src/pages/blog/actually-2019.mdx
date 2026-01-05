@@ -1,0 +1,55 @@
+---
+title: 'Actually there’s a plan…'
+pubDate: 2019-8-24
+description: "If you think it's hard saying what you want, try telling it to a computer"
+author: 'DrFriendless'
+tags: ["technology","features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import bobbob from "/public/img/blog/favcombo.png";
+
+I have been a bit slack with this project recently, but I’m going to blame most of that on playing games.
+I’m dungeon master in a D&D campaign, and I spend a lot of time researching things like “what’s the most explosive substance there is?” and “what are the middle names of the member of Destiny’s Child?”, even when I’m not at the gaming table being way too extroverted.
+
+However I have indeed also been working on something for the stats site.
+One of my intentions is that the data presented on the site be customisable – if you don’t want to count expansions, then you shouldn’t have to.
+To this end, all of the data presentation pages take a selector which tells them which data to present.
+In case you have never heard of selectors before, they’re a formula which specify which set of games you’re talking about.
+The selector for the Favourites page is “all(played(ME), rated(ME))“, which means “games which have been played by me and rated by me”.
+Now you might very reasonably want to further restrict to games that you own, or to exclude books, or to only look at children’s games.
+So ideally you would be able to edit the selector.
+
+On the Favourites page you used to be able to, but it looks like I recently broke it, and the interface to do it was pretty hard to use.
+So I am working on making a new one.
+That comes in two parts.
+
+The page itself will have a basic selector which makes the page work.
+The Favourites page can be run against games you haven’t played, but it makes for some pretty bad data.
+In fact the page can suggest a variety of different selectors that I think are useful.
+These are presented in a dropdown list box.
+Furthermore, you can type into the list box, either to find an existing entry or to add your own entry.
+And of the entries in the list box, you will be able to mark some as your favourites.
+
+No such UI component like that exists, so I wrote one.
+I just got all (well, most) of the finicky details working this morning, and put the code on GitHub here: https://github.com/DrFriendless/favcombo . It looks like this:
+
+<Image src={bobbob} alt="A combo box with favourites" width={600} /><br/>
+<caption>A combo box with favourites</caption>
+<p/>
+
+Yes, one of my favourite Balkans regions is Bananas.
+We all have our quirks.
+
+When you come to the page, the options in the list box will be the suggestions from the page plus any that you previously marked as a favourite.
+So if you added a selector that you liked, it will be stored for you.
+Note to self: this will only work if you are logged in, in fact it’s cruel to let you favourite things if you’re not logged in.
+
+But to make that work, I need to do some work on the storage and retrieval of personal data for logged-in users.
+I haven’t got to that problem yet, I guess it’s what I’m looking at for the rest of this weekend!
+
+There’s also the issue that the site logs you out too soon – it annoys me so much that I don’t generally bother to log in, and it’s my site!
+
+Anyway, as you see things are happening bit by bit.
+I’m not dead yet.
+You can’t kill the DM.

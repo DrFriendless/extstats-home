@@ -1,0 +1,59 @@
+---
+title: 'One Step Back, Two Steps Forward'
+pubDate: 2019-10-26
+description: "Fixing things and making new features"
+author: 'DrFriendless'
+tags: ["features","AWS","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import pogo from "/public/img/blog/pogo.png";
+
+I’m so far behind that I have to blog about what happened last weekend.
+My wife was away so I had a bit of time to myself which I planned to use doing some work on the site, instead of acting like a human being and having a life.
+
+The first plan was to fix the Login button on the front page.
+What happens is that I display both a Login and a Logout button, then I make a call to the server to find out whether you are logged in or not, and then I remove the irrelevant button.
+That was working, but it was very slow due to Lambda startup time, so the two buttons both displayed for a disturbingly long time.
+So I wanted to move the API for whether you’re logged in or not into the “Elastic Beanstalk” server.
+I put that in quotes because although I still call it that, Elastic Beanstalk is not involved at all.
+Elastic Beanstalk is a service which would start another one of those servers if the first got overwhelmed.
+I had that working until I discovered that Elastic Beanstalk costs extra money, and as it was unnecessary I took it out.
+
+Anyway, I moved that service as planned, and it didn’t work.
+It turns out that API Gateway – the bit where I say which server or Lambda each URL goes to – has very firm poorly documented opinions about HTTP headers transiting through itself.
+And since the cookie which says whether you are logged in goes in a header, it didn’t want to send it.
+In fact I still don’t have that working.
+And as much as I understand how HTTP and CORS and API Gateway work, I’m not sure how it is ever going to work, although it seems very much like the sort of thing that should.
+So after many many hours, that problem got put on the backburner.
+
+The check for whether you’re logged in or not is a bit quicker, but it always says you’re not logged in, because the cookie is never sent to the server.
+I’ll figure it out.
+
+The other thing I worked on last weekend was also supposed to be easy.
+It was the Plays of Games Owned by Published Year graph, which looks like this:
+
+<Image src={pogo} alt="Plays of Games Owned by Published Year graph" width={1024} />
+<caption>Plays of Games Owned by Published Year</caption>
+<p/>
+
+This graph goes on the Owned page, which I hadn’t touched in a while, so I started by updating the libraries I use to make it.
+Well, that was a mistake.
+For four hours I juggled library versions, checked commit logs, and researched why the heck I was getting the wrong version of TypeScript.
+OK, the wrong version of TypeScript was totally my fault, but the rest of it was not and it was annoying.
+
+But then I got the page running again, and I could add the new graph.
+That just involved confusion about how Vega allocates colours to data points, and a few things being upside down and the wrong size and so on, as happens in this sort of work.
+And then it was finished and I sent it out to the site and dragged my sorry backside to bed.
+It really does get a bit wearing, doing things that don’t work, all the time.
+
+But of course this morning I was optimistic and naive again, and at 7am I started adding another feature to the Owned page.
+This time I didn’t need to upgrade any of the libraries, but I did discover that some of the data I wanted to display, in particular whether you had a game for trade, was not available in the data set I was using, so I had to fix that.
+And then I decided that rather than improving the REST data set, I should use the GraphQL data set and improve that.
+So I ended up creating a new version of extstats-core, a new version of extstats-angular, a new release of the API, and converted the whole page over to GraphQL.
+And then, only 6 hours after I started (some of which were spent on domestic duties), I got the “Why Do You Even Own This?” table working on the new site.
+
+On the whole though, today’s mucking around was much more productive than last weekend’s.
+GraphQL is kinda lovely, and much easier to work with than REST, and the changes I made today should be useful for all of the other pages as well.
+I think about 4 of them out of 9 or 10 use GraphQL so far.
+However I think if I do some more work this weekend I’ll probably just try to get some features out, rather than mucking with stuff.

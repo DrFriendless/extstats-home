@@ -1,0 +1,45 @@
+---
+title: 'The State of the Site'
+pubDate: 2019-11-9
+description: "Too many things are breaking because there are too many things"
+author: 'DrFriendless'
+tags: ["technology","meta"]
+layout: ../../layouts/BlogLayout.astro
+---
+I just received an email from an annoyed user of the site, that they had not been able to access the old site for ages.
+I thought that was a bit harsh as I am now running 3 versions of the site, but then I realised that it was my fault, as after repairing the physical machine that the old site runs on, I had forgotten to re-enable the hostname to point to it.
+So it turns out that I’m forgetting how it’s all configured, and it’s entirely reasonable that other people will be confused as well.
+So let’s go through it all from the beginning.
+
+There’s the PC in my study.
+It’s running stats.drfriendless.com (since I fixed it a minute ago).
+I suspect it is doing quite a poor job of it, but since I have to get past a bunch of people to get to it to find out, I won’t know for sure – my wife and my niece work in that room.
+The HTTPS on that system is a pain, and I have to go in there to fix it again soon.
+
+There’s a virtual machine which duplicates that PC, and it’s called stats3.drfriendless.com.
+It’s more reliable than stats.drfriendless.com as it is not subject to physical problems and does not run over my home WiFi.
+So I think in the future the VM will become stats.drfriendless.com – probably in summer, when the PC overheats, that will become a necessity.
+The downside is that it’s a bit expensive to run that system – maybe $50 / month – but I consider that a tax I have to pay because I have not got the new site doing as much as the old site yet.
+(Hmm… and I just discovered that some pages that load on stats.drfriendless.com don’t work on stats3.drfriendless.com. *sigh*)
+
+And then there’s the (mostly) serverless system, extstats.drfriendless.com.
+I can’t see that breaking due to anything except funding problems.
+Serverless architecture is just so robust – if that site goes down, probably half the internet is down with it.
+However that site still needs a lot of work to be done.
+
+The other thing to consider is the state of me.
+I haven’t been doing so much work on the site for a couple of months, and it’s hard to say why.
+I am spending a lot of time taking my dog to the vet – this is the same dog as I’ve had since the site started, so she is very old now.
+So even if I wake up energetic and enthusiastic on a Saturday morning to get some work done on the site, at about 9am I have to go for a very very slow walk to the park and back, and usually then drive her to the vet for an arthritis injection.
+It breaks my concentration, occupies my time, and makes me sad.
+She has been such a wonderful dog for such a long time, and now she’s almost an invalid that we have to take care of.
+So when she finally shuffles off this mortal coil, my life will change, and I hope I will take more time to do my own things.
+
+And then there’s work.
+Goodness me, I am a devoted and conscientious and competent worker!
+But that means that my head is full of work stuff, and not so full of stats stuff, and it’s a bit hard to motivate myself to think about a whole different set of problems just because the name of the day changed.
+But the problems also interbreed – it’s quite common that my boss will forward me some email from AWS telling us to deal with some problem, and I have got the same one at home.
+So I experiment at home to make sure I know how to solve it!
+
+When I’m feeling slack I always console myself with the thought that the old site was built over about a 5 year period, and we went through years of problems while I sorted out hosting.
+We got through that, and I’m sure the new site will get through its current problems as well.
