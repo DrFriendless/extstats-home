@@ -1,0 +1,32 @@
+---
+import {allBlogPosts} from "../code/BlogPost";
+const posts = allBlogPosts();
+const countByYear: Record<string, number> = {};
+
+for (const p of posts) {
+    const y = p.pubDate().substring(0, 4);
+    countByYear[y] = (countByYear[y] || 0) + 1;
+}
+
+interface ToShow {
+    year: string;
+    count: number;
+}
+const toShow: ToShow[]  = [];
+
+const sorted = Object.entries(countByYear).sort((e1, e2) => e2[1] - e1[1]);
+sorted.forEach(e => toShow.push({ year: e[0], count: e[1] }));
+toShow.sort((ts1, ts2) => {
+    const c = ts2.count - ts1.count;
+    if (c !== 0) return c;
+    if (ts1.year < ts2.year) return -1;
+    if (ts1.year > ts2.year) return 1;
+    return 0;
+});
+---
+<section style="float: right; width: 160px; min-width: 160px">
+    <h4>Posts by Year</h4>
+    <ul>
+        {toShow.map(e => <li><a href=`/years/${e.year}.html` >{e.year}</a> ({e.count})</li>)}
+    </ul>
+</section>

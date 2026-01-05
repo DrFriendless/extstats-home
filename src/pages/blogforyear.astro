@@ -1,0 +1,17 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+import {allBlogPosts, BlogPost} from "../code/BlogPost";
+import BlogPostList from "../components/BlogPostList.astro";
+
+interface Props {
+    year: string;
+}
+
+const { year } = Astro.props;
+
+const posts = allBlogPosts().filter(p => p.pubDate().substring(0, 4) === year).sort((p1: BlogPost, p2: BlogPost) => p1.compareByPubDate(p2));
+---
+<BlogLayout content={ { title: "Extended Stats Blog", pubDate: undefined, tags: [], author: "DrFriendless", description: "This is a generated page." } }>
+    <h2>Posts for Year {year}</h2>
+    <BlogPostList posts={posts}/>
+</BlogLayout>

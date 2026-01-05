@@ -4,6 +4,7 @@ import Footer from "../components/Footer.astro";
 import BlogTagList from "../components/BlogTagList.astro";
 import CommentsWidget from "../components/CommentsWidget.astro";
 import Configure from "./Configure.astro";
+import BlogYearList from "../components/BlogYearList.astro";
 
 interface Props {
     content: {
@@ -38,14 +39,17 @@ const metadataDisplay = pubDate ? "block" : "none";
 </head>
 <body>
 <BlogHeader />
-<div style="display: flex;flex-direction: row; justify-content: space-between; align-items: flex-start">
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start">
     <div style="padding-left: 18px; padding-right: 18px; max-width: 1000px">
         <h1 style="margin-bottom: 16px; margin-top: 20px; font-size: 40px; font-weight: 500">{content.title}</h1>
         <p style="margin-bottom: 30px"><i>{content.description}</i></p>
         <p style=`display: ${metadataDisplay}`><b>{pubDate}, by {content.author}</b></p>
         <slot />
     </div>
-    <BlogTagList required={content.tags}/>
+    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start">
+        <BlogTagList required={content.tags}/>
+        <BlogYearList/>
+    </div>
 </div>
 
 {!!slug && <CommentsWidget url={slug} />}

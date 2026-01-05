@@ -66,3 +66,14 @@ export function allBlogTags(): string[] {
     }
     return tags;
 }
+
+export function allBlogYears(): string[] {
+    const posts = allBlogPosts();
+    const result: string[] = [];
+    for (const p of posts) {
+        const y = p.pubDate().substring(0, 4);
+        if (result.indexOf(y) < 0) result.push(y);
+    }
+    result.sort();
+    return result;
+}

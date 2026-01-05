@@ -1,0 +1,16 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import {allBlogPosts, allBlogTags, allBlogYears, BlogPost} from "../../code/BlogPost";
+import BlogPostList from "../../components/BlogPostList.astro";
+
+export async function getStaticPaths() {
+    return allBlogYears().map(y => { return { params: { year: y } } });
+}
+
+const { year } = Astro.params;
+const rawPosts = allBlogPosts().filter(p => p.pubDate().substring(0, 4) === year);
+const posts = rawPosts.sort((p1: BlogPost, p2: BlogPost) => p1.compareByPubDate(p2));
+---
+<BlogLayout content={ { title: `Posts in ${year}`, tags: [ ], pubDate: undefined, author: "(generated)", description: `Posts from the year ${year}` } }>
+    <BlogPostList posts={posts}/>
+</BlogLayout>
