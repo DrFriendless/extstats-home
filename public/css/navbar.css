@@ -1,6 +1,8 @@
 .extstats-navbar {
     margin: 4px 0;
     display: flex;
+    height: 30px;
+    overflow: visible;
 }
 .extstats-navbar .navbar-button {
     border: 2px transparent solid;
@@ -8,12 +10,13 @@
     width: 90px;
     font-size: 16px;
     line-height: 24px;
+    min-height: 28px;
     text-decoration: none;
     display: inline-block;
     text-align: center;
     box-shadow: 2px 2px 1px #ccc;
 }
-.extstats-navbar .navbar-button:hover {
+.extstats-navbar .navbar-button.clickable:hover {
     box-shadow: 4px 4px 2px #ccc;
 }
 .extstats-navbar .nav-wartable {
@@ -54,9 +57,12 @@
     flex-direction: column;
     position: absolute;
 }
-.navbar-menu:hover .navbar-dropdown {
+.navbar-menu:hover > .navbar-dropdown {
     display: flex;
+    position: relative;
+    left: 20px;
 }
+
 /*
   background-color: #159588;
   background-color: #8cc152;

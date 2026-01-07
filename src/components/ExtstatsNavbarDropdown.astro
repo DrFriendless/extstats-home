@@ -1,0 +1,18 @@
+---
+import For from './For.astro';
+import type {Link} from "../code/NavBase";
+import ExtstatsNavbarMenu from "./ExtstatsNavbarMenu.astro";
+const { items, style } = Astro.props;
+---
+<div class="navbar-dropdown">
+    <For each={items}>{
+        (item: Link) => {
+            return item.link ?
+                    <a class={`navbar-button clickable ${style}`} href={item.link}>
+                        {item.name}
+                    </a> :
+                    <ExtstatsNavbarMenu link={item}/>
+        }
+    }
+    </For>
+</div>
