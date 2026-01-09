@@ -113,8 +113,8 @@ export class StatsSiteStack extends cdk.Stack {
     this.lookupExternalResources();
     TEST_BUCKET = this.defineTestBucket();
     LIVE_BUCKET = this.defineLiveBucket();
-    TEST_DISTRIBUTION = this.defineCloudFront("testDistribution", TEST_BUCKET, "test.drfriendless.com", "test",
-        "Test version of the extstats site", "");
+    // TEST_DISTRIBUTION = this.defineCloudFront("testDistribution", TEST_BUCKET, "test.drfriendless.com", "test",
+    //     "Test version of the extstats site", "");
     LIVE_DISTRIBUTION = this.defineCloudFront("liveDistribution", LIVE_BUCKET, "extstats.drfriendless.com", "extstats",
         "Live version of the extstats site", "live");
   }

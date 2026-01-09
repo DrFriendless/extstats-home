@@ -1,0 +1,92 @@
+---
+title: 'Observability Friday'
+pubDate: 2026-01-09
+description: "Dark matter and dark energy are two things we measure in the universe that are making things happen, and we have no idea what the cause is. - Neil deGrasse Tyson"
+author: 'DrFriendless'
+tags: ["AWS","technology","costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import costs from "/public/img/blog/costs_20260109.png";
+import processcharts from "/public/img/blog/process_charts.png";
+import grafana from "/public/img/blog/grafana.png";
+
+Well it's Finances Friday which means I have to check on the costs and so on.
+I've been receiving some emails from AWS saying things like "you've reached the limit of free stuff" so I'd better take a look.
+
+<Image src={costs} alt="Forecast for AWS costs for the month" width={1024} />
+<caption>Yeah costs are good, what next?</caption>
+<p/>
+
+It turns out the costs are looking fine!
+There are still some things to do, like get rid of the old blog server, but that has to happen after I copy all the interesting posts off it.
+
+So what next?
+Well I was reading an interesting posts on Reddit earlier by a FinOps person (FinOps is a cloud evolution of operations, in that it monitors costs rather than system correctness)
+who asked would developers be more happy to make code changes to decrease costs if they were given information about where the cost was being incurred.
+The answer is "well duh yeah", with an undercurrent of "but hang on how come the FinOps guy is the one detecting the problem?"
+
+The answer is, the FinOps guy is the one who's looking for the problem, and has the data to do it - in this case the data is the itemised AWS bill.
+Operations people have a boatload of things to look at, but as long as the system is working they don't mind.
+Developers can fix problems, but it's hard to tell from the code and AWS's very complicated pricing plans that there's going to be a problem.
+In my previous job I was all of these people :-).
+
+The common factor is a thing called Observability.
+That is, in a software system, what do you look at to see what's going on?
+There are various things:
+* log files
+* system data, e.g. CPU, memory used - these are all available from AWS
+* database records
+
+Putting them all together to make a coherent picture was always difficult.
+In a job a long time ago, I instrumented everything to record data to the log files, then developed a viewer to show that data.
+And the product and the viewer evolved together for many years.
+It looked like this:
+
+<Image src={processcharts} alt="A graph with lots of wiggly lines and dots" width={1024} />
+<caption>It was complicated, but it was wonderful</caption>
+<p/>
+
+Because everything was instrumented we could see how memory and CPU problems were related.
+We could see when clients opened a particular page and whether that had any effect on memory or CPU.
+We could search for two different items in the logs and have them highlit simultaneously - I am still yet to see another application that does that.
+Reading the charts was a black art, but it was a black art that produced the correct answers and solved the problems, so it was a wonderful black art.
+
+In cloud systems it's far more difficult to achieve anything like that, as log files are scattered all over the world, and there are many more systems to gather data from.
+This has been on my mind, both as a way of decreasing costs as well as a way of detecting faults,
+so when during the week I decided to find out what AWS Grafana was, I got interested in it.
+
+Grafana is an interface for presenting observability data.
+It's only a presentation tool, not a data gathering nor data storage tool, which kinda threw me at first.
+However it has ways to connect to CloudWatch (where AWS keeps system metrics and log files), and databases, and many AWS services I don't use.
+And it has many ways of presenting that data which I also don't understand.
+But once I understood what its role was, I thought about how I could use it, and then in a flurry of hacking instrumented my code to produce this.
+
+<Image src={grafana} alt="Three graphs with lines going up and down" width={1024} />
+<caption>It's a start</caption>
+<p/>
+
+The first graph shows what files the downloader needs to download.
+The line going up means something else needs to be refreshed now, and the line going down means something was downloaded and ticked off.
+This is a very interesting graph, because during that period where it was quiet, what was the downloader doing?
+Not downloading very much, it seems.
+The downloader lines should always be moving, so I'll need to investigate that.
+
+The second graph shows user activity on the site.
+At the moment the numbers being shown are the all-time total number of interactions, so they are monotonic increasing over time.
+What I really need to do is graph the differences between readings, but that's an advanced Grafana topic that I haven't figured out yet.
+I was delighted to see someone was viewing blog pages, but it's probably just me looking at previews of this post.
+
+The third graph shows things that might indicate actual problems.
+The "slowdowns" line is how many times BGG told the API to not ask for data so fast, and is thus an indicator of how likely I am to get in trouble with Aldie or Octavian or dakerr or whoever the headkicker is.
+
+All of that information is coming from my database.
+I've spent a lot of time today trying to get Grafana to connect to CloudWatch, but that has hit a snag.
+As I understand it, what's happening is:
+* Grafana is running inside my VPC, and hence has a local IP address
+* CloudWatch is running out on the wild internet
+* I would need a NAT Gateway or a VPC Endpoint to connect the local IP address to the internet, and both of those cost money.
+
+As far as I can tell, either option would cost about $33 per month, which is more than I want to pay at the moment.
+It's a trivial cost for a company, but it would be a massive increase to the costs.
+I need a cunning plan.
