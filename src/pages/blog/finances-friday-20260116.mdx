@@ -1,0 +1,54 @@
+---
+title: 'Finances Friday Again'
+pubDate: 2026-01-16
+description: "Also, a review of improvements to the system"
+author: 'DrFriendless'
+tags: ["AWS","costs","features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import costs from "/public/img/blog/costs-20260109.png";
+import dashboard from "/public/img/blog/grafana-20260116.png";
+import github from "/public/img/blog/github-202601616.png";
+
+The good news from Finances Friday is that there is no bad news from Finances Friday - the system is running smoothly and at low cost.
+
+<Image src={costs} alt="AWS costs per day for the last 2 weeks or so" width={1024} />
+<caption>AWS costs per day for the last 2 weeks or so</caption>
+<p/>
+
+I've also made good progress on my observability dashboard.
+As mentioned previously Grafana couldn't get metrics from my AWS without me spending a whole lot of money, so I wrote some code to get the data I wanted cheaply.
+That code then stuffs the metrics into the database, whence I can retrieve them for display in the Grafana UI.
+It's not perfect, but it's working and I'm going to leave it there until I have a problem it can solve for me.
+
+<Image src={dashboard} alt="Lots of graphs of system metrics" width={1024} />
+<caption>Yeah, it means something, I'm sure</caption>
+<p/>
+
+Other than that, what have I been working on?
+I asked GitHub this question, as that's where I put the code when I've finished writing it, and GitHub doesn't know.
+It says I haven't been doing anything.
+
+<Image src={github} alt="Days GitHub thinks I committed code on" width={1024} />
+<caption>Yeah GitHub, I have total confidence in your information</caption>
+<p/>
+
+The reality is I commit changes at least 5 days a week.
+GitHub doesn't like to talk about work on branches, but I don't use branches.
+This is one of those mysteries I really couldn't be bothered figuring out.
+In my opinion, it's just wrong, and whatever justification there is for it is wrong too.
+
+So after trawling through the repositories, it seems this is what I've been doing:
+* add the plays by year table, including improvements requested by users
+* hunting for bugs in the downloader - there seem to be some files which are never processed
+* bring the metadata file back into the new system
+* trialling using AWS SNS (Simple Notification Service) to send myself emails about errors in the downloader
+
+The last is working well - I now have 18 emails that I'll need to check.
+I was very impressed with how simple it was to set up using the CDK -
+I just say I want a topic, I want that topic to have a subscriber, I want the downloader Lambdas to be allowed to publish on that topic,
+and hey presto I'm receiving junk mail.
+
+OK, that's enough meta jibber-jabber, back to work.
+
