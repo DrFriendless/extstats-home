@@ -7,19 +7,9 @@ const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html",
         // { link: "http://blog.drfriendless.com/2018/09/08/welcome-to-new-users/", name: "Welcome"},
         // { link: "http://blog.drfriendless.com/2018/08/12/what-use-are-users/", name: "Logins"},
     ]};
-
-
 ---
-<style>
-    body {
-        margin: 0 auto;
-        width: 100%;
-        padding: 1rem;
-        line-height: 1.5;
-    }
-</style>
 <div role="navigation" class="extstats-navbar">
-    <a class="go-button" href="/" role="button"><img src={'/img/go.png'}  height="28px" alt="GO logo from Monopoly"/></a>
+    <a class="go-button" href="/" role="button"><img src={'/img/go.png'}  height="28px" alt="GO logo from Monopoly" title="Go directly to the Home Page"/></a>
     <GeekMenu/>
     <a class="navbar-button nav-wartable clickable" href="/wartable.html">War Table</a>
     <a class="navbar-button nav-ranking clickable" href="/rankings.html">Rankings</a>
@@ -28,4 +18,5 @@ const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html",
     <Menu link={bggMenu}/>
     <Menu link={devMenu}/>
     <a class="navbar-button nav-patreon clickable" href="https://www.patreon.com/drfriendless">Patreon</a>
+    <img src="/img/No_AI_art.svg" alt="No AI" height="100%" title="No AI was used in the building of this site."/>
 </div>

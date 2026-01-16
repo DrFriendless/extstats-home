@@ -57,10 +57,13 @@
     flex-direction: column;
     position: absolute;
 }
+.navbar-dropdown .navbar-menu:hover > .navbar-dropdown {
+    left: 20px;
+}
 .navbar-menu:hover > .navbar-dropdown {
     display: flex;
     position: relative;
-    left: 20px;
+    left: 0;
 }
 
 /*
@@ -83,9 +86,6 @@
     background-size: cover;
     color: white;
     border: 0;
-}
-.go-button {
-    margin-right: 2px;
 }
 .geek-collection {
     background-color: #0099cc;
@@ -118,4 +118,11 @@
 .geek-updates {
     background-color: #cc0066;
     color: white;
+}
+.extstats-navbar img {
+    margin-left: 12px;
+}
+.go-button {
+    margin-left: 16px;
+    margin-right: 12px;
 }
