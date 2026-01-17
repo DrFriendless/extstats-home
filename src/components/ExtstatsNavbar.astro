@@ -1,7 +1,7 @@
 ---
 import Menu from './ExtstatsNavbarMenu.astro';
 import GeekMenu from './GeekMenu.astro';
-import {bggMenu, devMenu, type SubMenu, userMenu} from "../code/NavBase";
+import {bggMenu, devMenu, type SubMenu, userMenu, patreonMenu} from "../code/NavBase";
 
 const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html", items: [
         // { link: "http://blog.drfriendless.com/2018/09/08/welcome-to-new-users/", name: "Welcome"},
@@ -17,6 +17,6 @@ const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html",
     <Menu link={userMenu}/>
     <Menu link={bggMenu}/>
     <Menu link={devMenu}/>
-    <a class="navbar-button nav-patreon clickable" href="https://www.patreon.com/drfriendless">Patreon</a>
+    <Menu link={patreonMenu}/>
     <img src="/img/No_AI_art.svg" alt="No AI" height="100%" title="No AI was used in the building of this site."/>
 </div>
