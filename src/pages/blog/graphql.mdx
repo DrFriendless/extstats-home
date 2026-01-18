@@ -1,0 +1,52 @@
+---
+title: 'GraphQL'
+pubDate: 2019-07-12
+description: "A man with a hammer bashes everything into shape"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+So there’s this technology called GraphQL (graph query language).
+It’s a way of getting exactly the data you need from a database using HTTP.
+That’s a vast oversimplification, but I am not writing an academic paper here.
+
+When I started the site I couldn’t imagine a need for it, as for the pages I know exactly what data I need, so I figured I’d just write API methods that retrieved that data.
+(That’s what’s happening when you see those 8 pulsing blobs.)
+
+But then I wrote the Comparative Plays page, and that thing requires a boatload of data.
+At first, it required all of the plays of all of the geeks, and all of the data about all of the games that they’d played.
+And then I tried to open the page with geeks Friendless, jmdsplotter, and Nap16, and AWS Lambda said “BZZZT! That’s more data than I can return!”
+That was when I realised I would need to think harder.
+
+So I did an experiment where I fetched the data for Friendless, ferrao and Simonocles.
+That was 1,462,103 bytes, which is a LOT of data for just one graph.
+So I mucked around and rewrote the code to only send the first play of each game, and that was 632,447 bytes.
+And then rather than send year, month and date for a play separately, I just sent YMD, e.g. 20190712. That got it down to 587,717 bytes.
+And then I realised that I was doing a lot of futzing and there was still a lot of data I didn’t really need still coming, for example the minimum player count for games, and so on.
+So I decided to think about it very hard for a while.
+
+I then slowly realised that selecting the values you want was one of the things GraphQL offered.
+So I did some more reading and I did not get how it was supposed to work, but I did find a very nice tutorial written by a bearded gentleman about how to use GraphQL on AWS Lambda.
+So I sat down one evening earlier this week and copied that code into my API, and after an hour or so got the basic example working.
+And that was when it clicked what it was doing, so I then proceeded to implement a query for plays following the same pattern.
+I got it working that evening, in a shambolic kind of fashion.
+The next evening I came back and cleaned it up and was able to rerun the query for Friendless, ferrao and Simonocles, and it came back with 214,470 bytes.
+Woohoo! And in transit, that gets gzipped!
+So I was pretty content with that (because remember, I pay for bytes which come out of the server).
+
+And then the next day I updated the Comparative Plays page to use GraphQL, which wasn’t as easy as it sounded –
+AWS blatantly lied about the error it was giving me – but in the end it was all good.
+
+Well, there was one moment of neurotic anguish.
+It turns out that for a game, in that graph, all I need is its number and name.
+(In fact all I need is the name, OMG OMG OMG, no I will worry about that later.)
+However I have a nice set of definitions of what a Play is, what a Game is, what a GeekGame is (it’s the relationship between a geek and a game, e.g. the rating), and now with GraphQL I’m saying I’m going to call it a game, but it’s really just a number and a name.
+And TypeScript is not overly pleased with that, and pedantic programmers aren’t either.
+So I will have to think about my neuroses.
+
+But now I’m like a man with a hammer!
+So many things I’ve done in the API can be done better in some other way.
+Everything should be rewritten!
+But believe it or not, even I know that’s a bad idea.
+So I have to restrain myself.
+Nevertheless there is still that thrill of having discovered a wonderful thing that will keep me interested for a while yet.

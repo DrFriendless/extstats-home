@@ -1,0 +1,36 @@
+---
+title: 'Terraform'
+pubDate: 2019-07-27
+description: "Yet more canoodling with technology"
+author: 'DrFriendless'
+tags: ["technology","AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+I can imagine the despair out there in gamer land, when you realise that this is another post about technology and not about the site actually doing something.
+Yeah… sorry about that. My nerdiness is definitely trending towards tech at the moment.
+
+Anyway, Terraform is nothing about Mars.
+It’s software for specifying what to do with Amazon Web Services.
+For example, for Extended Stats, it might include stuff like this:
+
+* there’s a database
+* there’s a Lambda which runs every 10 minutes, which looks at a file on pastebin to see who the users are
+* there’s a Lambda which looks at BGG to get data about users
+* there’s a host called extstats.drfriendless.com
+* there’s an API Gateway which connects the host extstats.drfriendless.com to some Lambdas.
+* and so on… there would be a lot of it.
+
+At the moment I use a technology called Serverless to do that sort of thing, but I am not very good at it.
+On the other hand, after a couple of days of Terraform, I’m really getting into it.
+It seems better designed and easy to use.
+
+Sadly I suspect it would be a lot of work to change from Serverless to Terraform for Extended Stats, though I will have to one day.
+Extended Stats is a poor combination of Serverless and ad-hoc undocumented changes made in AWS.
+This is fine for Extended Stats as it is, but it would be difficult for someone to reproduce the site.
+
+In particular, the tricky bit is specifying the security permissions, which allow different bits of the project to use / modify / read other bits.
+For this Terraform stuff I’m doing, I’m very carefully doing even that in Terraform.
+For Serverless, I have not been so careful (because it was too annoyingly difficult!).
+
+Anyway, it’s cool. One day I will get to use it in anger.
+Tomorrow though, I suspect I will have to write some features for you.

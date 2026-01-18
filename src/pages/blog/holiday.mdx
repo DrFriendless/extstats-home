@@ -1,0 +1,48 @@
+---
+title: '"Holiday!"'
+pubDate: 2019-07-05
+description: "It would be so nice"
+author: 'DrFriendless'
+tags: ["meta","features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import holiday from "/public/img/blog/holiday.jpg";
+
+My wife has leave at the moment, so she suggested that we go on a holiday interstate.
+I do not have leave at the moment, but I’m the one who does the long-distance driving so I was tangled up in this plan.
+I often work from home so my boss said it was OK, so next thing you know I’ve driven a thousand kilometres and am staying at a holiday unit at the beach.
+Here is the view from the balcony.
+
+<Image src={holiday} alt="Waiting for the sun to come up over the Pacific Ocean" width={1024} />
+<caption>It's really the clouds that do all the work</caption>
+<p/>
+
+Of course, I am not on holiday, so I’m busy coding away in between dropping the family at the shops and the train station and so on.
+I have a couple of pretty big deadlines so I really am busy.
+
+Even worse, the internet here is not as good as at home.
+For work stuff that’s generally OK. However I’ve done a couple of updates to extstats.drfriendless.com, and it takes quite a while to upload 50 megabytes.
+However I did finish an update to the user page (the one you get to if you click on your name when you are logged in).
+It still looks pretty bad because I can’t work Angular Material very well yet, but I think it’s more useable.
+I’ve also been trying to start using some of the configuration you can set on that page.
+However I have not really had the time to make a lot of progress. Worst holiday ever.
+
+On the other hand, I was watching my wife web-surf last night, and discovered that the h-index is a popular statistic amongst academics.
+An academic’s h-index is the highest number n such that they have n papers which have been cited n times each.
+And of course being academics, whose performance is measured by their h-index and similarly absurdly trivial metrics, they think way too much about this sort of thing.
+
+For example, they have a g-index.
+The g-index is the largest number n such that their n most-cited papers have been cited on average n times each.
+We don’t have that metric. NOT YET!
+
+They also have a rational h-index, which is approximately the h-index but with some indication of how close you are to getting to the next number.
+So we definitely want that! The formula (which took a while to track down) is:
+
+* say your h-index is **h**
+* and the minimum number of plays you could play to get it to **h+1** is **n**
+* then your rational h-index **hr** is: **hr** = **h + 1 – n / (2h + 1)**
+
+and of course you keep the fractional part. OMG, I am so excited!
+I can’t wait to implement it!
+But right now, I have to have a “holiday”.

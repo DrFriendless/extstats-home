@@ -1,0 +1,47 @@
+---
+title: 'Login is Useful!'
+pubDate: 2019-07-12
+description: "... for small values of useful"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import login1 from "/public/img/blog/login1.png";
+import login2 from "/public/img/blog/login2.png";
+import login3 from "/public/img/blog/login3.png";
+
+I’ve been working on login again recently.
+As I say every time, login is hard to work on because it doesn’t work on the test system and it doesn’t work on the development system, due to the authentication service saying “no, you can only login to extstats.drfriendless.com from extstats.drfriendless.com” which is eminently sensible but a bit frustrating.
+So I have to make the change, send it live, wait up to 24 hours for the CDN to put it on the site, and then I can test my code.
+
+Now when I log in, I get this:
+
+<Image src={login1} alt="Screenshot of the Login button" width={1024} />
+<caption>We are looking at the three buttons on the right</caption>
+<p/>
+
+The presentation still needs some work – that does not come naturally to me!
+The orange button is a link to the user page, and the yellow button is a link to the geek page for Friendless.
+
+The user page is only available to you if you’re logged in. It looks like this:
+
+<Image src={login2} alt="Screenshot of the user page" width={1024} />
+<caption>We will find out one day what Buddy Groups are for</caption>
+<p/>
+
+<div style="float: right">
+<Image src={login3} alt="Combo box listing BGG user names" width={256} />
+<br/>
+<caption>I only stalk people who break the system</caption>
+<p/>
+</div>
+
+The Buddy Groups aren’t used yet, not quite.
+What is a bit useful is the list of BGG user names above them.
+In that area, I can enter the list of BGG users that I am, or just ones that I like to stalk. And then when I’m logged in, those names turn into yellow links.
+And those will take you directly to the geek page for those users.
+
+I’m not yet happy with the layout of the buttons, but as with all things on the site I’ll figure it out eventually.
+
+Now that I’ve had this first success with user data, I hope to plumb it in in more places in the site, so that logging in becomes a useful thing to do.
