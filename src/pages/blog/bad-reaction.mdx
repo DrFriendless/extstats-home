@@ -1,0 +1,61 @@
+---
+title: 'A Bad Reaction'
+pubDate: 2019-04-27
+description: "Maybe it was something I ate"
+author: 'DrFriendless'
+tags: ["Angular","React","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import navbar from "/public/img/blog/navbar.png";
+
+I may have mentioned several times on this blog that I use a technology called Angular to write the web pages on the site.
+That’s what I use at work so I have some experience with it.
+There’s a competing technology called React, which I have heard a lot about, in that I have subscribed to various React podcasts and so on,
+and generally opened myself up to it in the hope that understanding would come without too much effort.
+
+Several BGG users who use React have told me “Angular’s dead! React has won that battle!”
+So, in response to such taunting, and also in response to a weakness in Angular where I can’t have two Angular applications on the same page,
+I decided to rewrite the navigation bar in React.
+The nav bar is a terribly simple component, and it couldn’t be that hard, could it?
+
+Indeed, it was not.
+React (like Angular) has a nice feature where I can change the code and see it instantly changed in my web browser.
+So, following my usual process of one Google search for one line of code, I got it working to my satisfaction.
+And it was so simple I really did not need React, but maybe some other ideas I have will justify my choice in the future.
+
+<Image src={navbar} alt="The NavBar Application" width={1024} />
+<caption>Yes it's colourful, get over it</caption>
+<p/>
+
+
+So that was good, I had some working React, now I just needed to update my process to take the JavaScript that React produced and put it onto my web site.
+React produced 3 files, with extremely unhelpful obfuscated names that change every time you change anything.
+This is bad because the rest of my site, which loads those files, does not change very much.
+I edit those files by hand, and there’s no way I’m going to edit them to put unhelpful obfuscated file names into them on a regular basis.
+
+No problem!
+There’s a thing called webpack which does that.
+Oh yeah, except for the problem that webpack is badly documented, hard to configure, and keeps changing.
+My first attempt to use it involved copying some configuration I found on the internet (it seemed like a good idea at the time).
+And that seemed to work at first, but then it stopped.
+So I had to poke around and debug a whole lot of things to figure out what was going on, and that took WAY TOO LONG.
+
+Of course, this could have been a whole lot easier if React had not generated the unhelpful obfuscated file names,
+but the React developers refuse to understand why anyone might not want that.
+It seems that React is the whole universe, and once the code works in any fashion, their job is done.
+They have no concern with fitting in with larger processes.
+Nevertheless despite my fury on that particular point, I liked React and I’ll use it again.
+Webpack, on the other hand, needs a bullet in the head.
+
+Well, I hope this blog post provides me some catharsis!
+I’ve spent several evenings reading up on how webpack works when I never cared to know in the first place.
+
+One final word.
+Angular is not dead.
+In my time outside the React world, I heard a lot about state management.
+There’s a technology called Redux which is used to help with that.
+It’s totally irrelevant in the Angular world, because we don’t have the state management problem – the solution is built in.
+So it worries me a bit that React requires a complex (and by all accounts, really boring) solution to a non-problem.
+Angular does have its problems (I nominate zone.js) but I’d say otherwise the technologies are equally capable, but different.
+And different is OK.

@@ -2,6 +2,7 @@
 import {allBlogPosts} from "../code/BlogPost";
 const posts = allBlogPosts();
 const countByTag: Record<string, number> = {};
+const TO_SHOW = 20;
 
 for (const p of posts) {
     for (const t of p.tags) {
@@ -26,9 +27,9 @@ for (const r of required) {
         delete countByTag[r];
     }
 }
-if (toShow.length < 10) {
+if (toShow.length < TO_SHOW) {
     const sorted = Object.entries(countByTag).sort((e1, e2) => e2[1] - e1[1]);
-    const toAdd = Math.min(sorted.length, 10 - toShow.length);
+    const toAdd = Math.min(sorted.length, TO_SHOW - toShow.length);
     for (let i=0; i<toAdd; i++) {
         const e = sorted[i];
         toShow.push({ tag: e[0], count: e[1] });
@@ -43,7 +44,7 @@ toShow.sort((ts1, ts2) => {
 });
 ---
 <section style="float: right; width: 160px; min-width: 160px">
-    <h4>Common Tags</h4>
+    <h4>Posts By Tag</h4>
     <ul>
         {toShow.map(e => <li><a href=`/tags/${e.tag}.html` >{e.tag}</a> ({e.count})</li>)}
     </ul>

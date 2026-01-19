@@ -1,0 +1,44 @@
+---
+title: 'Kaboom!'
+pubDate: 2020-05-26
+description: "Is this what Chernobyl was like?"
+author: 'DrFriendless'
+tags: ["costs","AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import kaboom1 from "/public/img/blog/kaboom1.png";
+import kaboom2 from "/public/img/blog/kaboom2.png";
+import kaboom3 from "/public/img/blog/kaboom3.png";
+
+Hmm, something bad happened yesterday.
+Database CPU went very high, and database capacity was exceeded and it used up all of the burst capacity.
+That means the database is worn out for a few hours until it recovers.
+I wonder what went wrong?
+I suspect one of the Lambdas went crazy and ran too many times, but I don’t have a good idea why that would happen.
+For the moment I have turned off the downloader so it will stop hassling the database.
+
+<Image src={kaboom1} alt="Graphs of Database Performance" width={1024} />
+<caption>Blue Line Smashing Into Ground Bad</caption>
+<p/>
+
+These graphs show database performance.
+The top-right one is probably a cause – lots of incoming connections – and the bottom right one is a consequence.
+In particular the blue line diving into the ground is a bad thing.
+
+<Image src={kaboom2} alt="Graph of Lambda Invocations" width={1024} />
+<caption>Whatever it is, it's Gettng Worse</caption>
+<p/>
+
+Looking at the Lambda invocations, it seems about every 35 days there’s a spike, and yesterday’s spike was the biggest ever.
+
+<Image src={kaboom3} alt="Graph of Lamnbda Invocations Over Time" width={1024} />
+<caption>Yeah That's Really Bad</caption>
+<p/>
+
+Taking a closer look at the spike, we can see that it was the oranges and the greens wot dunnit.
+Greens are downloading data about a game from BGG, and orange is storing that game in the database.
+
+I just checked the code, and each game is updated every 839 hours (there’s a boring reason for that).
+So, that would be what’s causing the problem – every 35 days, I go to update 66000 games, which causes 66000 Lambdas to download data from BGG (sorry Aldie) and then 66000 Lambdas try to update the database.
+It seems I need some more dithering.

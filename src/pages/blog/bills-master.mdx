@@ -1,0 +1,23 @@
+---
+title: 'The Bills, Master, the Bills'
+pubDate: 2019-03-10
+description: "When will you pay me? say the bells at Old Bailey"
+author: 'DrFriendless'
+tags: ["costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import bills from "/public/img/blog/bills-master.png";
+
+I hate banking and I hate bills. Not because it’s money going out – I can cope with that – it just gives me anxiety.
+I am forever doomed to be a programmer (or possibly a novelist) because I hate thinking about money and I hate doing banking.
+This extends even to the email from AWS about the bills giving me anxiety.
+That’s why I had 3 unread ones in my mailbox until today, and they are issued monthly.
+
+<Image src={bills} alt="Graph of AWS costs over the last few months" width={1024} />
+<caption>See, nothing to worry about</caption>
+<p/>
+
+Despite my personal issues, the bills were great news, as illustrated in drop in the graph above.
+The database continues to cost a fixed amount (variations are due to varying numbers of days in the month), and the other costs are all dropping.
+I could probably do even more about the EC2 costs now that I have the lambdas sorted, but I feel that I should get some functionality working on the site, for a change.

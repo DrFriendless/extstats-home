@@ -1,0 +1,39 @@
+---
+title: "Ooh Er, That's a Bit Fancy!"
+pubDate: 2019-04-19
+description: "I'm always surprised when I don't hate my user interface"
+author: 'DrFriendless'
+tags: ["Angular","design"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import wartable from "/public/img/blog/war-table.png";
+
+When I started writing the user interface parts of this project, I knew I would need a table component.
+Angular has quite a few libraries, but I couldn’t find a table component that was useful and that I could get to work…
+well until the one that I ended up with and used for the War Table and the Rankings Table.
+It wasn’t great, but it sort of worked and got the data out there.
+
+However I always aspired to something nicer – I aspire to make the whole site better, but I have to do it bit by bit!
+So I prepared to make the table component nicer by reading the source code, but at first I didn’t understand it.
+It didn’t do complicated stuff, it just used Angular features that I didn’t know existed.
+This is what I get for being a newb!
+However today I managed to get myself sorted to make an improved version, and I’m rather pleased how it came out.
+
+<Image src={wartable} alt="The New and Revised War Table" width={1024} />
+<caption>The War Table, updated</caption>
+<p/>
+
+I moved the pagination stuff to the top of the table.
+If it’s at the bottom, you may not see it to use it.
+I also got the CSS under control so that the pagination bar looks like a natural extension to the table.
+I also took control of the page numbers you could go to so that it’s easier to scroll through the pages with some sort of intent.
+
+And with all that extra space I had available, I added a Search field.
+One thing that I did not like about those tables was that it was really hard to find yourself –
+nobody wants to scroll through lots of pages searching for something.
+So if you type a geek name into the search field, it will take you to the page with that name on.
+How cool is that!
+It makes all the data behind that table much more accessible.
+
+I guess tomorrow’s job will be to fix the rankings table, because IMHO this design is too sweet to ignore.

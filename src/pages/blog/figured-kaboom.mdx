@@ -1,0 +1,29 @@
+---
+title: 'I Figured Out the Kaboom!'
+pubDate: 2019-05-29
+description: "It's like the 1812 Overture around here"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+On the weekend when I noticed that the database was worn out, I updated some code to try to make database operations for saving game data less expensive.
+When I turned the downloader back on, the situation was just as bad as before, which was much worse than it was last month.
+I didn’t really know what had changed.
+
+I noticed in the Lambda logs that a lot of updates of game data were timing out after 30 seconds, which I thought was odd. There might be a couple of dozen SQL statements involved, which should not take that long.
+So I added some logging to the appropriate Lambda to see which bits might be taking a long time.
+
+The answer was that the statement where I calculate a game’s score for the rankings table was taking maybe 8 seconds.
+Actually I think it takes longer if there are more things hitting the same table (the one which records geeks’ ratings of games), so 30 seconds is not unbelievable.
+But it is bad.
+
+I checked out the indexes on that table, and realised that I had relatively recently removed an index on that table – the index that lets me quickly find the ratings for a game.
+So it seems that the lack of that index was slowing the calculation of rankings down, and hence causing updates to games to wreck the database.
+
+So I fixed that index, but there was a reason I took it off.
+MySQL InnoDB (not sure what that even means) tables have a problem where if you do lots of inserts into the same table you can get deadlocks between the updates to the table and the updates to the indexes.
+I figured I didn’t need the index on games so much, so I took it off to fix some deadlocks I was seeing.
+Silly me! Now I suppose the deadlocks will come back at some point.
+
+Next time though, I hope to remember how important that index is.
+I’ll just rewrite the code that was deadlocking to do smaller transactions and retry if it fails.

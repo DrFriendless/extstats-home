@@ -1,0 +1,41 @@
+---
+title: 'Swaggering, or Staggering?'
+pubDate: 2019-04-14
+description: "I feel like sometimes I do things properly"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+During the week (well, last week, I think), a strange thing happened.
+I got an email from GitHub, where I keep the source code for the site, saying that someone wanted to fix a bug in the site.
+So I had a look at what they suggested and it made perfect sense, so I accepted the change.
+So since then that developer and I have been chatting, and now I have a collaborator.
+Or at the very least, a second opinion on many things.
+This is very odd for a doctor of friendlessness such as myself.
+
+Now I have been a programmer longer than most people have been alive (<a href="https://worldpopulationreview.com/country-rankings/median-age">source</a>)
+so I have a great many opinions about programming things, but for much of the technology used in Extended Stats Serverless, I’m quite new to it.
+And being a humble motherfucker with a big ass appetite to learn, I’m very happy to take advice on these techs.
+
+So one thing that has been on my mind is a product called Swagger (now changed to the Open API Initiative, which is a very dull name).
+Swagger is a system for describing APIs.
+An API is an application programming interface, which means it’s a way to talk to an application by programming.
+These days, it is coming to mostly mean a way to talk to a web application by making calls to the web site.
+One way to use an API is as the back-end to the web site, which is what I do.
+
+When you go to extstats.drfriendless.com, all of that stuff is being loaded from AWS S3 (think of that as Amazon’s hard drive).
+Then the code runs in your web browser and talks to api.drfriendless.com to retrieve data –
+api.drfriendless.com implements the API.
+So what I was doing with Swagger was documenting what you could say to the API and what it would say back.
+
+That doesn’t sound hard.
+And indeed it wasn’t, to do the sort of half-assed job that I did.
+Nevertheless it came to about a thousand lines, which took quite a while to do.
+I’m sure you’re desperate to see what I produced, so here it is:
+
+https://app.swaggerhub.com/apis/DrFriendless/ExtendedStatsServerless/1.0.0
+
+Yeah. Although the swaggerhub interface is nice, it’s still pretty dry stuff.
+Nevertheless I felt it was an essential bit of due diligence that I should do.
+And while doing I found a few cases where I thought “huh? why did I do it like that?” which I will probably go back and redo to be more sensible.
+So that’s a good thing.

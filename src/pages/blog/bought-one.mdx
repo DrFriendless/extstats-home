@@ -3,30 +3,54 @@ title: 'Like A Bought One!'
 pubDate: 2020-06-13
 description: "I love GraphQL even more now"
 author: 'DrFriendless'
-tags: ["technology"]
+tags: ["technology","features","GraphQL"]
 layout: ../../layouts/BlogLayout.astro
 ---
 I had a pleasant tech experience yesterday. That’s a sufficiently rare experience that I need to write about it.
 
-I’ve been working with a technology called GraphQL, which is a bit like SQL expect it works with structured data, e.g. a Facebook user, who has a list of friends and a list of posts, and the post have users who liked them, and the friends have posts of their own, and so on, not to mention the cats. GraphQL lets you write a query (like SQL does) that you send to a server which executes it and returns the data.
+I’ve been working with a technology called GraphQL, which is a bit like SQL expect it works with structured data,
+e.g. a Facebook user, who has a list of friends and a list of posts, and the post have users who liked them,
+and the friends have posts of their own, and so on, not to mention the cats.
+GraphQL lets you write a query (like SQL does) that you send to a server which executes it and returns the data.
 
-That sounds easy. The hard bit for me is that because I own the data, I have to write the bit that retrieves the structured data from the database. GraphQL makes that easy enough, so I can usually just do a query on a table, give it all the data, and it sorts out what it wants. People say bad things about it, but I think GraphQL is a wonderful technology.
+That sounds easy. The hard bit for me is that because I own the data, I have to write the bit that retrieves the structured data from the database.
+GraphQL makes that easy enough, so I can usually just do a query on a table, give it all the data, and it sorts out what it wants.
+People say bad things about it, but I think GraphQL is a wonderful technology.
 
-However it’s not always that easy. I have a concept in my database called a GeekGame. It’s the relationship of one geek with one game. It includes values like that geek’s rating for that game, and whether they own it or not. It does not include the name of the game, or how many players it’s for – that data goes in the game.
+However it’s not always that easy.
+I have a concept in my database called a GeekGame.
+It’s the relationship of one geek with one game.
+It includes values like that geek’s rating for that game, and whether they own it or not.
+It does not include the name of the game, or how many players it’s for – that data goes in the game.
 
-So with GraphQL I can ask for a GeekGame, and I can say that I want to get whether the geek owns it, but I don’t want the rating. But until yesterday, one thing I could NOT do which I should have been able to was get the game as well. So I would have liked to say “give me all the games owned by this geek, with the rating and the name”.
+So with GraphQL I can ask for a GeekGame, and I can say that I want to get whether the geek owns it, but I don’t want the rating.
+But until yesterday, one thing I could NOT do which I should have been able to was get the game as well.
+So I would have liked to say “give me all the games owned by this geek, with the rating and the name”.
 
-The problem was that GraphQL would ask me for all of the GeekGames, and then after retrieving them, it would find out which games it wanted, and ask me for them one by one. And as there were hundreds of them, that would generate a lot of queries (which cost me money and take a long time). And in fact I couldn’t get it to work at all. Quite a few times the database got cranky at me and refused to talk to me any more until I found out about the FLUSH HOSTS command and ran that. That was a learning experience!
+The problem was that GraphQL would ask me for all of the GeekGames, and then after retrieving them, it would find out which games it wanted, and ask me for them one by one.
+And as there were hundreds of them, that would generate a lot of queries (which cost me money and take a long time).
+And in fact I couldn’t get it to work at all.
+Quite a few times the database got cranky at me and refused to talk to me any more until I found out about the FLUSH HOSTS command and ran that.
+That was a learning experience!
 
-But, there’s a technology called DataLoader, which was made at Facebook (they invented GraphQL as well), which promised to collect all of the single queries, and give them to me in a batch. Then I could do one query on the game table, give it to GraphQL, and it would sort the rest out.
+But, there’s a technology called DataLoader, which was made at Facebook (they invented GraphQL as well),
+which promised to collect all of the single queries, and give them to me in a batch.
+Then I could do one query on the game table, give it to GraphQL, and it would sort the rest out.
 So I thought I'd give it a go.
 
 O. M. G.
 
-It worked, first time. I don’t even mean it worked after I fixed all of my stupid mistakes. I mean I copied from the example, implemented my bulk query, and kablammo, it did what it was supposed to.
+It worked, first time.
+I don’t even mean it worked after I fixed all of my stupid mistakes.
+I mean I copied from the example, implemented my bulk query, and kablammo, it did what it was supposed to.
 
 So I was kinda pleased about that.
 
-I could then convert the Monthly Page over to use GraphQL, and then today I could add the How Much Do You Play New Releases? chart to that table. For that, I needed the publication year of the game, which that page did not previously load. But with GraphQL it’s simply a matter of changing the data query URL to say you want that field as well.
+I could then convert the Monthly Page over to use GraphQL, and then today I could add the How Much Do You Play New Releases? chart to that table.
+For that, I needed the publication year of the game, which that page did not previously load.
+But with GraphQL it’s simply a matter of changing the data query URL to say you want that field as well.
 
-I feel I’m on a bit of a roll with the new features now. I’ve stabilised on Angular 9 (with Ivy, the new compiler technology), some version of Vega that seems to not break, and GraphQL. According to my Trello board I have about 10 features remaining to be feature-compatible with the old system. Then with any luck I can get to inventing cool new stuff.
+I feel I’m on a bit of a roll with the new features now.
+I’ve stabilised on Angular 9 (with Ivy, the new compiler technology), some version of Vega that seems to not break, and GraphQL.
+According to my Trello board I have about 10 features remaining to be feature-compatible with the old system.
+Then with any luck I can get to inventing cool new stuff.

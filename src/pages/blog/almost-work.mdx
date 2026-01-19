@@ -1,0 +1,48 @@
+---
+title: 'Lots of Things Almost Work'
+pubDate: 2019-03-30
+description: "Compressing data is the last thing I could ever get excited about"
+author: 'DrFriendless'
+tags: ["features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import multiple from "/public/img/blog/multiple-geeks.png";
+
+Of course the Plays page which I was touting last week failed miserably.
+It complains about the base setting being incorrect.
+I suppose it’s telling the truth, but it’s a bit annoying to find these things out in production.
+So I’ve deployed a new version and due to the CDN, you might see that new version tomorrow.
+In the meantime, you can play with the test site with URLs like this: http://test.drfriendless.com/plays.html?geeks=Friendless,karlsen,jmdsplotter which show off the colours and the multiple geeks.
+
+<Image src={multiple} alt="Rate of Play of Games New To You for 3 user" width={1024} />
+<caption>Multiple geeks, oh my!</caption>
+<p/>
+
+Another thing I managed to sort of achieve today was compression.
+A graph such as the one above retrieves a lot of data from the database – maybe 2 megabytes.
+Sooner or later someone has to pay for that data transfer, and someone is gonna be me, so I wanted to cut that down.
+Luckily, web servers and web browsers have this agreement that the browser can ask for the data to be gzipped, and if the server can do it will.
+One of the things AWS’s API Gateway gives me for free (for which I forgive it for being a massive pain in the arse other times)
+is that I can just tell it so send data compressed, if the web browser asks for it.
+
+So I changed my code to ask for the data to be compressed, and Angular (the JavaScript framework I use to write the pages) said “NO! You are not allowed to ask for that!”
+Apparently it’s a sin to be running around asking for stuff to be compressed willy-nilly.
+And the word on the street was that the browser does it automatically.
+
+Which it plainly was not doing.
+So I had a think and a search and another think, and remembered that as the request for the data was coming from extstats.drfriendless.com and going to api.drfriendless.com –
+a totally different place – the two ends don’t trust each other.
+So extstats.drfriendless.com could only ask for compressed data if it first got permission from api.drfriendless.com to do so.
+This is a thing called CORS, but don’t Google it, it’s horrendously complicated annoying crap that just prevents things from working.
+For example, it prevents sites from stealing your bank logins and that sort of stuff.
+But after I configured CORS, the browser was allowed to ask for the data to be compressed, and the server was configured to do it, and hey presto 90% data compression.
+
+Although the site doesn’t have a lot of the functionality I want on it, yet, I feel that mechanically it’s approaching stability enough that I can start inviting lots of people to use it.
+They’ll be disappointed I expect, but I will use their misery as motivation.
+
+The old site annoys me more and more each time I look at it.
+During the week we had a technician come to convert our internet connection from “cable in the house connected to cable in the street” to “cable in the house connected to fibre in the street”.
+That may make the old site run a little faster, but probably not a whole lot as that site’s big problems are the database architecture and the wifi link from the machine to the home network.
+But I had to spend an hour or two of misery trying to understand networking and Ubuntu config things that are just not problems with the new site.
+I think I’ll be pleased when I can close that site down.

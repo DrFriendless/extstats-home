@@ -1,0 +1,38 @@
+---
+title: 'Goodness, a thing happened'
+pubDate: 2019-03-24
+description: "One small step for a man, one giant leap for board-gamer-kind"
+author: 'DrFriendless'
+tags: ["features","Vega"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import blackline from "/public/img/blog/black-line.png";
+
+Last time I blogged I mentioned how frustrated I was with Vega.
+Yesterday, Saturday, I had a look at the problem and I still had no idea.
+So I posted a big description on reddit and went and walked the dog or something.
+When I got back, a useful person had replied, but I couldn’t get what they were telling me.
+After a bit more head scratching this morning, I finally figured it out and I got the plays page doing something.
+
+<Image src={blackline} alt="Number of different games played over time graph" width={1024} />
+<caption>Number of different games played over time, for Karlsen</caption>
+<p/>
+
+I’m claiming it mostly wasn’t my fault!
+I thought that if I imported Vega it would import an appropriate set of sub-libraries.
+Not at all, it imported an inconsistent set of sub-libraries.
+So two versions of things I didn’t specify didn’t work with each other.
+I am grumpy about that, but when it works Vega is so beautiful I’ll have to put up with it.
+
+Not that this graph is particularly beautiful, yet.
+I probably should have used a colour other than black for the line.
+When I start adding more users, each line will be a different colour and rendered with a different symbol.
+
+I’ve been working towards that goal for MONTHS.
+After I got this much going, I had a look at how to get the geek buddy lists from the user data into this page.
+Then I got stuck with another bug for way too long, because Angular doesn’t tell you the URL of the page you’re on…
+and it doesn’t even say that it does, it’s just that it looks very much like it might, and that confuses a great many people.
+
+So I’m continuing work on adding multiple users to this page.
+It was very nice though to be able to add a news item to the news table in the database for the first time since September.

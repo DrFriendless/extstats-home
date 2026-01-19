@@ -1,0 +1,62 @@
+---
+title: "This Ain't the Panama Canal"
+pubDate: 2019-05-11
+description: "A man, a plan, a canal - Panama"
+author: 'DrFriendless'
+tags: ["features","Angular"]
+layout: ../../layouts/BlogLayout.astro
+---
+The lovely palindrome suggests that the building of the Panama Canal was planned and executed in a rather neat and reversible way.
+So when I consider my development process which is kinda haphazard, I feel a bit inadequate and envious.
+Fortunately, a quick glance at the Wikipedia entry on the building of the Panama Canal suggests that its 33 year construction was not without drama,
+difficulty or incompetence.
+Ferdinand de Lesseps, the man with the plan, was sentenced to go to jail for his role, but never actually did.
+
+So that makes me feel better.
+The first Extended Stats site started as a few Python scripts.
+I spent years running them nightly and uploading them to free hosting sites, which were universally shitty, resulting in my decision to host the site at home.
+Maybe only a year after that I rewrote the scripts as a proper web site.
+Between the shitty free hosting and the world’s mistrust of dynamic DNS, the site name kept changing.
+As web users continue to expect more (e.g. https) and I become more professional in my approach, it continues to evolve.
+
+The same thing is happening with the new site.
+I spent a good deal of 2015 and 2016 thinking “I should make a new site”, then a good deal of 2017 thinking “hmm, what would be the best way?”
+And then I spent a few more months trying to get those ideas to work.
+It was only in June 2018 that the technology started to work for me.
+About then I realised that Node.js, which I had chosen to write the server-side in, was not one of my talents.
+So I wrote some fairly bad Node code for a while, and maybe I am still doing so.
+Though it’s a few months since I’ve found a way I like better.
+
+Similar things happened with the web pages.
+Although I am competent with Angular, when I started I didn’t know what I wanted on the pages, and I still don’t, really.
+However they are slowly converging.
+Whenever I write a new page there are some bits I like and some bits that are horrible.
+When I’m done, I take the bits that I like and put them into a library on NPM, and use them again later.
+That makes it easier to re-use those ideas on later pages, or on revisions of existing pages.
+
+So this morning I sat down, determined to put the Plays Of Games Owned table into the new site.
+The first task was to find the right place for it, which would be on an existing page which already has the correct data.
+I looked at the Owned Games page, and noticed that it was the first page where I had implemented the pattern of the page loading a set of data,
+and multiple components rendering their views on it.
+However some code from that page had been put into a library, so I fixed up the page to use the library and stuck in a loader component while I was there
+(the coloured bobbles that indicate that the data hasn’t arrived yet).
+
+However the Owned Games page doesn’t have plays data, so it’s not the right page for that table.
+So I next considered the Favourites table, which does include plays.
+The selector isn’t quite right though, as the Favourites table defaults to games played and rated, and isn’t anything to do with owning them.
+
+The Favourites page one of the first pages to use Vega charts, so it had a Charts button that you could click on to get to the charts.
+That preceded the way I do it now where each chart appears on the page as its own thing, and uses the data the page provides.
+So I moved those charts out onto the main Favourites page, and wired them up to receive the data.
+Then I noticed that the Favourites page was the one where you can change the selector, but the new selector was injected into the table,
+rather than into the page.
+So I went back to the library and changed the way the config component worked, so now you can change the selector on the Favourites page,
+and the table and all of the charts update. It’s still clunky, but it works.
+Oh, and the Favourites page had one of the old-style tables without the handy header bar, so I fixed that up as well.
+
+And that’s why it’s now late afternoon and I have not yet achieved the first thing I set out to do today.
+The site has evolved a little, and I look forward to wiring the selector changer into other pages, and hopefully making it nicer when I do so.
+I’ll see if I get to try again tomorrow.
+
+<i>“A man, no plan, a clusterfuck, a clean up.”</i>
+

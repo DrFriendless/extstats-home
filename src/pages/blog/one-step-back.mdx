@@ -3,7 +3,7 @@ title: 'One Step Back, Two Steps Forward'
 pubDate: 2019-10-26
 description: "Fixing things and making new features"
 author: 'DrFriendless'
-tags: ["features","AWS","technology"]
+tags: ["features","AWS","technology","Vega","GraphQL"]
 layout: ../../layouts/BlogLayout.astro
 ---
 import { Image } from 'astro:assets';
@@ -48,7 +48,8 @@ And then it was finished and I sent it out to the site and dragged my sorry back
 It really does get a bit wearing, doing things that don’t work, all the time.
 
 But of course this morning I was optimistic and naive again, and at 7am I started adding another feature to the Owned page.
-This time I didn’t need to upgrade any of the libraries, but I did discover that some of the data I wanted to display, in particular whether you had a game for trade, was not available in the data set I was using, so I had to fix that.
+This time I didn’t need to upgrade any of the libraries, but I did discover that some of the data I wanted to display,
+in particular whether you had a game for trade, was not available in the data set I was using, so I had to fix that.
 And then I decided that rather than improving the REST data set, I should use the GraphQL data set and improve that.
 So I ended up creating a new version of extstats-core, a new version of extstats-angular, a new release of the API, and converted the whole page over to GraphQL.
 And then, only 6 hours after I started (some of which were spent on domestic duties), I got the “Why Do You Even Own This?” table working on the new site.
