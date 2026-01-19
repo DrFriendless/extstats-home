@@ -1,0 +1,43 @@
+---
+title: "So You Can Take That Cookie..."
+pubDate: 2019-06-20
+description: "I did it all for the cookie"
+author: 'DrFriendless'
+tags: ["technology","users"]
+layout: ../../layouts/BlogLayout.astro
+---
+I’ve been working on the login button for a few days.
+This is not because I want to, but because I discovered that the way I was handling login was regarded as bad practice.
+When a user logs in, Auth0 sends me a thing called a JWT (JSON Web Token), which is effectively information about who that user is and what privileges they get.
+So I was getting that and storing it in browser local storage where other parts of the site could retrieve it later.
+
+It turns out that’s bad, because third party code that I use on the site might look into the browser local storage and get the JWT out, and send it off somewhere else for Nefarious Purposes (TM).
+Well, we don’t want nefarious porpoises around here.
+So the better way todo it is forme to send the JWT to my server, and for the server to set a cookie reminding me of who you are.
+That sounds easy enough.
+
+But oh goodness me, the drama!
+Because my site is extstats.drfriendless.com, and my server is api.drfriendless.com, which are different, they don’t trust each other unless I do all sorts of “yeah, it’s OK, they’re my friend” stuff in the code.
+That’s called CORS, and although it’s not so complicated, it’s just too boring to remember.
+
+And you can’t do CORS and cookie stuff with the API Gateway Lambda integration (well, not very easily using serverless framework), you have to use the lambda-proxy integration.
+Which is OK, but it means everything in the code has to be much more explicit.
+So I did all that.
+
+And then it still didn’t work.
+I could see the Set-Cookie header coming back from my server, but Chrome denied it existed.
+Firefox said it existed, but ignored it.
+So I poked around for a bit longer, and found out that if you set an expiry time on a cookie, Chrome throws it away.
+Why? I have no idea. It just does.
+So I have to set the maximum age for the cookie instead.
+
+And then finally I got the cookie set.
+And by then I had kinda forgotten what I was trying to achieve.
+Like a chump!
+
+So I think now the cookie is working as intended, but I have to change the code on the pages to use it properly.
+At the moment the user page (the one you get to if you click on your user name under the Logout button) is broken, and is awaiting the CDN’s pleasure to be fixed.
+
+Overall I quite like this solution.
+I feel I have more control over where data is going, and I understand how it works.
+It has just been pretty painful to get to this point!

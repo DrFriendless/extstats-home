@@ -1,0 +1,84 @@
+---
+title: "Cleanin' Out My Closet"
+pubDate: 2019-06-22
+description: "Keep kicking ass in the morning and taking names in the evening"
+author: 'DrFriendless'
+tags: ["technology","users"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import invocations from "/public/img/blog/cumulative_lambda.png";
+import costs from "/public/img/blog/cumulative_costs.png";
+import auth0 from "/public/img/blog/auth0.png";
+
+Nah, I’m not going to go all Eminem and aggressive and stuff.
+I’ve literally been cleaning stuff up today.
+It was a great, productive day.
+There were a couple of users that I added over a week ago, and before advising them that their pages were ready, I decided to check whether they were, and they weren’t.
+This is the sort of bug that cannot be tolerated. With 3034 users, stuff’s got to work without me watching it.
+
+So I hunted down what the problem was, and discovered that I’d modified some SQL in a buggy way a couple of weeks ago, and then swallowed the error so that I never noticed.
+So I fixed the SQL and the users started being created.
+
+But they still weren’t coming through properly, so I investigated further.
+There were half a dozen or so users who had deleted themselves from BGG, and so I was unable to process.
+Yet I kept trying to, every minute. So I deleted them.
+And then there was one user whose BGG collection is so big that BGG just tells me it’s too big.
+I’m not sure what to do about that.
+
+You will notice in the graph below of Lambda invocations that there was a solid orange band at the bottom.
+That was just doing broken things over and over.
+Oh, and by the way, I pay for the height of this graph – lambda invocations cost some tiny amount of money.
+The right hand end of the graph shows how much the orange band decreased after fixing that stuff up.
+It will cost me a bit this month (like, a dollar), but next month it should be better.
+
+<Image src={invocations} alt="Cumulative invocations of all Lambdas" width={1024} />
+<caption>Looking beter at the end there</caption>
+<p/>
+
+These sorts of problems can’t be allowed to persist.
+So I wrote some code to send errors to the database.
+When errors happen in the hundreds of thousands of lambda invocations per month, I don’t necessarily notice them.
+If I write them to the database I can at least find them.
+With any luck I will find the next similar problem faster.
+
+So then after cleaning that up, the new users started working properly, and I had a clear conscience.
+I then started emailing people who have been waiting to be added to the site to tell them that there was a new site and they were added.
+I emailed 280 people, some of whom had been waiting for 18 months.
+I hope they still play board games.
+
+Anyway, whether or not they still remember who I am, it was nice to get 280 messages out of my inbox, and to have that weight of guilt lifted from my shoulders after such a long time.
+On the other hand, I’ve increased my potential active users by 280, and that might reveal some other problems.
+I don’t expect it will be too much, as the architecture I’ve chosen is nothing if not scalable, but you never know.
+The database is a non-scalable weak link, but I think the impact of users is trivial compared to the impact of the downloader.
+
+And then, because I’m hyperactive or something (not to mention that the weather outside was a bit yukky, so I wasn’t tempted to do anything else), I updated my spreadsheet of ongoing costs.
+It was 3 months behind.
+
+<Image src={costs} alt="Cumulative cost of the site per month" width={1024} />
+<caption>Literally a picture of my money being spent</caption>
+<p/>
+
+May 2019 shows a jump in Lambda costs, due to the Kaboom I blogged about previously.
+It was only $6, but it was an architectural problem that was going to stick around and cost more each month until I dealt with it.
+Hence why things like that get my attention sooner than actual useful features, and get blogged about.
+
+The kaboom happens about every 35 days, which puts the next one in the first few days of July.
+Due to the dithering I put in, and fixing the huge database index bug, I don’t expect a big kaboom, just more of a tremor.
+And due to the continued effect of the dithering, that will become less every 35 days.
+
+The next thing I’m hoping to work on is the update schedule page.
+It’s not a headline feature, more of a necessary evil.
+Also I logged a play from October last year, today, so I need it myself.
+And of course so does everyone from time to time.
+
+Work also continues on the login stuff that I mentioned in the blog post about sticking the cookie.
+Now that the cookie is working, I need all the bits of code to use it properly, or they won’t be able to access user data.
+And then I want to write more code which reads and writes user-specific data so I can realise some benefits from all of that mucking around.
+
+<Image src={auth0} alt="Graph of Auth0 logins" width={1024} />
+<caption>Heat map of Auth0 Logins</caption>
+<p/>
+
+Auth0 tells me I have 138 users with accounts, which I think is pretty wonderful since having an account is of little use.
+But it’s supposed to be a feature, so let me make it that way!

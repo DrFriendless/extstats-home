@@ -1,0 +1,36 @@
+---
+title: 'Achievement Unlocked!'
+pubDate: 2019-06-29
+description: "It took me long enough"
+author: 'DrFriendless'
+tags: ["features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import achievement from "/public/img/blog/achievement.png";
+
+Over summer, I was working towards a particular goal.
+I mean the Australian summer, so that was more than 6 months ago now.
+My plan was to put into the new site a feature that I had mocked up on the old site 2 years before.
+However even then the old site was becoming difficult to work on.
+
+I actually implemented the feature with the server in Kotlin, and the web page in AngularJS.
+AngularJS has since died, and I am now using Angular 7 (which is sooooo much nicer!).
+Kotlin is a language I do love, but the architecture of the server was so 2015, so that code could not continue to live in the serverless world.
+And then when I did start writing serverless code, TypeScript on Node.js seemed like a better choice.
+
+So anyway, what did I do?
+Well, it’s just the Rate of Play of Games New to You, for multiple users (which the page could already do), but now it’s EASY TO USE!
+So people can actually see that the page can do that.
+
+<Image src={achievement} alt="Graph of plays of new games over time for multiple users" width={1024} />
+<caption>That's seriously impressive, Jeroen</caption>
+<p/>
+
+I tried to add a few more people to the list, but I ran into a problem I haven’t encountered before – there was too much data for the Lambda to return!
+It seems there’s a 6 megabyte limit.
+After I return that data, it gets compressed before sending it back to the browser, to only about 10% of the original size, but the limit is before compression.
+
+To tell the truth I’m a little nervous about the amount of data I send back, as it costs me money, so maybe it’s worth some work to make that data smaller.
+
+This new feature is on the test system and is coming to the live system within 24 hours.

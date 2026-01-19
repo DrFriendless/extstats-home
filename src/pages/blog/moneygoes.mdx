@@ -1,0 +1,31 @@
+---
+title: "That's the Way the Money Goes!"
+pubDate: 2019-06-23
+description: "Not with a whimper, but with a kaboom"
+author: 'DrFriendless'
+tags: ["AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import money1 from "/public/img/blog/money1.png";
+import money2 from "/public/img/blog/money2.png";
+
+I’ve just figured out a new way to work the AWS Cloudwatch graphs, so rather than just graphing the number of Lambda invocations, I can graph the total duration.
+For Lambda, I pay for each invocation, but if an invocation goes long it counts for multiple.
+So I’m sort of paying for duration as well. I figured out how to graph total duration per Lambda.
+
+<Image src={money1} alt="Cumulative duration of all Lambdas, during a normal time" width={1024} />
+<caption>Ooh, pretty!</caption>
+<p/>
+
+This graph is for the last 2 weeks, and shows that inside-dev-processPlaysResult is taking by far the most time.
+That’s the one that takes plays scraped from BGG and writes them to the database. I’ll take a look at that code.
+It is a bit on the complex side, as it’s the bit that infers plays of base games from plays of expansions, but I can usually find something to optimise.
+
+Looking at the same graph for the past 4 weeks, all we can see is the Kaboom! Everything else literally pales into insignificance compared to that bug. Cool!
+
+<Image src={money2} alt="Cumulative duration of all Lambdas, including the bad time" width={1024} />
+<caption>Kaboom</caption>
+<p/>
+
+Sorry I am having too much fun graphing AWS performance to graph board game stuff :-).
