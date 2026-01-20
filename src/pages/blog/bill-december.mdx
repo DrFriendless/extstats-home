@@ -1,0 +1,36 @@
+---
+title: 'The Bill for December'
+pubDate: 2019-01-06
+description: "All I Want for Christmas is Free"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import december1 from "/public/img/blog/december1.png";
+import december2 from "/public/img/blog/december2.png";
+
+Sorry for the lack of updates.
+Just before New Year I bought myself Assassin’s Creed: Origins for the PS4, and oh my goodness I have been playing a lot of that.
+Today I’m making some time to look at Extended Stats, before I finish saving Cleopatra.
+
+In the absence of having anything exciting to say, here’s the news on the latest bill.
+It’s still higher than I want, but it shows promise.
+
+<Image src={december1} alt="AWS Bill with cost per service" width={1024} />
+<caption>The Bill for December</caption>
+<p/>
+
+The great news is that Lambda costs are zero.
+Lambdas do a lot of work on the site, so getting them for free is good.
+The Elastic Compute Cloud (EC2) costs are high, but that includes the costs for Elastic Beanstalk that I blogged about previously and will be much lower since I replaced that with a simple virtual machine.
+
+The CloudWatch charge is another surprise – my graph of all of the lambdas being invoked started costing me money because there was too much stuff on it.
+
+<Image src={december2} alt="Graph of database CPU" width={1024} />
+<caption>The database is running nicely</caption>
+<p/>
+
+In other news, the database performance gets smoother and smoother, which is a great thing.
+
+I’m continuing to try to get the login button to work properly. It’s very hard to test! I guess I should start adding some functionality some time soon.

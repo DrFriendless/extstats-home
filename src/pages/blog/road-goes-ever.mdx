@@ -1,0 +1,48 @@
+---
+title: 'The Road Goes Ever On and On'
+pubDate: 2019-01-12
+description: "One does not simply walk into Mordor"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import logout from "/public/img/blog/logout.png";
+
+Working on the User page is a bit of a pain in the backside.
+For those of you who are new here, let me explain.
+After you create an account and log in, the Log Out button appears with your (Extended Stats) user name underneath it.
+This works extremely unreliably! I’m *still* debugging that.
+
+<Image src={logout} alt="Close up off the Log Out button" width={1024} />
+<caption>Oh yeah, you show up for photos...</caption>
+<p/>
+
+User name is displayed under the Log Out button.
+If you click on that user name, you get taken to the user page, which contains the user widget, which is the bit that is supposed to let you choose your BGG user name and make geek buddy lists.
+It also shows you the information that Extended Stats stores about you, which actually does work, even it looks like a lot of waffle (so far).
+
+Now I spent quite a bit of time before I got addicted to Assassin’s Creed: Origins making the user widget work.
+In particular I built an Express server and coded the autocomplete functionality in that and deployed it with Elastic Beanstalk and then undeployed it from Elastic Beanstalk and just stuck it on an EC2… and now Chrome says that as the user page was loaded using HTTPS (secure), it can’t call the Express server on the EC2 using HTTP (insecure) as that would break the security.
+It is correct to do that.
+So today I needed to add a security certificate to the EC2, but with AWS you just can’t do that.
+There is no way.
+
+So what I figured out I could do is I could configure api.drfriendless.com, which does have HTTPS, to direct calls to the autocomplete code on the EC2.
+And then I need to change the user widget to use https://api.drfriendless.com instead of http://eb.drfriendless.com.
+
+As if all of this isn’t a complete pain in the bum enough, extstats.drfriendless.com is served by the CDN, Cloudfront, so it caches all of its resources.
+I am supposed to be able to tell it to dump particular resources from the cache, but that hasn’t been working for me. It used to, but now I must be doin’ it wrong.
+So after I change all of those things, I have to wait a day for the changes to take effect.
+This is a seriously painful development process.
+
+Of course, I need a test server to try this out on.
+I do have test.drfriendless.com.
+The test server doesn’t use CloudFront, which means that it doesn’t have HTTPS so it won’t have the problem anyway.
+But also, because it doesn’t have HTTPS, auth0 (which manages the logins and passwords) won’t talk to it.
+So in this particular case, the test server cannot possibly work.
+
+Ah well, enough bitching.
+I got two new patrons yesterday, for a total of 4.
+Four wonderful patrons! Muahahahahaa!
+At this rate I’ll be rich about when I get the user page working properly.
