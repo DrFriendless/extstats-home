@@ -1,6 +1,7 @@
 ---
+const { showAccounts } = Astro.props;
 ---
 <link rel="stylesheet" href="LoginWidget/styles.css">
-<extstats-login></extstats-login>
+<extstats-login showAccounts={showAccounts}></extstats-login>
 <script is:inline src="LoginWidget/polyfills.js" type="module"/>
 <script is:inline src="LoginWidget/main.js" type="module"/>

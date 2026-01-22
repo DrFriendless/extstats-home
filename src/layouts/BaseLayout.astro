@@ -3,7 +3,8 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Configure from "./Configure.astro";
 import TitleBar from "../components/TitleBar.astro";
-const { pageTitle } = Astro.props;
+let { pageTitle, showAccounts } = Astro.props;
+if (showAccounts === undefined) showAccounts = true;
 ---
 
 <html lang="en">
@@ -22,7 +23,7 @@ const { pageTitle } = Astro.props;
 <body>
 <Header />
 <div style="padding-left: 18px; padding-right: 18px; max-width: 1200px">
-<TitleBar pageTitle={pageTitle}/>
+<TitleBar pageTitle={pageTitle} showAccounts={showAccounts}/>
 <slot />
 </div>
 <Footer views="page" />

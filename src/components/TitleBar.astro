@@ -1,8 +1,8 @@
 ---
 import LoginButton from "./LoginButton.astro";
-const { pageTitle } = Astro.props;
+const { pageTitle, showAccounts } = Astro.props;
 ---
 <div style="display: flex; justify-content: space-between; width: 900px; align-items: baseline">
     <h1 style="margin-bottom: 40px; margin-top: 20px; font-size: 40px; font-weight: 500; display: inline">{pageTitle}</h1>
-    <LoginButton/>
+    <LoginButton showAccounts={showAccounts}/>
 </div>
