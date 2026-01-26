@@ -1,0 +1,48 @@
+---
+title: 'Soldiering On'
+pubDate: 2018-11-11
+description: "The soldier came knocking upon the queen's door..."
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import ebhealth from "/public/img/blog/ebhealth.png";
+
+I penetrated the impenetrable twaddle!
+After getting very frustrated last week with AWS security, I did some research,
+and finally found a description of a few things that I could understand.
+I now basically understand what a virtual private cloud is, and sort of how it works.
+That was really awesome news on Monday. Then on Tuesday we had some system problems at work and I got distracted sorting out other (AWS) stuff.
+
+I was finally able to get back to the Express on Elastic Beanstalk project today.
+As I now understood the VPC stuff, I configured EB to use the VPC I already had.
+And then I commanded “Work now!”
+And behold, it did not.
+
+<Image src={ebhealth} alt="Graphs of Elastic Beanstalk health" width={1024} />
+<caption>It sure would be nice if this graph was a flat line at the “OK” level</caption>
+<p/>
+
+
+I screwed around with it for a few hours, until I came to the conclusion that the reason it wasn’t working was because it thought it wasn’t working.
+No really, that makes sense.
+
+Elastic Beanstalk is designed for implementing a web site (which looks like one computer) by using a bunch of computers in the background.
+If one of those bunch of computers goes bad for some reason, EB throws it out and replaces it with a new one.
+So to do this, EB has to know how to tell whether one of those computers is bad.
+And for a long time, I had that wrong.
+
+However even after sorting that out, I still can’t get it to work.
+I’m beginning to suspect it’s a networking problem again – although Express “works” when I run it on my own machine,
+it doesn’t work when I connect to either the load balancer (the part of EB which farms work off to the worker machines) nor when I try to connect to the individual machines.
+My recollection from how we do this at work is that *should* work.
+So I’m back trying to figure out networking.
+And since I have known that stuff since Monday, I thought I got it…
+
+I’ve also been considering whether I should actually get back to working on functionality (i.e. pretty things) instead of this AWS navel-gazing.
+But I should not. The bill for October (which I still have not blogged about) was a bit high, and I need to get this project working to cut down the costs.
+While it’s costing me too much, this project is at risk, so I need to get that stuff sorted.
+
+The good news is that I was plagued by problems like this for about a year while I was trying to get this project off the ground, and with perseverance and experience I managed to figure them out.
+I feel like I”m making progress, even if it’s just developing a callus where I’m bashing my head on the wall.

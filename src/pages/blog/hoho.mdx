@@ -1,0 +1,50 @@
+---
+title: 'Ho Ho Kill Me Now'
+pubDate: 2018-12-26
+description: "Do I know it's Christmas time at all?"
+author: 'DrFriendless'
+tags: ["features","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import hoho1 from "/public/img/blog/hoho1.png";
+import hoho2 from "/public/img/blog/hoho2.png";
+
+This Christmas season, I am being, as usual, as unChristmassy as I possibly can.
+Quite apart from work never actually stopping for me, and this being a busy time of year, I’m a grumpy old man.
+However as this blog is not about my misanthropy, let me tell you about the code I’ve been writing.
+
+On December 1 (oh my goodness, so long ago) I showed off the component I had got going which allowed you to enter a list of geeks.
+I also complained about Angular Material. Since then I’ve been working on the user data page, and maintaining the love-hate relationship with Angular Material.
+Mostly hate.
+
+<Image src={hoho1} alt="The User Data Page" width={1024} />
+<caption>I feel like it needs more structure</caption>
+<p/>
+
+The user data page does two things – it allows you to edit data attached to your login on Extended Stats, and it tells you what that data is.
+The first is obvious, the second is my interpretation of a GDPR requirement.
+It might seem silly, but I kinda believe in what GDPR is trying to achieve and want to build accountability in from the ground up.
+
+Now, editing the user data.
+The first thing you can edit is your BGG user name.
+As anyone can see the data on Extended Stats relating to your BGG user name, even without being logged in, you don’t need to fill that in.
+However my intention is that when you’re logged in, I’ll give you hyperlinks to the pages for that BGG user.
+And in fact, you can have multiple BGG user names, which will be convenient if you maintain stats on behalf of your spouse or your board game group.
+
+Then there’s buddy groups.
+A few years ago I made this graph of new games played over time for my local gaming group.
+And I want so badly to be able to provide this graph to all of you!
+
+<Image src={hoho2} alt="A graph of rate of play of new games for many users" width={1024} />
+<caption>I love this graph</caption>
+<p/>
+
+So the plan is that this sort of graph will apply to a group of geek buddies.
+And to save you entering that group of geek buddies every time, I will store it in your account.
+And if you want to do it for your other gaming group as well, you can create a different buddy group.
+
+Sadly, the work on the user page is still not complete.
+However most of the wrangling with Angular Material seems to be over, and I have to connect the results to the database.
+As the authentication system refuses to work with the test system, I need to test that out on the real system, which is kind of painful.
+So, work continues at its usual crawl.

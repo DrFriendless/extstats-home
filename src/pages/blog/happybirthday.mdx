@@ -1,0 +1,41 @@
+---
+title: 'Happy Birthday, Gray'
+pubDate: 2026-01-27
+description: "Happy birthday to you, did you do a poo?"
+author: 'DrFriendless'
+tags: ["Gray","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import gray from "/public/img/blog/gray3.jpg";
+import bug1 from "/public/img/blog/bug1.png";
+import bug2 from "/public/img/blog/bug2.png";
+
+Well we had a very busy weekend.
+DrMrsDrFriendless got home from a long overseas trip.
+Then the next day it was Australia Day, Invasion Day, Indian Republic Day, Yarbun Festival, and Gray's birthday all at the same time.
+And that meant that Monday was a public holiday.
+
+<Image src={gray} alt="Gray carrying a ball around at the park" width={854}  />
+<caption>Big three-year old</caption>
+<p/>
+
+So that makes today Tuesday, and I took a look at the Grafana dashboard to reassure myself that all was well with the system.
+
+<Image src={bug2} alt="Grafana graphs of system performance" width={1024} />
+<caption>What does it say, I wonder?</caption>
+<p/>
+
+All was not well with the system.
+
+The Files Awaiting Processing were not coming down, and the EB2 CPU was weirdly high.
+That sounded very much like a bug in the server-side of the downloader (called Inside Q, by the way).
+
+<Image src={bug1} alt="Grafana graphs of system performance" width={1024} />
+<caption>The green and blue lines should go down, and the yellow line should not be that high</caption>
+<p/>
+
+The recent changes to default base games, which I haven't even documented here yet, had broken when they encountered someone who didn't have a login, which is almost everyone.
+Oh dear, that's what I get for releasing a feature in a hurry on a Friday afternoon.
+
+It was a quick fix, and we were up and running again.

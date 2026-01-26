@@ -1,0 +1,24 @@
+---
+title: 'In Which Jack Climbs the Elastic Beanstalk'
+pubDate: 2018-11-17
+description: "What does Jack expect to gain from doing this?"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import eb1 from "/public/img/blog/eb1.png";
+
+Woohoo, I got Elastic Beanstalk to work! The “Express & EB” sticky note has been removed!
+Actually I got Elastic Beanstalk to work on about Tuesday, and today I’ve been learning more about getting Express to do stuff.
+
+
+<Image src={eb1} alt="Graphs of Elastic Beanstalk performance" width={1024} />
+<caption>I don’t know what it all means either</caption>
+<p/>
+
+The first thing to do was a URL to find geeks with a particular partial name.
+For example, http://eb.drfriendless.com/findgeeks/Fri will give you up to 10 geeks whose names start with “Fri”.
+And http://eb.drfriendless.com/findgeeks/boy will give you up to 10 geeks whose names start with “boy”.
+Because there are none, it will instead give you up to 10 geeks with “boy” somewhere in their name.
+This is how autocomplete fields work, but I didn’t write the autocomplete field yet so I can’t show you what the plan is.

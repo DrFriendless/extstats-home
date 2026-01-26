@@ -1,0 +1,44 @@
+---
+title: 'Jack of the Beanstalk'
+pubDate: 2018-12-16
+description: "In which our hero slays giants"
+author: 'DrFriendless'
+tags: ["technology","AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import jack1 from "/public/img/blog/jack1.png";
+import jack2 from "/public/img/blog/jack2.png";
+import jack3 from "/public/img/blog/jack3.png";
+
+I was away last weekend on Family Business, so I just let the site run, with the beanstalk going.
+The bill for November arrived, showing a dramatic increase in EC2 (virtual server) costs.
+
+I’ve been very slack about posting about costs (because it’s so boring), so I made a (quite bad) chart of the components of the costs over time (the last 5 months).
+In July, the Cloudwatch  costs were high, because I was doing too much logging, and I fixed that.
+In September and October the Lambda costs were high, so I brought in Elastic Beanstalk to fix that.
+In November the EC2 costs were high because of the Elastic Beanstalk, so today I tried to fix that.
+
+The reason Elastic Beanstalk is expensive is because it adds another server – so now I have two servers, one for Express and one for the blog – and that has a certain fixed cost. But then there’s another machine called the load balancer, which decides which of the Express servers will handle the request. In my scenario, the load balancer seems like an unnecessary luxury, given there is only one Express server. So at $8 for the month, that had to go. The virtual machine that Express runs on was more expensive than it needed to be, too, so I decided to make that an even smaller one. Those changes should save more than $10 / month.
+
+<Image src={jack1} alt="AWS Costs per month" width={1024} />
+<caption>I told you it was quite a bad chart</caption>
+<p/>
+
+Of course it wasn’t that easy. One of the nice things that Elastic Beanstalk does for you is create the server environment that the application runs in, so I had to redo that bit myself. So today I learn how to create an Application Machine Image,  how to deploy my Express application onto a server, and how to run an Express server with permissions to use port 80. The last bit was much harder than it deserved to be.
+
+So apart from this recurring trauma, the site is going quite well.
+
+<Image src={jack2} alt="AWS Graphs of site performance" width={1024} />
+<caption>We like smooth lines</caption>
+<p/>
+
+The dithering of the updates has really evened out the load on the database, so now the database WHICH IS COSTING ME $30 / month looks like it might actually be able to do its job for a while. The AWS database service seems like extraordinarily poor value. On the other hand, it does backups and stuff for me.
+
+<Image src={jack3} alt="More graphs of site performance" width={1024} />
+<caption>We do not like big sharp spikes</caption>
+<p/>
+
+The Lambda performance issues seem to be fixed for the moment as well.
+
+It looks like it might be time to write some functionality.
