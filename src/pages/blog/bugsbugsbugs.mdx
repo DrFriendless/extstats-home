@@ -1,0 +1,46 @@
+---
+title: 'Bugs Bugs Bugs!'
+pubDate: 2018-10-28
+description: "When the cat's away the bugs will play"
+author: 'DrFriendless'
+tags: ["technology","meta"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import lambdaperf from "/public/img/blog/lambdaperf.png";
+
+Hello, I’m back!
+I spent two weeks gallivanting around the world with my wife (who was working), and then I spent one more weekend playing Ingress in Canberra.
+And now finally after all the unpacking is done and the clothes washing is finished, I can get down to some programming.
+I last saw my wife in Dubai and don’t expect her home for a while yet, so I hope for minimal distractions.
+
+So while I was away the system was running happily by itself, by which I mean it was unattended and nobody much was looking at the site 🙁 so really all it was doing was costing me money.
+The last bill arrived while I was in Italy so I haven’t looked at it in detail yet, but I did investigate why the Lambdas were still costing me more money than I expected.
+
+<Image src={lambdaperf} alt="Graphs of Lambda performance" width={1024} />
+<caption>We do not like big lumps, big lumps cost money</caption>
+<p/>
+
+I found a new way of arranging the Lambda usage graphs that makes more sense (and that’s what the pretty picture above is).
+It’s pretty clear that blue was doing way too much work, so I investigated that.
+That’s the bit which takes the list of what games someone has in their collection and puts it into the database.
+One user had many versions of games in their collection, so I kept trying to put the same game into the database over and over.
+I’ve sort of fixed that (but what can I do if someone gives the same game two different ratings?) and that particular problem seems to be fixed.
+In a week or two I’ll know how that has affected the performance (and hence cost) of the system.
+
+The next bug I addressed was one that was found by alert reader Jeroen, who pointed out that if someone recorded more than 100 plays in a month, I only used the first 100.
+I knew what that was, so I investigated and fixed it.
+Then came the hard bit – fixing all the data that was wrong.
+Even finding it took a while – essentially I had to find all the months for all the geeks where there were 100 plays recorded.
+There were 2750 of those, so I then had to mark those as needing to be reprocessed.
+That was quite difficult to figure out.
+Ideally I would have just said “reprocess all the months”, but I know that that takes more than a month to do, so I had to get exactly those ones.
+I seem to have achieved it, but after all that hard work, the database was a bit puffed out and needed a rest.
+In technical speak, I exceeded my CPU quota and the burst balance was very quickly heading to zero as well.
+So now that I’ve figured out all of the months to fix, the database is too tired to do it and I’ve told the downloader to rest.
+I’ll turn it back on in the morning.
+
+So one of the good things about my wife being away is that I can now put sticky notes of things I need to do all over the house.
+There’s a rather nice Japanese flower picture in the living room here which is now covered in notes saying things like “geek buddies” and “API keys”.
+Actual user-facing features haven’t even made it to the sticky notes yet.
+However I shall be extremely pleased if I can get these things done in a couple of weeks.

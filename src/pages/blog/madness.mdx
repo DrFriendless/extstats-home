@@ -1,0 +1,54 @@
+---
+title: 'Why Yes, There Is Method to My Madness'
+pubDate: 2018-09-12
+description: "Blind to the dangers and dismay that wipe the innocent smile away from the face of a laughing clown"
+author: 'DrFriendless'
+tags: ["features","design"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import rogyo from "/public/img/blog/rogyo.png"
+
+Just this evening I released an update to the site.
+I added a new panel to the geek page. In case you don’t know the geek page, it’s something like:
+
+https://extstats.drfriendless.com/geek.html?geek=Ozjesting
+
+It’s the central page related to a particular geek.
+At the moment there are 6 panels, of which you can click on 3 to get through to other pages.
+On those 3 pages there are various tables and graphs and so on.
+
+The question you are no doubt asking is “how do tables and graphs get allocated to those pages?
+Does DrFriendless just pick up the nearest page and jam some more stuff on it?”
+
+That’s how I used to do it on the old site, pretty much, but I’m a grown-up now.
+These days I’m thinking about performance, so I group features (that’s what the old site calls tables and graphs) by the data that they use.
+For example, the Owned Games page uses games data (name, BGG average, etc) and geek game data (your rating for the game, whether you own it), for only the games that you own.
+When the page loads, it goes and retrieves exactly that data once and gives it to all of the features, which then display using the same data set.
+
+If you understand selectors, then you’ll understand that a selector can be used to choose which games to return, so of course I do.
+The ultimate goal is to be able to change the selector on the page, so that if you want to display games you own but not books or expansions, you’ll be able to do so.
+I’ve made some progress on that plan (on the favourites page) but it is not widespread yet.
+
+The other factor in the data query is what data to return for each game, and that is fixed for the page.
+The pie chart for your ratings of games you own will never display plays – there’s just nowhere for them to go – so that data is unnecessary and should not be retrieved.
+So you don’t get to mess with what data is available for each game.
+
+I guess it’s possible to display the owned games page using games that you previously owned, but that might be weird.
+On the other hand it might be genius, we’ll see what people come up with.
+
+<Image src={rogyo} alt="Rating of Games You Own graph" width={854} />
+<caption>Rating of Games You Own graph</caption>
+<p/>
+
+Now, there is even more method.
+Given that the page does just one query for data, I can cache that.
+Browsers these days have a thing called browser local storage where the web page can store stuff for later.
+So I could save the data for the page in browser local storage and just get it back from there later.
+This means (a) you wouldn’t have to wait to get the data and it wouldn’t come off your bandwidth allowance, and (b) it might be a bit out of date.
+So it would be best if that feature was used when you were on your phone and not so much on your desktop.
+When I get to putting that in I’ll make it configurable.
+
+In other news, there is so much other news!
+I have more blog posts to write, but I also have more code to write and that’s more important.
+Stay tuned.

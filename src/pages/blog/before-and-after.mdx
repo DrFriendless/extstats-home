@@ -1,0 +1,65 @@
+---
+title: 'Before and After'
+pubDate: 2018-08-26
+description: "What's past is prologue - Antonio, The Tempest"
+author: 'DrFriendless'
+tags: ["features","Vega"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import oldpby from "/public/img/blog/oldpby.png"
+import newpby from "/public/img/blog/newpby.png"
+import trello from "/public/img/blog/trello.png"
+
+I mentioned a couple of weeks ago that I needed to do a big survey of all of the features in the old site, and make a plan for getting them onto the new site.
+And that I  had a big block of drawing paper specifically for such situations.
+Well, that bit’s true, but when it came to the crunch, I was sitting in bed with my laptop and couldn’t be bothered getting the drawing paper,
+so I had a(nother) look at Trello, and discovered that Trello is a great tool for organising a bunch of pictures into groups.
+So now I have a Trello board with the work that needs to be done to get the new site being as useful as the old site.
+
+<Image src={trello} alt="A Trello board full of Extended Stats features" width={854} />
+<caption>Trello board</caption>
+<p/>
+
+
+I’ve been doing a lot of under the water work on the Favourites page, and spent the morning extracting bits of that code in the hope that I could use them again for other things.
+It was pretty cool from a programmer point of view, but useless from a user point of view.
+But then I decided that I would take the good bits that I’d extracted from the Favourites page and apply them to the User Collection page, which is the first table I did.
+I sort of wondered where that page was going, but it was supposed to correspond to one of the columns on the Trello board.
+
+About then was when I realised that I’d deleted the user collection source code in a fit of cleaning one day.
+It’s on Github, I could have got it back, but when I consulted Trello to find out what the table on that page was supposed to look like, there wasn’t one.
+So I didn’t bother.
+Technically that page could hold a table which included differences between your rating and BGG averages, but that’s on BGG as Aldie stole the idea from me many years ago.
+Maybe I’ll make that table one day, but this is not that day.
+
+There were three things in that column, but I only had time to get one done, so I chose a pretty one.
+It was the ratings by published year graph which looks like this on the old site:
+
+<Image src={oldpby} alt="The rating by published year graph from the old site" width={854} />
+<caption>Before</caption>
+<p/>
+
+You may remember from previous posts that I’m using a charting package called Vega.
+Vega is lovely and horrible at the same time.
+It’s very powerful and the charts are very beautiful, but Vega does not play very well with Angular, so it’s always a bit of a pain to get it working.
+However after a couple of hours I got it sorted.
+
+<Image src={newpby} alt="The new version of the rating by published year graph" width={854} />
+<caption>After</caption>
+<p/>
+
+If you click through that image you will get to a live demo on the test site.
+(I usually link to the test site from the blog, as the live site gets changes about 24 hours later due to the CDN.)
+As I write this, there’s still more work to be done on that chart (e.g. tooltips, configurable start year), but it’s about as good as the old one.
+So I’m faintly pleased with that work.
+
+In other news, the Favourites table got The Most Advanced Feature Yet!
+As well as having the Documentation button, and the Charts button, it got a Configuration button.
+The configuration button lets you change the selector that the table uses to load games.
+And of course if you do that then do charts, they are based on the new data that you loaded.
+This is very exciting to me, and maybe one other person.
+
+The plan is that logged-in users will be able to store their preferred selector for each page.
+I’m not so far off achieving that, despite the login button being a bit broken at the moment, and not much functionality having been achieved on other parts of the site.
+But, it’s a brave new world that has such features in it.
