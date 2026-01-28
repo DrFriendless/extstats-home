@@ -1,0 +1,63 @@
+---
+title: "Wiser Now"
+pubDate: 2026-01-28
+description: "No, seriously, what are the odds I got dumber?"
+author: 'DrFriendless'
+tags: ["technology","meta","Angular","MySQL","GraphQL"]
+layout: ../../layouts/BlogLayout.astro
+---
+I've just finished the gargantuan, nay, Brobdingnagian, task, of porting all the old blog posts from the WordPress blog to the new Astro blog.
+That is all except a couple for which I lost the images -
+I suspect the images were being stored in my Google Images and one day when I was cleaning that out I deleted a couple.
+But anyway I read all the old blog posts.
+The things that impressed me were:
+
+* I knew way less back then ("then" being 2018-2022)
+* Things actually were way harder back then
+* Third-party software is the pits
+
+I spent so much time mucking around with Auth0 that I never had time to make it useful for anything.
+The new login stuff is:
+
+* simpler
+* easier to adapt to what I want
+* free forever
+
+It does help that in the time between now and then I worked on a system with its own authentication, so it was a topic I learnt things about.
+That applies to many other facets of cloud / web / serverless development - I either learnt them at work or they became more mainstream and I became accustomed to the
+ideas they were showing me.
+
+One thing I am missing a little is my Trello board.
+Some time ago I got email from whoever runs it now saying they thought I wasn't using so I should do something... so I deleted it.
+I don't miss the data, but I miss the functionality.
+Maybe one day I'll write my own, and hook it into the site for general gaming shenanigans.
+
+Another technology I spent a long time thinking about was NoSQL databases.
+The NoSQL concept has its place - I spend a lot of time doing SQL queries and then turning them into JSON to return to the GraphQL clients.
+Wouldn't it be good to just get that JSON straight from the database?
+
+Sometimes it would be, and that's probably why MySQL added JSON-valued columns a few years ago.
+At work we stored random key-value data in XML encodings which couldn't be queried unless they were decoded.
+Storing the same data in JSON columns meant they could be queried from the command line.
+So MySQL solved that problem and negated one of the great advantages of NoSQL databases.
+So for the foreseeable future I'll be sticking with MySQL.
+
+I also used to be interested in Google Analytics.
+<a href="https://killedbygoogle.com/">The list if technologies killed by Google is infamous.</a>
+The ones that affected me personally were Google Reader and Google Play Music, but the transition we had to do at work from Universal Analytics 3 to Universal Analytics 4 was brutal even if it didn't count as a death.
+I now no longer trust Google to provide anything I use - no Captcha, no GCP, not one single service.
+Google owns Angular, which distresses me, but I was using Angular before they were involved.
+I hope it will survive for a while after they dump it.
+
+In any case, having seen the relentless manner in which analytics from various sources pursues users, I have turned against on principle.
+In an online discussion about this sort of tech the other day, I asked if it just technowankery, and nothing convinced me that it wasn't.
+If you can find your audience you don't need to spy on them to improve your business, you need to provide a quality service.
+So, although there's basically no money at stake in this little venture of mine, I'm going to keep it ethical and see how that goes.
+
+Finally (i.e. I'm sure there was more I wanted to say but I forgot it all) I think I'm way better at cloud architecture now that I know what all the bits do.
+The fatal bug which killed the site for 3 years or more was fixed with a pretty simple queue.
+I think I need to add another queue at the moment, as some of my code is interacting badly with some of BGG's code, and a queue will probably solve that problem.
+
+Well, it is all very well to be wise, and write a lot of words.
+It is a whole other thing to knuckle down and fix one's bugs.
+Thus I bid you adieu.

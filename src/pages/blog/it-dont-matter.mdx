@@ -1,0 +1,41 @@
+---
+title: "It Don’t Matter Who You Are, Just So Long As You Are There…"
+pubDate: 2018-07-08
+description: "There'll be dancing in the streets when this works"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+I’ve been working on more invisible stuff.
+That’s why although it looks like there’s no change, I’m still exhausted and pissed off.
+This afternoon’s adventure was with a user login capability.
+As it’s security stuff, it’s confusing and mostly seems like useless guff… but as I know so little about it, I just code how I’m told.
+
+Now the old site doesn’t have user logins, so you might think that the new site doesn’t need them either.
+On the other hand the old site uses way too many cookies, and I’d like a more robust solution than that.
+Also I have ideas for very cool features that produce user-specific information that they would want to keep and edit later.
+So I have to have user login.
+It won’t be required to use the site, but it will be required for features that need to store information on a user’s behalf.
+
+There are third-party packages that can handle these things for you.
+Auth0 is one of them, so I jammed in some Angular code to allow users to login to the site with their Facebook or Google credentials.
+And that sort of worked a bit.
+But then Auth0 called me to tell me someone had logged in and it all went pear-shaped.
+See Auth0 calls me at a URL that I specify, and it sticks the user’s credentials on the end of the URL.
+However as that URL went through an API Gateway to get to my Lambda, AWS lost the URL and I didn’t get the information I needed.
+I think that’s a design flaw on their part.
+Apparently there are ways to get around that, but as I was trying to understand them I found another option.
+
+AWS has a service called AWS Mobile which offers a suite of user-attached features, such as authentication, profile photos, and a bunch of other guff that I ignored.
+You see, my requirements are trivial beyond belief – I just want to know if this person logging in is the same person who logged in some other time.
+I don’t care for their name, email address, blah blah blah.
+I just need an opaque token that I can save in the database, and when I see that token again I get the settings out of the database and start using them for that user.
+Nobody seems to design for such a simple use case.
+
+Anyway, I signed up to my own site using the AWS Mobile widget, and I appeared in the user pool on the back-end.
+Hooray!
+The widget doesn’t behave very well, so I’ll have to explore that, and I still haven’t figured out how to get the opaque token I was wanting, but the documentation seems nice.
+Though I do get sick of being told how to install stuff, I’d much prefer to hear what it does and how it’s used.
+
+So that was my Sunday afternoon.
+Stuff is progressing, slowly slowly.

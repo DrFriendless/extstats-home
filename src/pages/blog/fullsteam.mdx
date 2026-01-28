@@ -1,0 +1,32 @@
+---
+title: "Full Steam Ahead!"
+pubDate: 2018-07-22
+description: "One giant leap for serverless-kind"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import fullsteam from "/public/img/blog/fullsteam.png"
+
+I’ve been beavering away on plays downloads.
+There were a couple of bugs so the downloader was stuck for most of the week, but this afternoon I got it working properly (this time for sure), so I cranked up the pace.
+I told the system to do 100 downloads per minute.
+It had 231900 to do, so it’ll still take a while – maybe 4 days, unless there are more bugs.
+
+Anyway, that’s to complete that job.
+As some plays have already been downloaded, I’ve started populating the SdJ column in the War Table, and Total Plays in the Rankings table.
+
+To populate the SdJ column I needed to know what the series were, so I coded up the bit that downloads the series metadata as well.
+I’ve dumped the old Catan / Carcassonne / Command & Colours, etc series, as they were getting silly and nobody cares.
+And if somebody does care I can put them back.
+
+When the plays data is ready, I’ll get the War Table and the Rankings Table working properly, and then I’ll be in a position to implement some of the other features of the old system.
+I have a plan in mind for constructing pages of features, which I will experiment with a bit when I have some features to do it with.
+
+I hope it gets more fun after this.
+I mean, it’s kinda fun for me to see it all coming together, but it’ll be better when it’s fun for you guys too. Here’s a pretty picture:
+
+<Image src={fullsteam} alt="AWS performance graphs jumping up" width={854} />
+<caption>Lambda invocations take a salmon leap</caption>
+<p/>

@@ -1,0 +1,55 @@
+---
+title: 'Oh What A Tangled Web We Weave'
+pubDate: 2018-08-18
+description: "when first we practise with JAM stack"
+author: 'DrFriendless'
+tags: ["features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import tangled1 from "/public/img/blog/tangled1.png"
+import tangled2 from "/public/img/blog/tangled2.png"
+
+I’ve spent the day working on cleaning up a few things.
+When I started this project I didn’t know what could succeed, and I tried a few different ways of doing things.
+Time has shown me better ways, so I’ve gone back and revised a lot of things.
+
+I’ve extracted two JavaScript libraries – one for the various data structures that I send around between the server and the client, and one for common user interface components (in particular, the charts).
+Extracting the charts out should make it easy to stick them into other views.
+I also need to extract the documentation component, and push some more stuff into the table component so that they can be reused as well.
+The tabbed view in the documentation has me a bit confused at the moment.
+I don’t really understand the template stuff they’re using, so I can’t fiddle with it.
+
+<Image src={tangled1} alt="The updated navigation bar" width={854} />
+<caption>The new-look navigation bar</caption>
+<p/>
+
+
+I also updated the navigation bar to be more garish, and kinda like how it has turned out.
+It’s starting to give the site that look of game pieces all over the table that I’m going for.
+
+I’ve also been working on a page that represents a geek.
+The more I think about the old site with the geek page with a variety of tables and diagrams on it, the more I think that’s not suitable for this site.
+On that site you scroll through a lot of stuff, I want this one to be more about poking around and discovering things.
+
+The way I see it at the moment, there will be a relatively small number of different pages, but each of them will be quite complex.
+I need to sit down with the old site and plan out what those pages will be.
+Then from the geek page shown below, there will be a number of coloured squares that link to those pages.
+The squares will contain a little bit of data of their own, but I was too tired today to put it in there so they’re mostly blank at the moment.
+
+<Image src={tangled2} alt="The new geek page" width={854} />
+<caption>Design of the geek page</caption>
+<p/>
+
+You might also notice the login button hanging in there causing trouble still.
+Between the CDN caching stuff, Auth0 demanding https, and the insolent damn thing not want to go to the right-hand side of the page, it’s wearing me down.
+However at least now it’s a nice colour.
+Work will continue on that.
+
+But anyway, this thought process led to the conclusion that the user collection page, e.g. http://test.drfriendless.com/collection.html?geek=Gecko3D, which is not very useful, is not very useful because I’m not clear where it’s going.
+And that’s practically the last step before it going somewhere.
+
+In my method of work, ideas come together when I make a Big Diagram.
+I even have a big drawing book for such events.
+I think I’ve arrived at a point where I know what the next Big Diagram has to have in it.
+No really, this is a great thing!

@@ -1,0 +1,57 @@
+---
+title: 'On Our Selection'
+pubDate: 2018-08-04
+description: "I seen 'im just now up in your paddick, an' he's clean off he's pannikin"
+author: 'DrFriendless'
+tags: ["technology","design"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import onour from "/public/img/blog/onour.jpg"
+import vega from "/public/img/blog/vega0.png"
+
+<div style="float: left; width: 230px">
+<Image src={onour} alt="Mother, from the Dad & Dave stories" width={214} />
+<br/>
+<caption>She had wonderful faith in the selection, had Mother.</caption>
+<p/>
+</div>
+
+One of the more complicated features of the old site is a thing called selectors.
+They were an idea I thought of long after the initial code was written, but they were so handy to me that I retrofitted them a bit.
+
+Essentially a selector is a rule that describes a set of games.
+As there are many sets of games involved in the site, having an easy way to describe them is useful.
+In the old site, it was mostly the case that the rules for choosing games for a feature were hard-coded,
+meaning that if I hadn’t chosen the right set of games for every interesting case, the site continued to suck.
+
+However having had that idea once, I am too smart to let it go this time.
+So for the Favourites and Collection pages (the only ones that are working at the moment) I’ve encoded the rule about what games are displayed as a selector.
+When I get around to working on the table widget, I’ll make the selector editable, so then you’ll be able to choose your own set of games for each widget.
+
+Another thing that has changed since I wrote the first site is a technology called Ajax, or XML HTTP Request.
+Those of you who are old may remember a time when you loaded a web page and you sat there and looked at it and it sat there and looked at you, and you were both stolidly passive.
+And then some pages started doing this thing where you would do a thing and they would change.
+Well the thing that enabled that was Ajax, which allowed the web page to load new data from the server after the page was loaded.
+That technology only entered the standards process about when I started designing the site, so I didn’t know about it and didn’t use it.
+
+These days though, it’s very easy to do.
+It’s built-in to the technology I’m using to develop the widgets on the web pages (Angular, by the way), so there will be a whole lot of it going on.
+Which means that generally the widgets on the pages will be a whole lot more interactive and fun to fiddle with.
+And selectors is one of the things you’ll be able to fiddle with.
+
+There’s a test page for selectors, which has the documentation and a test bed so you can try selectors out.
+It’s supposed to be here:
+
+https://extstats.drfriendless.com/selectors.html
+
+At the time of writing I’m waiting for the CDN to find that page and make it available.
+As I add more selectors I’ll add them to that page, because that’s the page I’ll be using to see whether they’re working.
+
+One more thing before I go.
+I went to a talk at MongoDB the other night, and they are using this library called Vega for their charting tool.
+I think I might have a use for it myself.
+
+<Image src={vega} alt="Vega demonstration images" width={854} />
+<caption>I want it all and I want it now</caption>
+<p/>

@@ -1,0 +1,22 @@
+---
+title: "Hey, There's a Blog!"
+pubDate: 2018-06-29
+description: "As if you wouldn't get my opinions on a platter"
+author: 'DrFriendless'
+tags: ["meta"]
+layout: ../../layouts/BlogLayout.astro
+---
+I need to start onboarding people to the new site, because some people have been waiting months for any acknowledgement from me that they can have stats.
+And if I’m going to give users a site under development, I’d better at least have some way of telling them how that development is going.
+So, there’s a blog.
+I am not a very arty person so it’s likely to be a kinda clunky boring blog.
+
+Anyway, this evening I’ve been working on getting some bugs out of the downloader.
+Some people on the user list have deleted their BGG accounts, and the downloader was very confused about why they had no games.
+So I had to get those people off the list and then get the downloader to delete them from the database.
+
+I also added a dashboard so I can see which Lambda functions are giving errors.
+That has been extremely useful.
+
+For those who know about AWS, the blog is hosted on a teensy weensy EC2 instance.
+So that bit is not serverless.

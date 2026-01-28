@@ -1,0 +1,79 @@
+---
+title: "Watch Out, There Might Be COOKIES."
+pubDate: 2018-07-21
+description: "No, not the kind the Dark Side has"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import cookies1 from "/public/img/blog/cookies1.png"
+import cookies2 from "/public/img/blog/cookies2.png"
+import cookies3 from "/public/img/blog/cookies3.png"
+
+I was watching ABC TV this morning, and some commentators from “Download This Show” were talking about digital privacy.
+They mentioned that cookies were used to track you all across the internet and invade your privacy blah blah blah.
+As I work closely with digital marketing people I have to know a bit about that sort of thing, and I’m not scared of it, but I figure I should tell you guys a bit about potential privacy things.
+
+First of all, cookies.
+The old site has cookies.
+I use them to store information you want me to know about your preferences, e.g. screen size and what features you want on your custom page etc.
+Whenever you come to the site, your browser sends me the cookies and I look in them to see what to do.
+I don’t know your identity, though it is extremely likely that if you’ve put your BGG user name in the cookie that you’re that same person.
+But you could put my BGG user name in there if you like. That’s about all cookies are good for.
+
+However, the privacy stuff gets a bit more interesting once you combine it with “pixels” and tracking.
+A pixel used to be exactly what it says.
+The page includes a one pixel image which is too tiny to be seen really.
+However, that pixel is loaded from Facebook.
+So when your web browser goes to load that pixel from Facebook, it gets told “Facebook user John Farrell requests this pixel because he’s looking at extstats.drfriendless.com” or whatever.
+So then Facebook knows what you’re looking at, because the person who made the website (me) put the Facebook pixel on the page.
+
+This is very very common on the internet.
+You’d be appalled.
+I have a browser plugin called WASP.inspector which tells me how many pixels get installed by a page. news.com.au just downloaded 295 of them in the page.
+Practically every site you go to has such stuff on it.
+
+Now what the Facebook pixel does is reports back to Facebook that you went to this page.
+It doesn’t tell me who you are, that information stays with Facebook.
+But it does mean that if someone goes to Facebook advertising and says “I want to sell stuff to people who like board games”, Facebook can identify you as such a person.
+Facebook does not tell the seller who you are, they just take that seller’s ad and stick it on your page.
+So it’s really only Facebook who knows everything about you, and hey, you knew that Facebook knew that stuff anyway, didn’t you?
+
+So, on drfriendless.com I use this thing called Google Tag Manager, which is a place where I can configure all of the pixels I want to dump on you,
+i.e. all of the third parties who will find out that you visited my site.
+As I have no particular need to tell Facebook that you were there, there is no Facebook pixel in my GTM, so Facebook does not know that you came to DrFriendless.com.
+The only thing I do use is Google Analytics.
+
+Analytics is a Google product which tells me a bit about my visitors.
+Some of the graphs it produces are shown below. Now you know that a person like me who creates a site like this wants those stats! So that is the evil privacy-invading tracking that I’m doing.
+
+<div style="display: flex-box; flex-direction: row; justify-content: space-between; align-content: flex-start; gap: 10px">
+    <Image src={cookies1} alt="When do your users visit?" width={340} />
+    <Image src={cookies2} alt="Sessions by country" width={340} />
+    <Image src={cookies3} alt="Sessions by country" width={600} />
+    <br/>
+    <caption>Sample data from Google Analytics</caption>
+    <p/>
+</div>
+
+As for the future, I intend to be very transparent about privacy.
+The new General Data Privacy Regulations in Europe kinda require it, as I am operating in the European market, and I think the rules they have are sensible.
+So I’ll comply with them as much as I can from the ground up.
+
+I also intend to allow users to log in to the site.
+This won’t be a requirement to get your stats, that will be public as always, but there are some ideas I have that require that I associate data with you, and for that I need to know your identity.
+And like the cookies on the old site, there will be only circumstantial evidence that links your account on drfriendless.com to your BGG account.
+
+And as for pixels, I think it’s fair to say that I’ll tell you if I add more tracking pixels to tag manager.
+It might be, for example, that I add the ability to play games online to the site, and one day I need to advertise on Facebook to get more users.
+So then I could add the Facebook pixel to the site, and tell Facebook “I want more people who are like the people I already have”.
+I think that would be a reasonable use case.
+
+Oh, and finally before I go, I should tell you that you can block this tracking stuff.
+I used to run Chrome extensions called Ghostery and Disconnect that stop the pixels, although I don’t know how.
+I know they worked though, because for days I couldn’t get work’s Google Tag Manager integration happening on my laptop.
+I eventually realised that if I wanted to test tracking pixels I had to stop blocking them.
+Hence now wherever I go all of my privacy gets invaded.
+On the other hand, Facebook ads do occasionally show me things I want, which is a pleasant change.
+

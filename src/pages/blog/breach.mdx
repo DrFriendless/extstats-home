@@ -1,0 +1,81 @@
+---
+title: 'Once More Into the Breach!'
+pubDate: 2018-07-29
+description: "Cry ‘Havoc,’ and let slip the dogs of war"
+author: 'DrFriendless'
+tags: ["technology","features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import breach from "/public/img/blog/breach.png"
+import faves from "/public/img/blog/faves0.png"
+import auth0 from "/public/img/blog/auth0.png"
+
+It really has been trench warfare this week. My last post was about the database crash.
+That took a day to get better by itself, but after discussing the matter with the AWS people on reddit, I decided that this was definitive proof that the database was too small, so I dumped it and got a bigger one.
+Which is a shame, because I think I already paid $79 for that small one.
+
+<Image src={breach} alt="Database performance graph" width={854} />
+<caption>The database hovers between life and death for a week</caption>
+<p/>
+
+Anyway, the bigger one is still not very big, but if I recall correctly it will cost about $20 / month.
+When I get some funding for the project I’ll probably upgrade again, but for the moment I’m struggling along with this one.
+
+The graph above shows CPU used in orange.
+It’s good when that’s high, it means I’m doing stuff.
+The blue and green lines are the ones that broke the database during the crash, and they must not be allowed to touch the bottom.
+Particularly notice when the blue line hit the bottom it stayed there for most of the day and the site was broken.
+So let’s not do that.
+
+So in response to this problem, I made some changes so that I can control the amount the downloader is doing from the AWS console.
+So in the graph, if the orange line goes down and the green line goes up, that’s because I turned off the downloader.
+And then later I turn it back on again. The initial download of games is about half done, so I expect another week or two of this!
+
+<Image src={faves} alt="The favourites table has data in it!" width={854} />
+<caption>The Favourites Table</caption>
+<p/>
+
+On the other hand, the good news is that there are plays in the database, so I started using them.
+My project yesterday was the favourites table, for which I had to write a few methods to retrieve plays data.
+That bit is working just fine, and the indexes I have on the plays make it very fast.
+
+The table comes with documentation which explains what the hard columns are, and the column headers have tooltips.
+There are other things about the table, like the pagination, which still annoy me, but I’m still thinking about what I want there.
+Some sort of mega-cool table with bunches of features which is used in all the different table features on the site…
+
+That was a major advance, so I decided today to follow up with some trench warfare, and had another shot at authentication.
+This is so that you can login to the site IF YOU WANT TO.
+I went back to trying to use Auth0, which has approximately the world’s most useless documentation.
+When I implement a security system I want to know:
+
+* where do the secrets go?
+* how can I trust them?
+* what do I have to do?
+
+Auth0 insists on telling you to type some stuff in and it will all work.
+It doesn’t say where to type stuff in, or what working means, or what I have to do.
+I know security is complicated, but that doesn’t mean you shouldn’t even try to explain it, it means you have to be very clear.
+It’s so frustrating.
+
+<Image src={auth0} alt="Authentication dialog" width={854} />
+<caption>You can sign in but why would you?</caption>
+<p/>
+
+But anyway, after a lot of failures I got this thing called Auth0.Lock “working”, in the sense that when you click Login it comes up, you can type in a username and password, and then it's happy.
+I get told some stuff in the web page about who you are.
+
+The remaining problems with this are:
+
+* when the web page tells the server “I logged in as this person”, how do I know the web page isn’t lying? Never trust stuff coming to the server from a web page.
+* there are pieces of information that the client can tell the server, and then the server can ask Auth0 “is this legit?”… but I am not yet getting those pieces of information.
+* I have to change all of the login apparatus in the web page once you’ve logged in, to say that you’re now logged in and you could log out. But that’s not really confusing, that’s just work.
+
+One of the changes I had to make to get this going was to change extstats.drfriendless.com from http to https.
+That should have been a quick operation as I did the same for www.drfriendless.com, but I screwed it up and it took over an hour.
+Https is better for everybody, except the bit that adds the ‘s’ on is a CDN (content delivery network) which caches my pages, so it means whenever I make a change to extstats.drfriendless.com I need to invalidate the caches and then wait for them to repopulate.
+And that’s a pain.
+
+Nevertheless, I’m pretty optimistic that Auth0 will start playing more nicely with me now that I’m past the first 20 hurdles.
+Once I get that going, I’ll be able to associate your login identity stuff like what features you want to see.
+And then I will really have to implement some more features that are worth seeing.

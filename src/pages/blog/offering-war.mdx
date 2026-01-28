@@ -1,0 +1,59 @@
+---
+title: 'An Offering of War'
+pubDate: 2018-07-15
+description: "The return of an audience favourite"
+author: 'DrFriendless'
+tags: ["features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import war from "/public/img/blog/war.jpg"
+
+<div style="float: right; width: 360px; margin-left: 10px">
+    <Image src={war} alt="A pretty cool bronze statue of a guy on a horse" width={340} />
+    <br/>
+    <caption>Offerings of War, by Gilbert Bayes</caption>
+    <p/>
+</div>
+
+“The Offerings of War” is a statue at the entrance to the Art Gallery of New South Wales.
+I'm not a really arty person, but I do like that statue and many other exhibits in that gallery.
+However that is not what this blog is about.
+
+Whenever I can get a spare 36 hours I’ve been working on the new site.
+The downloader is working quite well, chugging away gathering data, and it had caught up to me, in that it had downloaded everything I had told it to and I needed to tell it to do some more stuff.
+In particular it needs to download plays. It knows there are 231064 (actual number) instances of a geek having played games in a month that it needs to get data on, but I hadn’t written that code yet.
+So I started doing that.
+
+Getting the raw plays data is relatively easy, but Extended Stats does not run from raw data.
+Extended Stats tries to be smart and says “Hmm, he played Roll for the Galaxy: Ambition, so he must have played Roll for the Galaxy as well. I’ll put that in.”
+Which is all well and good but I hadn’t done the bit where I record which game is an expansion of which other game, so I had to do that first.
+So now I am reprocessing 61575 games to find out what all the expansions are.
+It’s working well, but there are 45036 to go.
+
+And then I wrote the plays logic, but I won’t start running it seriously until the expansions are done, or it will look silly.
+And until the plays are downloaded, there will be gigantic holes in the data.
+
+I was a bit stymied in that direction, so I turned my efforts to the user interface.
+From the user point of view, the web pages are all there is to Extended Stats, so I have to deliver some of them at some point.
+One thing I was missing was the War Table.
+Originally called the Pissing War Table, and renamed to suit the sensibilities of those who weren’t raised in the Australian scrub like I was, the War Table is where geeks can compare their geek cred.
+It also serves as a directory of everyone on the site and a way to find a link to your personal page. Here’s the new page:
+
+https://extstats.drfriendless.com/wartable.html
+
+The War Table boasts a number of cool features.
+First of all, I plan to be reusing the table component in a lot of pages, so I forked my own version of it.
+The plan is that I will be able to upgrade the table which will improve all of the places which use it –
+for example, I would like a search box which you can use to find a particular entry in the table.
+However no such upgrading was done today.
+
+I then added tooltips to the column headers, because I know that these columns can be a bit meaningless if you don’t know what they are.
+And then I went the whole hog and added a Documentation button, which opens up into a few tabs of doco where I can explain exactly what’s going on.
+
+I’m not completely pleased with the War Table.
+It doesn’t look exactly how I want it.
+The pager buttons down the bottom are the wrong colour and I can’t figure out why.
+There are rounded corners on things when I want square.
+However I’ll probably bring those pager buttons up to the top of the table, and somehow show the Documentation button, the page flicker, the page size chooser, and the search box all into one row.
+However domestic duties call, and I must make an Offering of Peace to Scrabblette.

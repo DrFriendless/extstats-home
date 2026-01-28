@@ -1,0 +1,46 @@
+---
+title: 'The Bill for July'
+pubDate: 2018-08-05
+description: "Charge 'em for the lice, extra for the mice"
+author: 'DrFriendless'
+tags: ["technology","costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import billjuly from "/public/img/blog/billjuly.png"
+
+I got the AWS bill for July, and it’s not quite as amusing as the one for June was.
+It’s not going to destroy the project, but it does show that I need to keep an eye on costs.
+
+<Image src={billjuly} alt="Itemised AWS bill" width={854} />
+<caption>I know what most of those things are</caption>
+<p/>
+
+Going through the significant line items, CloudWatch is one that I didn’t really want to see there. CloudWatch is cool – it’s where a lot of the graphs that I post come from.
+I had 4 dashboards showing me graphs, and it seems I only get 3 for free, and the 4th cost me $2.87.
+As I didn’t use it anyway, I trashed it.
+
+The other component of CloudWatch is a charge for data sent to the lambda logs.
+It’s not for storing that data, it’s just for getting it there.
+I was warned weeks ago that that was going to be a problem so I cut down the amount of logging I was doing.
+Still, there has been a lot of activity this month due to the plays download, so there was always a bit of logging from that.
+Let’s see how it goes next month.
+
+The Data Transfer costs are small so far, but I’m not sure whether they’re for me downloading data or for me sending out requested data.
+If it’s the latter, the site is in trouble when I start advertising it to 3000 users.
+Let’s watch that one.
+
+The Elastic Compute Cloud costs are for the blog.
+I realised that cost was coming so during the month I decreased the size of the virtual machine that the blog was hosted on, and that cost should be less next month.
+
+The costs for Lambda are for way exceeding the free quota of time and compute power.
+I suspect that is also related to the plays download.
+
+The Relational Database Service costs are for the database, and that one will probably go higher next month.
+As mentioned in previous posts I had to upgrade the database during the month so that it could cope with the plays download load, and it’s still not doing that well.
+The good news is that for about double the cost I think I can start using AWS Aurora, which allegedly has very good performance.
+So when I organise a revenue stream for the site that might be resolved. Until then it will be coming out of my pocket.
+
+As mentioned last month, it’s not too bad, but the costs definitely remain one of my priorities.
+When I start asking for Patreon contributions and putting ads on the site, you’ll know why.
+It’s not because I’m trying to profit from the site, but because something of this scale costs money under any circumstances.

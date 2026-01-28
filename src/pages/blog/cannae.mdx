@@ -1,0 +1,28 @@
+---
+title: "She Cannae Take Any More, Cap’n!"
+pubDate: 2018-07-23
+description: "it's worse than that, he's dead Jim"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import cannae from "/public/img/blog/cannae.png"
+
+So, a couple of hours after I wrote the blog post last night saying how everything was going full steam ahead, it all blew up.
+This morning, many bits of the system which were working just fine are failing.
+This points to the database, which is at the heart of everything, and all indications are that it broke at about midnight.
+
+<Image src={cannae} alt="Database performance graphs" width={854} />
+<caption>Graphs of database failure</caption>
+<p/>
+
+I had a poke around,  and eventually found the BurstBalance metric.
+In the top right graph, it’s the orange one that dives into the ground and bounces up.
+
+What it seems to be is that if you overuse your database (in particular, the database’s disk) , you eat into your overuse credits, i.e. the burst balance.
+And at midnight I ran out of burst balance so the database stopped responding.
+
+Well, that’s something I learned today.
+At least now I know to watch this when the system  is under proper load.
+It’s also a good indication of when it’s time to fork out for a bigger database.

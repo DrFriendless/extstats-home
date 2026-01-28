@@ -1,0 +1,39 @@
+---
+title: 'Ooh, I got the bill!'
+pubDate: 2018-07-06
+description: "Not gonna lie, was worried about this"
+author: 'DrFriendless'
+tags: ["technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import bill from "/public/img/blog/spend.png"
+
+One of the thrilling things about cloud computing is sticker shock.
+It’s OK once you’ve established your pattern of usage and know roughly how much you’ll pay each month, but for an experimenter like me, strange things can happen.
+Like that time last year I tried something out, it didn’t work, then a month later I got a bill for $40 because I hadn’t deleted a thing and I didn’t even know what the thing did.
+So it was that this month I was a bit worried, as the site had been running somewhat properly for a few weeks.
+
+So after that stress, $12 is good news!
+It suggests that I’m doing something right and that I can keep this up.
+
+<Image src={bill} alt="Monthly AWS spend by service" width={854} />
+<caption>A number I can live with</caption>
+<p/>
+
+I’ll explain what the bits are.
+RDS is Relational Database Service – the database.
+AWS does automatic backups and so on – we tried it at work the other day, it’s pretty nice – so for that money they’re keeping our data safe.
+EC2 is the virtual computer that the blog runs on.
+It’s a tiny one, so it could be free, but I think I used up my quota of free EC2s already.
+Route 53 is the DNS (Dynamic Name Service),  i.e. the bit that tells the world where stats.drfriendless.com, extstats.drfriendless.com, api.drfriendless.com and blog.drfriendless.com are –
+they are all different computers, if they exist at all.
+Data transfer is costs for downloading from BGG. 4c seems reasonable.
+Of the “other” 5c, 4c is for S3 (Something Simple Storage) which is like a big hard drive, and 1c is for API Gateway,
+which is the bit that implements api.drfriendless.com by turning API requests into calls to lambdas.
+
+There’s no charge for Lambdas, as I seem to be under the free limit still.
+When I get more stuff going I might have to pay 20c for that.
+However that is where I’ve put most of my effort recently – trying to keep them small, and trying to make them do their job and not run uselessly.
+
+I love it when a plan comes together.
