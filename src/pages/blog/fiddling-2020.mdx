@@ -6,8 +6,13 @@ author: 'DrFriendless'
 tags: ["design","Angular"]
 layout: ../../layouts/BlogLayout.astro
 ---
-<img src='/img/blog/rome_burns.jpg'
-     alt="Rome burns, AD64. This is fine."/>
+import { Image } from 'astro:assets';
+import rome from "/public/img/blog/rome_burns.jpg"
+import fiddle from "/public/img/blog/fiddle-2020.png"
+
+<Image src={rome} alt="Rome burns, AD64." width={854} />
+<caption>This is fine</caption>
+<p/>
 
 When I was writing the “Best Days in Gaming” table the other day, I realised that there were 3 parameters that I used which were sort of arbitrary.
 And I also realised that it probably wouldn’t be too hard to allow users to change them – Angular is really good at that sort of stuff.
@@ -15,8 +20,9 @@ And I also realised that it probably wouldn’t be too hard to allow users to ch
 So last night I sat down and wrote the code, and I really liked how it turned out. It has gone live already so you can check it out.
 I had to give the button to get to it a name, so I called it “Fiddle”.
 
-<img src='/img/blog/fiddle-2020.png'
-     alt="Scteenshot of the fiddle interface"/>
+<Image src={fiddle} alt="Screenshot of the fiddle interface" width={854} />
+<caption>Come on Nero, show us what you can do with this</caption>
+<p/>
 
 And then today I decided I could do the same thing for a couple of other charts on that page, so now the Florence Nightingale diagram and the Most Played Games by Year chart have Fiddle buttons as well.
 I think this will become a thing.

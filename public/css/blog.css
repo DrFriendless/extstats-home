@@ -1,0 +1,42 @@
+span.tag {
+    margin: 3px;
+    padding: 2px 4px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+span.tag a {
+    text-decoration: none;
+    color: gray;
+    font-weight: bolder;
+}
+span.tag a:hover {
+    color: black;
+    font-weight: bolder;
+}
+.blog-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.blog-content {
+    padding-left: 18px;
+    padding-right: 18px;
+    max-width: 1000px;
+}
+.blog-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.blog-title {
+    margin-bottom: 16px;
+    margin-top: 20px;
+    font-size: 40px;
+    font-weight: 500;
+}
+.blog-description {
+    margin-bottom: 30px;
+    font-style: italic;
+}
