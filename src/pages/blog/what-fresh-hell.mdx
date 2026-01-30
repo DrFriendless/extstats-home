@@ -1,0 +1,35 @@
+---
+title: 'What Fresh Hell is This?'
+pubDate: 2026-01-30
+description: 'Finances Friday pays off again'
+author: 'DrFriendless'
+tags: ["costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import fresh1 from "/public/img/blog/fresh1.png"
+import fresh2 from "/public/img/blog/fresh2.png"
+
+I just remembered it was Friday - these short weeks are difficult - and so it was Finances Friday, it wasn't "Happily Adding New Features Day" as I had hoped.
+I killed off the old blog server a couple of days ago so I was hoping for a nice number.
+
+The good news is that costs are very low, although there was no sign of a decrease due to killing the blog server.
+However there was this mysterious green lump in the graph.
+It was only a lump of about $2 per day, but as I didn't ask for it I needed to investigate.
+
+<Image src={fresh1} alt="Graph of AWS costs per service per day" width={854} />
+<caption>Big green lumps belong on Shrek, not in my costs</caption>
+<p/>
+
+It was attributed to "EC2 Other", which is not a thing I remember buying.
+A bit of investigation suggested that it was due to excess CPU usage.
+Standard CPU usage for the EC2 (I only have one) is about 1%, so it was unusual that it was at about 50% for a few days.
+I don't really get why I would be charged extra for using my CPU 50% of the time when I'm already paying for it, but I'm sure such things make sense in the AWS world.
+
+<Image src={fresh2} alt="Graph of various EC2 server performance metrics" width={854} />
+<caption>The high green line caused the blue line to fall down, so the purple line kicked in which cost me money</caption>
+<p/>
+
+Anyway, it seems to have been caused by the bug I posted about on Tuesday, as the timeline and symptoms match.
+Oh well, I must stop putting bugs in.
+At least my processes caught it fairly quickly.
