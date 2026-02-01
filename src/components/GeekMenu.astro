@@ -7,6 +7,7 @@ const GEEK_SUB_MENUS = [
     { id: "geekmonthly", style: "geek-monthly", name: "By Month" },
     { id: "geekyearly", style: "geek-yearly", name: "By Year" },
     { id: "geekcomparative", style: "geek-comparative", name: "Compare" },
+    { id: "geekdiscover", style: "geek-discover", name: "Discover" },
     { id: "geekupdates", style: "geek-updates", name: "Updates" },
 ];
 ---
@@ -36,6 +37,7 @@ function showHideGeekButton() {
         document.getElementById("geekmonthly").setAttribute("href", "monthly.html?geek=" + geek);
         document.getElementById("geekyearly").setAttribute("href", "yearly.html?geek=" + geek);
         document.getElementById("geekcomparative").setAttribute("href", "multiplays.html?geek=" + geek);
+        document.getElementById("geekdiscover").setAttribute("href", "discover.html?geek=" + geek);
         document.getElementById("geekupdates").setAttribute("href", "updates.html?geek=" + geek);
     } else {
         document.getElementById("geekmenu").classList.add("hidden");
