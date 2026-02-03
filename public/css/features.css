@@ -1,0 +1,41 @@
+.fc-item.default {
+    font-weight: bold;
+}
+.table.extstats-table tbody tr:nth-child(even){
+    background-color: var(--even-colour);
+}
+.table.extstats-table tbody tr:nth-child(odd){
+    background-color: white;
+}
+.table.extstats-table th {
+    background-color: var(--primary-colour);
+    color: var(--text-colour);
+}
+.table.extstats-table thead a {
+    color: var(--text-colour);
+}
+.extstats-page-item.active {
+    background-color: var(--even-colour);
+}
+table.extstats-table td,
+table.extstats-table tbody,
+table.extstats-table thead,
+table.extstats-table.table thead th {
+    border-color: var(--primary-colour);
+}
+.table.extstats-table thead td,
+.table.extstats-table tbody td {
+    border-right-width: 0;
+    border-left-width: 0;
+}
+.extstats-table-controller {
+    background-color: var(--primary-colour);
+    color: var(--text-colour);
+    border: 1px solid var(--primary-colour);
+}
+.extstats-table-controller a.extstats-page-link {
+    color: var(--text-colour);
+}
+.features-header p {
+    text-align: left;
+}
