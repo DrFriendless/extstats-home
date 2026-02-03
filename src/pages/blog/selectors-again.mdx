@@ -1,0 +1,50 @@
+---
+title: 'Selectors Revisited'
+pubDate: 2026-02-03
+description: "God say you can do what you want Abe, but..."
+author: 'DrFriendless'
+tags: ["technology","design"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import pogo from "/public/img/blog/pogo-no-exps.png"
+import combo from "/public/img/blog/combo.png"
+
+Alert users may have noticed the recent appearance of a selector combo on some pages.
+It looks like this:
+
+<Image src={combo} alt="The selector combo box" width={854} />
+<caption>This is how you change the page's selector</caption>
+<p/>
+
+Not all pages use selectors, so not all pages have the combo box.
+
+Let's go over what selectors are for those who don't remember from <a href="/blog/selection.html">last time I blogged about them</a>.
+A selector is an expression which describes a set of games (where a game is a thing listed on boardgamegeek as a game).
+Examples include "games played by Friendless", "games owned by jmdsplotter", "books", "expansions", and "games played by Friendless and by jmdsplotter".
+
+Examples which are not selectors include "all games", and "games not played by Friendless", because those sets of games would be so large that it would blow up my database to talk about them.
+Basically selectors are a way of describing queries against games based on the data in my database, that can be composed in sensible ways.
+
+They're important to me because it turns out that the various feature pages (where the graphs and tables are) make more sense when different selectors are applied to the data.
+When talking about your favourite games, it makes sense to talk about the games you've rated.
+When talking about utilisation of your collection, it makes sense to talk about the games you own.
+
+Selectors can also not make sense for a given context.
+If I'm making recommendations to you about games you might like to try, it does not make sense to select those from games you've rated - obviously you have an opinion already!
+On the other hand, sometimes you'll want to know the data on a page for a selection other than the one I default to.
+For example, you might care about how many times you've played games you own, without caring about books or expansions.
+And that's when the selector combo comes in useful:
+
+<Image src={pogo} alt="Plays of Games Owned chart, excluding expansions and books" width={854} />
+<caption>Plays of Games Owned chart, excluding expansions and books</caption>
+<p/>
+
+So I've stuck the selector combo on a few places where it can do something, but I make no guarantees as to whether that something is useful or meaningful!
+And it's very likely there will be display errors as the pages are given data they weren't expecting - I'll clean those up as I notice them.
+
+Now that selectors are available as a feature I'll be motivated to implement more of them, e.g. "abstract games", "games by Uwe Rosenberg" and so on.
+That will mean there will be huge numbers of combinations, and the combo box could become quite enormous.
+At that point I'll need to revisit the items that are in it and remove the meaningless ones.
+The combo box has little hearts so you can mark your favourite selectors, but at the moment those get ignored.
+I expect they will be part of the solution, in the future.
