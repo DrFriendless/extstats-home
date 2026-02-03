@@ -1,6 +1,9 @@
 .fc-item.default {
     font-weight: bold;
 }
+.table.extstats-table {
+    border-collapse: collapse;
+}
 .table.extstats-table tbody tr:nth-child(even){
     background-color: var(--even-colour);
 }
