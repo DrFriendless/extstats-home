@@ -5,26 +5,26 @@
     border-collapse: collapse;
 }
 .table.extstats-table tbody tr:nth-child(even){
-    background-color: var(--even-colour);
+    background-color: var(--even-colour,gray);
 }
 .table.extstats-table tbody tr:nth-child(odd){
     background-color: white;
 }
 .table.extstats-table th {
-    background-color: var(--primary-colour);
-    color: var(--text-colour);
+    background-color: var(--primary-colour,red);
+    color: var(--text-colour,white);
 }
 .table.extstats-table thead a {
-    color: var(--text-colour);
+    color: var(--text-colour,white);
 }
 .extstats-page-item.active {
-    background-color: var(--even-colour);
+    background-color: var(--even-colour,gray);
 }
 table.extstats-table td,
 table.extstats-table tbody,
 table.extstats-table thead,
 table.extstats-table.table thead th {
-    border-color: var(--primary-colour);
+    border-color: var(--primary-colour,red);
 }
 .table.extstats-table thead td,
 .table.extstats-table tbody td {
@@ -32,13 +32,38 @@ table.extstats-table.table thead th {
     border-left-width: 0;
 }
 .extstats-table-controller {
-    background-color: var(--primary-colour);
-    color: var(--text-colour);
-    border: 1px solid var(--primary-colour);
+    background-color: var(--primary-colour,red);
+    color: var(--text-colour,white);
+    border: 1px solid var(--primary-colour,red);
 }
 .extstats-table-controller a.extstats-page-link {
-    color: var(--text-colour);
+    color: var(--text-colour,white);
 }
+
 .features-header p {
     text-align: left;
+}
+
+div.extstats-doc button {
+    border: 1px solid var(--tab-border-colour,black);
+    border-radius: 0;
+    margin: 4px;
+}
+div.extstats-doc .nav-tabs {
+    --bs-nav-tabs-link-active-border-color: var(--tab-border-colour,black) var(--tab-border-colour,black) transparent;
+    --bs-nav-tabs-border-color: var(--even-colour,gray);
+}
+div.extstats-doc .tab-container {
+    margin-top: 0.75rem;
+}
+div.extstats-doc .tab-container .nav-tabs {
+    margin-bottom: 0.5rem;
+}
+div.extstats-doc li.nav-item a.nav-link.active {
+    color: black;
+}
+div.extstats-doc li.nav-item a.nav-link {
+    color: gray;
+    font-size: 14px;
+    border-radius: unset;
 }
