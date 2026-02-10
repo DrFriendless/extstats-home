@@ -26,6 +26,6 @@
   },
   {
     "title": "G-index",
-    "text": ["The largest number <b><i>g</i></b> such that the <b><i>g</i></b> players who have played the game the most times have played the game on average <b><i>g</i></b> times each. This is similar to the h-index but favours games that some people play alot."]
+    "text": ["The largest number <b><i>g</i></b> such that the <b><i>g</i></b> players who have played the game the most times have played the game on average <b><i>g</i></b> times each. This is similar to the h-index but favours games that some people play a lot."]
   }
 ]

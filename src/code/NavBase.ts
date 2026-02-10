@@ -35,7 +35,8 @@ export const devMenu: SubMenu = { name: 'Developer', style: 'nav-github', link: 
         // { link: "https://github.com/DrFriendless/ExtendedStatsServerless/blob/master/misc/Dev%20Doco.pdf", name: "Dev Doc" },
     ]};
 export const patreonMenu: SubMenu = { name: 'Patreon', style: "nav-patreon", link: "https://www.patreon.com/drfriendless", items: [
-        { link: "/silverton/silverton.html", name: "Silverton" }
+        { link: "/silverton/silverton.html", name: "Silverton" },
+        { link: "/wator.html", name: "Wa-Tor" },
     ]};
 
 export const userMenu: SubMenu = { name: "Users", style: 'nav-dataprot', link: "/user.html", items: [

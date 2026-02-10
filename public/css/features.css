@@ -1,54 +1,14 @@
-.fc-item.default {
-    font-weight: bold;
-}
-.table.extstats-table {
-    border-collapse: collapse;
-}
-.table.extstats-table tbody tr:nth-child(even){
-    background-color: var(--even-colour,gray);
-}
-.table.extstats-table tbody tr:nth-child(odd){
-    background-color: white;
-}
-.table.extstats-table th {
-    background-color: var(--primary-colour,red);
-    color: var(--text-colour,white);
-}
-.table.extstats-table thead a {
-    color: var(--text-colour,white);
-}
-.extstats-page-item.active {
-    background-color: var(--even-colour,gray);
-}
-table.extstats-table td,
-table.extstats-table tbody,
-table.extstats-table thead,
-table.extstats-table.table thead th {
-    border-color: var(--primary-colour,red);
-}
-.table.extstats-table thead td,
-.table.extstats-table tbody td {
-    border-right-width: 0;
-    border-left-width: 0;
-}
-.extstats-table-controller {
-    background-color: var(--primary-colour,red);
-    color: var(--text-colour,white);
-    border: 1px solid var(--primary-colour,red);
-}
-.extstats-table-controller a.extstats-page-link {
-    color: var(--text-colour,white);
-}
+/* Styles for the feature pages */
 
 .features-header p {
     text-align: left;
 }
 
-div.extstats-doc button {
-    border: 1px solid var(--tab-border-colour,black);
-    border-radius: 0;
-    margin: 4px;
+.fc-item.default {
+    font-weight: bold;
 }
+
+/* documentation widgets */
 div.extstats-doc .nav-tabs {
     --bs-nav-tabs-link-active-border-color: var(--tab-border-colour,black) var(--tab-border-colour,black) transparent;
     --bs-nav-tabs-border-color: var(--even-colour,gray);
@@ -66,4 +26,143 @@ div.extstats-doc li.nav-item a.nav-link {
     color: gray;
     font-size: 14px;
     border-radius: unset;
+}
+div.extstats-doc {
+    margin-bottom: 1rem;
+    font-size: 14px;
+    border-collapse: collapse;
+    border: none;
+}
+div.extstats-doc button {
+    color: #777777;
+    font-size: 14px;
+    line-height: 18px;
+    background-color: white;
+    border: 1px solid var(--tab-border-colour,black);
+    border-radius: 0;
+    margin: 4px;
+}
+
+button.extstats-button {
+    color: #777777;
+    font-size: 14px;
+    line-height: 18px;
+    background-color: white;
+    border-radius: unset;
+}
+.extstats-page {
+    display: flex;
+    width: fit-content;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+/* Aligning stuff on a features page */
+.extstats-page extstats-loader {
+    align-self: center;
+}
+.exstats-page .extstats-chart {
+    align-self: center;
+}
+.extstats-page .extstats-table-wide {
+    position: relative;
+    margin-left: min(calc((var(--content-width, 900px) - 100%)/2), 0px);
+    z-index: 1;
+    width: fit-content;
+}
+
+/* Tables */
+.extstats-table td, .extstats-table th {
+    padding: 0 4px;
+    border-top: 0;
+}
+.extstats-table {
+    border-collapse: collapse;
+    margin: 0;
+    border: none;
+}
+.extstats-table-block {
+    display: inline-block;
+}
+.extstats-table-controller {
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid white;
+}
+.extstats-table-controller .help {
+    display: inline-block;
+    flex-grow: 0;
+    height: 100%;
+    margin-left: 8px;
+    margin-right: 4px;
+}
+.extstats-table-controller input {
+    margin-top: 4px;
+}
+.extstats-pagination {
+    display: inline-block;
+    flex-grow: 0;
+    height: 100%;
+}
+.extstats-table {
+    border-collapse: collapse;
+}
+.extstats-table tbody tr:nth-child(even){
+    background-color: var(--even-colour,gray);
+}
+.extstats-table tbody tr:nth-child(odd){
+    background-color: white;
+}
+.extstats-table thead th {
+    background-color: var(--primary-colour,red);
+    color: var(--text-colour,white);
+}
+.extstats-table thead a {
+    color: var(--text-colour,white);
+}
+.extstats-page-item.active {
+    background-color: var(--even-colour,gray);
+}
+.extstats-table tbody,
+.extstats-table thead,
+.extstats-table thead th,
+.extstats-table thead td,
+.extstats-table tbody td {
+    border: 1px solid var(--primary-colour,red);
+    padding: 2px;
+}
+.extstats-table tfoot {
+    border: 0;
+}
+.extstats-table tfoot td {
+    padding-top: 1rem;
+}
+.extstats-table-controller {
+    background-color: var(--primary-colour,red);
+    color: var(--text-colour,white);
+    border: 1px solid var(--primary-colour,red);
+}
+.extstats-table-controller a.extstats-page-link {
+    color: var(--text-colour,white);
+}
+
+/* Other stuff */
+.filler {
+    flex-grow: 1;
+}
+.extstats-page-item {
+    width: 40px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+}
+.extstats-page-item:hover {
+    color: black;
+    background-color: white;
+}
+.extstats-page-item:hover a.extstats-page-link {
+    color: black;
+}
+td.date-column, th.date-column {
+    width: 100px;
 }
