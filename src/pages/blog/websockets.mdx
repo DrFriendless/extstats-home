@@ -1,0 +1,68 @@
+---
+title: 'Websockets'
+pubDate: 2026-02-19
+description: "Would thou wert clean enough to spit upon! - Timon of Athens"
+author: 'DrFriendless'
+tags: ["technology","DynamoDB"]
+layout: ../../layouts/BlogLayout.astro
+---
+I've been trying out some new technology this week, and as such it has been a very frustrating week.
+I'm just gonna vent a bit before I return to work to harvest the fruits of my labor, which surely must be growing heavy for the vintage.
+
+Websockets are a web technology which give you a full duplex connection between a web browser and a web server.
+The usual web model is that the browser just asks for what it wants to know, but if the server has stuff happening in the background that the user should know about,
+the browser will never find that out until it asks.
+The idea of a websocket is that the server can push messages out to the web browser.
+
+One place where this could be useful would be in web-based board games, for example.
+The server could push out what is happening other players take their turn.
+
+My particular use case is to push out notifications to logged-in users that their stats have been updated.
+This is not a particularly compelling use case, but I just wanted to play with the technology.
+So that's the first thing I'm doing with it.
+
+Of course in my case it's extra hard, because although a websocket is between the browser and the server, I don't really have a server.
+I have a whole lot of bits of AWS tacked together with string and rubber bands and blu tack, with a beer coast with the word "SERVA" written on it in crayon balanced on top.
+The absence of any substantial components makes the system more reliable!
+
+Luckily AWS has a solution for serverless websockets using API Gateway.
+API Gateway is basically the master technology for tacking together other things.
+So according to tutorials <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/websocket-api-chat-app.html">like this</a>,
+you can have serverless web sockets.
+
+Now that tutorial is the type I particularly hate, as it gives instructions for a whole lot of doing, and absolutely zilch understanding.
+So I looked at what it was saying, and decided to start at the end (Automate with CloudFormation) and start by writing the CDK code to build
+the infrastructure.
+And then I copied their Lambda code and futzed around for a day figuring out all the broken things.
+I got my websockets running (well, more like staggering, but it was enough) on host socks.drfriendless.com.
+
+The next part of the plan was to take that infrastructure and stick it into extstats.drfriendless.com, the hostname where I wanted to actually use the websocket.
+I soon a hit a problem similar to the one <a href="/blog/and-another-thing.html">discussed here</a>,
+but for the life of me I couldn't get the websocket to work using another hostname, not even by asking on reddit.
+
+Now the point of that plan was so that when my code connected to the server, it would send the login cookie, showing me that the user was already logged in.
+I suspect that was never going to happen, because I think websockets probably don't send cookies - until I can get it to work, I'll never know!
+
+So that left me with the problem of how to authenticate a connection to the websocket.
+I invented a scheme whereby when you log in I tell you a secret (called a chatter ID), and then when you connect to me via a websocket you have to tell me
+your login name and the chatter ID.
+Then I check my database to see whether that sounds legit or not.
+
+Now that tutorial I linked stores connection information in DynamoDB, and that seemed like a reasonable choice.
+The Lambdas involved are not running in my VPC, so I can't get to MySQL.
+However DynamoDB is accessible via an AWS gateway endpoint, meaning you can get to it for free from outside VPCs and from inside VPCs.
+I like free stuff.
+
+On the other hand, DynamoDB is a NoSQL database.
+If you never learned SQL that might seem like a cause for rejoicing, but in fact what it means is that there's no standard method of using it.
+You can use the AWS CLI, or the SDK v2, or the SDK v3, but even within the SDK there are blurry bits,
+e.g. <a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html">the Query API has legacy fields</a>.
+Maybe you could use the <a href="https://aws.amazon.com/blogs/developer/introducing-dynamodb-document-api-part-1/">DynamoDB Document API</a>,
+but that article's from 2014 so who knows what the state of that is?
+
+So it took me up to 2 days to figure out some code which worked to store chatter IDs in DynamoDB, then reject connections which didn't have a correct one.
+I finally got it all going and was able to connect to the websocket from a web browser and an external testing tool at the same time.
+Then I sent a message and the browser disconnected, for no obvious reason.
+That will be my next problem to solve.
+
+I just keep telling myself that I've got to work through this once, and whenever I need to do it again I'll be able to copy the code that works.

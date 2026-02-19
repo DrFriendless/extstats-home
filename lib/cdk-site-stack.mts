@@ -31,6 +31,7 @@ let STAR_CERT: acm.ICertificate | undefined;
 let STAR_CERT_GLOBAL: acm.ICertificate | undefined;
 let DRFRIENDLESS_ZONE: r53.IHostedZone | undefined;
 let API_REWRITE_FUNCTION: cf.IFunction | undefined;
+let SOCKS_HOST = "socks.drfriendless.com";
 
 export class StatsSiteStack extends cdk.Stack {
   defineTestBucket(): IBucket {
@@ -80,6 +81,21 @@ export class StatsSiteStack extends cdk.Stack {
             protocolPolicy: OriginProtocolPolicy.HTTPS_ONLY,
             httpsPort: 443,
             httpPort: 80,
+          })
+        },
+        "/socks/*": {
+          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          allowedMethods: AllowedMethods.ALLOW_ALL,
+          cachePolicy: CachePolicy.CACHING_DISABLED,
+          functionAssociations: [{
+            function: API_REWRITE_FUNCTION!,
+            eventType: FunctionEventType.VIEWER_REQUEST
+          }],
+          originRequestPolicy: OriginRequestPolicy.ALL_VIEWER,
+          origin: new HttpOrigin(SOCKS_HOST, {
+            protocolPolicy: OriginProtocolPolicy.HTTPS_ONLY,
+            httpsPort: 443,
+            httpPort: 80
           })
         }
       }
