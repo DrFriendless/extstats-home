@@ -15,6 +15,7 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.8",
     "astro": "^5.16.0",
+    "@astrojs/rss": "^4.0.15",
     "http-proxy-middleware": "^3.0.5"
   },
   "devDependencies": {

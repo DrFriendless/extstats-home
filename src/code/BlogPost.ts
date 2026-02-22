@@ -21,6 +21,16 @@ export class BlogPost {
         return this.pd || "bob";
     }
 
+    date() {
+        const pd = this.pubDate();
+        return new Date(pd);
+    }
+
+    correctUrl() {
+        const s = this.url;
+        return s + ".html";
+    }
+
     hasTag(tag: string | undefined) {
         return ((tag !== "unspecified") && this.p.frontmatter.tags.indexOf(tag) >= 0) ||
             (((tag === "unspecified") || !tag) && !this.p.frontmatter.tags);

@@ -18,6 +18,7 @@ export default defineConfig({
             theme: 'github-light-default',
         },
     },
+    site: "https://extstats.drfriendless.com",
     vite: {
         server: {
             proxy: {
