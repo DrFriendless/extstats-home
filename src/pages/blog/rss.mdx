@@ -1,0 +1,38 @@
+---
+title: 'I can haz RSS!'
+pubDate: 2026-02-23
+description: "One should write sensible post summaries for the RSS people"
+author: 'DrFriendless'
+tags: ["Astro","RSS","Gray"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import swimming from "/public/img/blog/gray_swimming.jpg";
+import rss from "/public/img/blog/rss_reader.jpg";
+
+For some months I've been thinking about supporting RSS for the blog.
+Mostly I think such thoughts while I'm out somewhere with the dog and we are having a rest in the shade.
+Then when I get home I have to clean the mud / sand / grass off everyone and everything and I forget that idea.
+
+<Image src={swimming} alt="A white dog swimming in the Parramatta River" width={512} /><br/>
+<caption>Inevitably most of that water will end up on me</caption>
+<p/>
+
+This weekend just gone I had a few minutes while waiting for my lunch to reheat, and I had the brainwave that Astro might have some sort of RSS support.
+So I googled it, and it did.
+It seemed really easy so I copied and pasted it, and next minute I had an RSS feed.
+I added a few more bells and whistles before the oven dinged with my lunch ready.
+Yes it was that easy.
+
+Today I added a little button onto the blog header so that people could find out that there was such a feed.
+Then I realised I had no way of knowing whether that little button would do anything, and that I should use an RSS reader to check it.
+
+I haven't used an RSS reader since Google killed theirs, but it turns out they are still a thing.
+And this is what they look like:
+
+<Image src={rss} alt="An RSS feed as shown in the Feeder app" width={512} />
+<caption>From the Feeder app on Android</caption>
+<p/>
+
+So it has taken about as long to get RSS going nicely as it has to write this blog post.
+Maybe one day someone will even read my posts!

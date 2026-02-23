@@ -1,0 +1,34 @@
+---
+title: 'Odd Socks'
+pubDate: 2026-02-23
+description: "Just another rant about websockets, but this time with a happy ending"
+author: 'DrFriendless'
+tags: ["technology","websockets"]
+layout: ../../layouts/BlogLayout.astro
+---
+Well, after about a week of effort I've succeeded with the proof of concept with the websockets stuff.
+It turned out to be quite a lot of work, but I've built a system I think will be robust for when I have a use for it.
+The visible effect for users (so far) will be that if they're looking at their own Updates page, and the downloader finishes processing any of their files,
+the page will update with the new times.
+Although users can see other users' Updates pages, I don't send messages about that, just to keep the traffic to a sensible level.
+
+In the last thrilling instalment of this rant, we had got to the situation where the server sends a chatter ID to the browser.
+If the browser wishes to use the websocket, it connects and passes the chatter ID, the geek name, and a topic (which specifies exactly what sort of chatter it's interested in).
+The server confirms that the chatter ID matches the geek name, or else denies the connection.
+The server records the connection's connection ID, geek, and topic in a table in DynamoDB.
+
+On the server side, from time to time something happens that we might want to tell someone about.
+The place I've instrumented this is in the downloader - when a file is successfully update for a geek,
+a message is sent out saying "this is for **Friendless**, the topic is **updates**, and we would like to say "your plays for 2026 have been updated."
+
+But where is that message sent to?
+At the moment it goes to an SQS queue.
+I'm not sure that I need a queue in this part of the architecture, but last time I had unrestrained parallelism things go a bit out of hand and I had to close the site down.
+
+That SQS queue is serviced by a Lambda which is acting as a message broker.
+It looks at the subscriptions in DynamoDB and matches them by geek and topic to the message it has to send.
+It then uses the connection ID to send the message back to anyone who's listening.
+
+So this isn't really just a socket.
+This is a publish and subscribe system, which is a kinda handy thing to have.
+Well, that's nice, but I have some more mundane things to be fixing so I'll keep this capability in my backpack until I find a cool use for it.
