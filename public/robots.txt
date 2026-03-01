@@ -1,2 +1,5 @@
 User-agent: *
+Allow: /blog.html
+Allow: /blog/
+Crawl-delay: 5
 Disallow: /
