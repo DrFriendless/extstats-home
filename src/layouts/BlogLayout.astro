@@ -49,7 +49,7 @@ const metadataDisplay = pubDate ? "block" : "none";
 </head>
 <body>
 <BlogHeader />
-<div class="blog-page">
+<div class="blog-page" role="main">
     <div class="blog-content">
         <h1 class="blog-title">{content.title}</h1>
         <p class="blog-description">{content.description}</p>
@@ -59,7 +59,7 @@ const metadataDisplay = pubDate ? "block" : "none";
         </p>
         <slot />
     </div>
-    <div class="blog-sidebar">
+    <div class="blog-sidebar" role="navigation">
         <BlogTagList required={content.tags}/>
         <BlogYearList/>
     </div>
