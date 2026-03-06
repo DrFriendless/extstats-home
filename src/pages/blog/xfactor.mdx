@@ -1,0 +1,155 @@
+---
+title: 'The X-Factor'
+pubDate: 2026-03-06
+description: "The trials and tribulations of implementing a recommendation system"
+author: 'DrFriendless'
+tags: ["features","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import principal from "/public/img/blog/principal component.png";
+import hoho2 from "/public/img/blog/hoho2.png";
+
+Ancient users of Extended Stats may recall that until about 2015 there was a feature called "Crazy Recommendations",
+which was a rudimentary game recommendation system which produced crazy results.
+Crazy in the sense that I would be crazy to bother reproducing that feature in this new implementation.
+Nonetheless I feel I need a recommendation system.
+
+When I was young, long before Jon Snow was born, I had a friend called Jonathan who was a psychology student.
+All I can really remember about him was how to spell his name (because I got it wrong so many times, and it annoyed him) and that he was doing some sort of mathematics called factor analysis.
+I was studying maths at the time but I didn't see the relationship between what he was doing and the linear algebra I was doing.
+Which is a shame because it's a really cool area of maths.
+
+Years later I read a wonderful book called <a href="https://www.pnas.org/doi/10.1073/pnas.94.15.7719">"Genes, Peoples, and Languages"</a> by Luigi Luca Cavalli-Sforza,
+in which he described building a giant matrix of genetic markers of European people versus that person's place of birth.
+He then did factor analysis on the matrix which produced a number of eigenvectors.
+Eigenvectors are serious magic - in layman's terms, they tell you "what the matrix is telling you" - for better details please study maths for a few years.
+So the principal eigenvector from that matrix could be interpreted as the spread of people from the Middle East into the rest of Europe -
+people who could do farming outcompeted hunter-gatherers, and so replaced them in the population.
+The next part of Cavalli-Sforza's book isn't as relevant here, but nevertheless is completely magical as he goes on to show that words spread across languages in roughly
+the same pattern as people spread across land.
+
+<Image src={principal} alt="Map from 'Genes, Peoples, and Languages'" width={854} />
+<br/>
+<caption>Genetic variation in Europe matching the spread of agriculture from the Middle East</caption>
+<p/>
+
+OK, but what about games?
+We know for a fact that games evolve from each other - Dominion begat Thunderstone and all of the deck-building games, and the bag-building games,
+and so until I am playing Slay the Spire and Orleans and Quacks.
+Puerto Rico gave birth to San Juan, Race for the Galaxy, Roll for the Galaxy, and all the others that I can't even tell apart.
+
+Gamers also feel that they are able to recommend games to each other based on similarity to games that they are known to like.
+I don't know if doing that is as reliable as we hope it to be, but we feel it's worth doing anyway.
+
+So it's as if games have shared characteristics that make them similar, and that gamers have preferred characteristics that they want in a game.
+For the want of a better name, let's call these characteristics the X-Factor.
+
+So it was with these vague not-overly-related notions that I started my quest to implement a recommendation system.
+AI is all the rage right now, and I was 100% certain that generative AI was not the answer to anything.
+On the other hand, I felt that machine learning techniques might be relevant.
+I futzed around looking at various products and techniques until I found one that matched what I was dreaming about.
+
+Some years ago, about when Extended Stats was invented, Netflix wanted a recommendation system.
+A guy called Simon Funk came up with a matrix technique.
+Say there are 1,000,000 Netflix users and 100,000 movies.
+Then there are 100,000,000,000,000 possible ratings for those movies by those users.
+But of course there aren't actually that many, nobody's watched all the movies, so maybe there are only 5,000,000 ratings given.
+So we have a matrix of 1,000,000 users by 100,000 movies, with only 5,000,000 values in it.
+
+The plan is to assign to each user and movie an X-Factor, which is a vector of N items, where N is some number more than zero.
+We then have user data of 1,000,000 x N, and movie data of 100,000 x N.
+Using matrix multiplication, we multiply those two matrices of X-factors, and get a matrix of 100,000,000,000,000 values.
+The aim is to create the user X-factors and the movie X-factors so that the entries in that matrix match (as closely as practical)
+the 5,000,000 entries we do know.
+And then, this is the magic bit, we also have values for the entries we don't know, which is our guess at the rating that user would
+give that movie they haven't watched yet.
+There is a very pretty explanation of this sort of thing <a href="https://temugeb.github.io/tensorflow/python/svd/2021/02/04/Funk-SVD-recommender-p1.html">here</a>.
+
+Simon Funk's particular contribution was in the way that he calculated the X-factors for users and movies in the absence of complete data.
+Once I understood that that was what I wanted, I needed some code for it.
+The difficulty was that all of the discussion about the algorithms spoke about matrix operations, which I don't typically code, and don't know the fine details of.
+The people who do code such things do it in Python because there are libraries like numpy and scipy which eat that stuff for breakfast.
+Not to mention stuff like CUDA which is a technology for delegating computation to GPUs, and Jupyter Notebook and Apache Spark -
+it's a whole world of programming that I've avoided.
+
+After becoming befuddled I decided I'd need to do this project in Python, so I installed PyCharm and cloned some repos from Github.
+That was when I remembered why I stopped using Python in about 2016 - lack of types!!!!!!!
+In Python, values have types, but variables don't.
+That's fine if you just wrote the code and you know what type something is.
+It is NOT fine if you've never see the code before and the type (a) changes from line to line, (b) and is something from a library, and (c) is undocumented.
+It's a truly awful experience and do not miss Python one little bit.
+
+But anyway, on the second repository I fiddled with managed to get some X-factors out, and I wrote the code to integrate them into Extended Stats.
+However they produced really bad results.
+I fiddled with the code for a bit, but it seemed to be quite sensitive to the initial random approximations to the X-factors.
+I looked around for more information on what to do and <a href="https://riverml.xyz/dev/examples/matrix-factorization-for-recommender-systems/part-1/#introduction">
+found this very nice page</a>.
+
+Let me just take a minute here to talk about anacondas.
+Every programming language has external libraries, and they all manage them differently.
+Java has maven or gradle, Node has NPM and node_modules, and Python has pip and anaconda.
+I really really didn't want to learn anything about Python dependency management, but once I figured out how to create an anaconda environment
+and install libraries into it, my life got a whole lot easier.
+Anacondas are lovely but I would prefer they stay in the jungle.
+
+So once I got going with the River machine learning stuff, the coding became easier and I could compare various techniques.
+I plugged my data set into the examples they gave, and got the best results with biased matrix factorization.
+In Biased MF the model produces three types of data:
+* the user bias - a factor in the user's ratings independent of the item. Let's interpret this as whether the user is a grumblebum or a joyous butterfly.
+* the item bias - a factor in the item's rating independent of the user. Let's call this the game's intrinsic quality.
+* the user's X-factor
+* the game's X-factor
+
+The user bias is not useful to us.
+If I'm ranking games to recommend them to you, you care about the value of the game, not about your own personal qualities.
+If I was trying to predict the rating you would give the game I would care, but we're not doing that.
+
+The item bias is a tricky one.
+How do we decide that a game is intrinsically good?
+Maybe most of us agree that Puerto Rico is a great game, but how much great?
+I personally think Scrabble is an intrinsically great game, but it is ranked 2407 on BGG.
+Ideally, we would do away with concepts of intrinsic worth and just let the X-factors decide.
+
+And as for the X-factors, how many dimensions should they have? (N in the discussion above)
+How many dimensions of variation are there in board games?
+Well I don't know.
+
+I decided that I didn't know the answers to these questions, but the data did, so I fiddled with some different inputs to see what got me the lowest error
+when compared to the known ratings.
+The best results came with 8 dimensions in the X-factor, and slightly more suppression of the X-factors' influence than of the item bias.
+So that was what I ran with!
+
+Out of interest, the games with the highest item bias are these:
+* El Grande: Decennial Edition
+* 1817
+* Orléans: Deluxe Edition
+* Brass: Birmingham
+* Pandemic Legacy: Season 1
+* Gloomhaven
+* Innovation Deluxe
+* Spirit Island
+* Funkenschlag: EnBW
+* The Castles of Burgundy: Special Edition
+* Concordia Venus
+* Trickerion: Collector's Edition
+* Frosthaven
+* Power Grid Deluxe: Europe/North America
+* Maria
+* Pax Renaissance
+* Gaia Project
+* Brass: Lancashire
+* Indonesia
+* Innovation Ultimate
+
+It's something of a relief to me that those are at least quality games.
+One version of the recommendation system was giving me absolute rubbish.
+
+On the other hand, I've noticed that the effect of the X-factors is very small compared to the effect of the item bias, so it's very likely
+that the games on that list just above appear in your recommendations.
+To investigate that I've added two extra columns to the recommendation table - "Score 2" which uses only half of the item bias,
+and "Score 0" which only uses the X-factors.
+I am not terribly pleased with any of the results, but I imagine Martin Wallace and Splotter are cool with it.
+
+Anyway, I'll get this first cut released and go back to the anaconda mines and see if I can push against item bias and more towards X-factors.
+I'm just very pleased to have made it this far.
