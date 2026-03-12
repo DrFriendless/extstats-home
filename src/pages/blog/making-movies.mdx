@@ -1,0 +1,46 @@
+---
+title: 'Making Movies'
+pubDate: 2026-03-12
+description: "I'll mention you all in my acceptance speech at the Academy Awards"
+author: 'DrFriendless'
+tags: ["technology","features"]
+layout: ../../layouts/BlogLayout.astro
+---
+Whenever I watch one of those time-lapse graphs I think "wow, that's cool, I should totally make one of those."
+So I did.
+
+This is a graph from the start of Y2K until now, of the cumulative number of plays of each game by the current users of this site.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/i-VRs27fVc0?si=go3_YRdx7a8KoVMI"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+
+I thought this would be an easy project - harvest the data which I already have in the database, draw the frames, assemble the frames into a movie.
+Those were the steps, but I completely failed at the bit about "draw the frames".
+
+I've been coding this project in Node.js, so I had the data gathering bit done in a few minutes.
+Then I discovered that Node has no drawing API of any description.
+Java does, Python does, but for Node you have to use a third-party thing.
+I tried to install that, and it said installation failed.
+I thought "maybe I need to reboot" so I did that and my laptop failed to start with a kernel panic.
+
+That's not good, but it was easy to fix.
+The drawing package still didn't work.
+Now it seems every time I install software my laptop needs to recompile the latest 4 versions of the kernel and leaves the most recent one broken.
+I don't get what's going on with that but I hope it goes away.
+Needless to say I won't be trying to install the drawing library for Node again any time soon.
+
+So I was unable to proceed with Node.js, and I didn't trust Python to be any better, so I turned to Java.
+Yes, I am a proper Java programmer but it has been 11 years or more since I wrote a Java program which had its own GUI, or had to instantiate a JDBC driver.
+I had to google that basic stuff but then I was off to the races.
+
+The way you draw an image in Java is very very similar to the way you draw on a window, so I was able to display the frames of the animation as I generated them.
+As it turned out there were some exciting plot twists and so on in the movie, so I spent some time just watching it feeling quite pleased with myself
+but also fiddling with the colour choices.
+And eventually I ran the task for the final cut, which only took a few minutes to make ~10000 frames, and used ffmpeg to stitch them all together into a movie.
+The code is <a href="https://github.com/DrFriendless/jmovies">on Github</a>.
+
+Well now that the film has been released, I'm off on a promo tour.
+Mention my name at the box office for 10% off popcorn.
