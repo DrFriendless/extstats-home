@@ -1,12 +1,13 @@
 ---
 interface Props {
     url: string;
+    title: string;
 }
 
-const { url } = Astro.props;
+const { url, title } = Astro.props;
 ---
 <p>&nbsp;</p>
 <link rel="stylesheet" href="/CommentsWidget/styles.css">
-<extstats-comments url={url} readonly="false"></extstats-comments>
+<extstats-comments url={url} title={title} readonly="false"></extstats-comments>
 <script is:inline src="/CommentsWidget/polyfills.js" type="module"/>
 <script is:inline src="/CommentsWidget/main.js" type="module"/>

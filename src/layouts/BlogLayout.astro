@@ -65,7 +65,7 @@ const metadataDisplay = pubDate ? "block" : "none";
     </div>
 </div>
 
-{!!slug && <CommentsWidget url={"blog:" + slug} />}
+{!!slug && <CommentsWidget url={"blog:" + slug} title={content.title} />}
 
 <Footer views="blog" />
 </body>
