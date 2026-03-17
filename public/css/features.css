@@ -163,6 +163,87 @@ button.extstats-button {
 .extstats-page-item:hover a.extstats-page-link {
     color: black;
 }
+
+/* delete this eventually as we should use col-date instead */
 td.date-column, th.date-column {
     width: 100px;
+}
+
+/* Column widths, with possible/standard names for the columns */
+/* Utilisation */
+th.col-percentage, td.col-percentage {
+    width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+th.col-date, td.col-date {
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
+}
+th.col-long-date, td.col-long-date {
+    width: 140px;
+    max-width: 140px;
+    text-align: center;
+}
+th.col-days-since, td.col-days-since {
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
+}
+/* Want in Trade */
+th.col-boolean, td.col-boolean {
+    width: 70px;
+    max-width: 70px;
+    text-align: center;
+}
+/* Your Rating, BGG Rating */
+th.col-rating, td.col-rating {
+    width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+/* BGG Rank */
+th.col-ranking, td.col-ranking {
+    width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+/* Plays */
+th.col-plays, td.col-plays {
+    width: 45px;
+    max-width: 45px;
+    text-align: center;
+}
+th.col-year, td.col-year {
+    width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+th.col-number, td.col-number {
+    width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+th.col-subdomain, td.col-subdomain {
+    width: 130px;
+    max-width: 130px;
+}
+td.col-subdomain {
+    text-align: left;
+}
+/* Name */
+th.col-game-name, td.col-game-name {
+    width: 450px;
+    max-width: 450px;
+}
+td.col-game-name {
+    text-align: left;
+}
+th.col-800l, td.col-800l {
+    width: 800px;
+    max-width: 800px;
+}
+td.col-800l {
+    text-align: left;
 }
