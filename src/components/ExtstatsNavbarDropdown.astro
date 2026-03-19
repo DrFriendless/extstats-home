@@ -8,7 +8,7 @@ const { items, style } = Astro.props;
     <For each={items}>{
         (item: Link) => {
             return item.link ?
-                    <a class={`navbar-button clickable ${style}`} href={item.link}>
+                    <a id={item.id} class={`navbar-button clickable ${style}`} href={item.link}>
                         {item.name}
                     </a> :
                     <ExtstatsNavbarMenu link={item}/>

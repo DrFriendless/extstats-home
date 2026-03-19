@@ -69,6 +69,9 @@
 .extstats-navbar div.hidden {
     display: none;
 }
+.navbar-button.hidden {
+    display: none;
+}
 #geeklink {
     width: 90px;
     height: 28px;
@@ -105,7 +108,7 @@
     background-color: #d34533;
     color: white;
 }
-.geek-updates {
+.geek-designers {
     background-color: #cc0066;
     color: white;
 }
