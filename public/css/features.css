@@ -1,13 +1,10 @@
 /* Styles for the feature pages */
-
 .features-header p {
     text-align: left;
 }
-
 .fc-item.default {
     font-weight: bold;
 }
-
 /* documentation widgets */
 div.extstats-doc .nav-tabs {
     --bs-nav-tabs-link-active-border-color: var(--tab-border-colour,black) var(--tab-border-colour,black) transparent;
@@ -41,14 +38,6 @@ div.extstats-doc button {
     border: 1px solid var(--tab-border-colour,black);
     border-radius: 0;
     margin: 4px;
-}
-
-button.extstats-button {
-    color: #777777;
-    font-size: 14px;
-    line-height: 18px;
-    background-color: white;
-    border-radius: unset;
 }
 .extstats-page {
     display: flex;

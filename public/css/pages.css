@@ -32,3 +32,26 @@ body {
     margin-top: 50px;
     margin-bottom: 16px;
 }
+
+button.extstats-button {
+    color: var(--foreground-colour);
+    background-color: var(--background-colour);
+    font-size: 16px;
+    line-height: 24px;
+    min-height: 28px;
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 2px 2px 1px #ccc;
+    margin-left: 6px;
+    margin-bottom: 6px;
+}
+button.extstats-button:hover {
+    box-shadow: 4px 4px 2px #ccc;
+}
+button.extstats-button:disabled {
+    background-color: var(--disabled-colour);
+}
+button.extstats-button:disabled:hover {
+    box-shadow: 2px 2px 1px #ccc;
+}

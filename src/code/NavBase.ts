@@ -43,6 +43,8 @@ export const patreonMenu: SubMenu = { name: 'Patreon', style: "nav-patreon", lin
 export const userMenu: SubMenu = { name: "Users", style: 'nav-dataprot', link: "/user.html", items: [
         { link: "/dataprotection.html", name: "Privacy" },
         { link: "/blog/passwords.html", name: "Advice on Passwords" },
-        { id: "geekupdates", link: "/updates.html", name: "Updates"}
+        { id: "geekupdates", link: "/updates.html", name: "Updates"},
+        { id: "tagalogue", link: "/tagalogue.html", name: "Tagalogue"},
+        { id: "catalist", link: "/catalist.html", name: "Catalist"},
     ]};
 
