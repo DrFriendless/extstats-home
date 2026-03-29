@@ -1,0 +1,133 @@
+---
+title: 'Tagging Along'
+pubDate: 2026-03-29
+description: "Introducing the Tagalogue"
+author: 'DrFriendless'
+tags: ["features","users"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import menu from "/public/img/blog/users menu.png";
+import tagalogue from "/public/img/blog/tagalogue.png";
+import tagging from "/public/img/blog/tagging.png";
+import tagpopup from "/public/img/blog/tagpopup.png";
+import popped from "/public/img/blog/popped up.png";
+
+I've recently been writing some pages which help users to discover new games, or rediscover old ones.
+The Discover page, for example, but also the Designers page can remind you of old games you'd like to come back to, or new games that you'd like to try.
+We currently have two nieces who live nearby, and I'm on the lookout for games that I can play with them,
+or games that I will be able to convince my wife to play with them.
+When I'm reminded of such a game I'd like to be able to tag it to be able to find it later, e.g. in preparation for a games session.
+
+This led me to the concept of a convenient popup to tag games.
+This popup would not ruin the visual simplicity of the site, but would be available when I needed it - in hindsight, it would be something like Spotify's "Add to playlist" feature.
+But then the next question would be, where would such a list of tags come from?
+And so was born a new page called the Tagalogue.
+
+This is of course a play on the name "Tagalog", which is a native language of the Philippines.
+As the page is some sort of catalogue I could have called it a "Catalogue", but I like dogs better than cats so it could have been a "Dogalogue".
+But the page contains neither cats nor dogs, it contains tags, so the Tagalogue it is.
+Yes I know it's silly, but it's not like Philip II of Spain did much to deserve having the Philippines named after him either.
+
+The Tagalogue is the place where you define tags, and where you can see what tags are on what games.
+Of course the next thing you would like to do after that is to retrieve a list of which games have which tags, but that opens up a whole nuther problem -
+you'd also like top constrain that search to games you own, or maybe you'd like to find games which have two particular tags.
+That's the problem that selectors solve (as blogged about in the distant past), and indeed the ability to search using custom selectors is a problem I need to solve.
+
+So I realised there were two pages involved, and that the searching page should use tags and other selectors, and that page will be called the Catalist.
+Because "dogalist" isn't even a word.
+As of writing this post, the Tagalogue is working and the Catalist is not yet started.
+
+<div style="float: left; width: 300px; margin-right: 20px">
+<Image src={menu} alt="Screenshot of the Users menu" width={300} />
+<br/>
+<caption>The Users Menu</caption>
+<p/>
+</div>
+
+### The Users Menu
+
+These pages appear under the Users menu.
+So at this point, let's go over what's in the Users Menu, as it keeps evolving.
+
+The Users page (accessed by clicking on the word Users, that's not just a menu name) is where you can configure your buddy groups and default games, as well as view what data I store about you.
+I think maybe next time I add some more configuration options I will split that into two pages.
+
+The Privacy page is just my privacy promise to you guys - not because I think you want one but because I think all sites should have one!
+
+The Advice on Passwords link is a link to a blog post where I tell you why it's bad that you reuse passwords, because that's an important message that cannot be repeated enough.
+
+The Updates page is where you go to tell Extended Stats that it hasn't downloaded all of your data properly, or that you went back and added a bunch of plays from last year that it hasn't found.
+
+The Tagalogue is where you go to manage your tag groups, and thus what tags you have.
+You can also quickly turn on / off tags for games.
+
+The Catalist (which doesn't exist yet) will be where you can create customised searches and (hopefully) manage the contents of the selector combos on the feature pages.
+It will be like SQL for board games, won't that be fun!? 🤨
+
+<p style="clear: both"></p>
+
+### The Tagalogue
+
+This is a screenshot of my Tagalogue page, now that I've been doing some tagging for a few days.
+At the top we have a selector combo, then a tag group section, then a tag group editing section.
+I have 3 tag groups, called "Play with", "Why own?" and "Misc".
+Their headings look like buttons because you can click them.
+When you click a tag group name, that tag group is placed in the tag group editor.
+
+<Image src={tagalogue} alt="Tag Groups in the Tagalogue" width={896} />
+<br/>
+<caption>The Tagalogue's Configuration section</caption>
+<p/>
+
+Note that some of the tag names are emojis.
+I discovered by accident that that sort of worked, and then I made sure that it worked properly.
+How cool is that?!
+
+You can see the box and button there to add a new tag group.
+When you create a tag group it will be put into the editor and you can add tags to it.
+You're allowed to add the same tag to more than one tag group.
+You can remove a tag from a tag group if:
+* no game has that tag (in which case the tag will be grey)
+* some other tag group has that tag.
+
+When a tag group is in the editor, the tags from that group will be displayed for all of the games in the game list.
+
+<Image src={tagging} alt="A list of games available for tagging" width={896} />
+<br/>
+<caption>Tagging in progress</caption>
+<p/>
+
+The games in the game list view are chosen by the selector at the top of the page.
+In this view, you simply click on a tag to turn it on or off for the given game.
+Your changes are saved immediately.
+And that is really all there is to the Tagalogue.
+
+### The Tag Pop-up
+
+<div style="float: left; width: 300px; margin-right: 20px">
+    <Image src={tagpopup} alt="The tag popup, ready to be clicked on" width={300} />
+    <br/>
+    <caption>The Tag Popup</caption>
+    <p/>
+</div>
+
+So that is very nice, but the objective we started with was to be able to note games found elsewhere on the site (whilst
+not disturbing the Spartan style).
+To that end, once you've defined some tags, you can start to use the tag popup.
+This is a feature that I have to add to pages, and currently it has only been added to the Designers page and the Discover page.
+I haven't yet made integration of it as simple as I'd like!
+But anyway it looks like a little tag that appears to the right of a game's name when you hover the mouse there.
+
+If you click on that tag, you get a list of all of your tags, and you can choose one to turn on or off.
+Note that each tag only appears once even if it's in multiple tag groups, because it's the same tag.
+
+<p style="clear: both"></p>
+
+<Image src={popped} alt="The tag popup, popped up" width={300} />
+<br/>
+<caption>This is what it will look like</caption>
+<p/>
+
+Well, that's all there is at the moment.
+Stay tuned for the next exciting feature, which had better be the Catalist!
