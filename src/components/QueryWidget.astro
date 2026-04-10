@@ -4,3 +4,21 @@
 <query-widget></query-widget>
 <script is:inline src="QueryWidget/polyfills.js" type="module"/>
 <script is:inline src="QueryWidget/main.js" type="module"/>
+<script is:inline>
+    function onLoad() {
+        let params = new URLSearchParams(document.location.search);
+        console.log(params);
+        let name = params.get("name");
+        console.log(name);
+        if (name) {
+            const pageTitle = document.getElementById("pageTitle");
+            console.log(pageTitle);
+            if (pageTitle) pageTitle.textContent = name;
+            const h1Title = document.getElementById("h1Title");
+            console.log(h1Title);
+            if (h1Title) h1Title.textContent = name;
+        }
+    }
+
+    addEventListener("load", (event) => onLoad());
+</script>
