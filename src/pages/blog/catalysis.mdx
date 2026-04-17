@@ -1,0 +1,75 @@
+---
+title: 'The Catalist'
+pubDate: 2026-04-17
+description: "It was a globe with a thousand facets; it shone like silver in the firelight, like water in the sun, like snow under the stars, like rain upon the Moon!"
+author: 'DrFriendless'
+tags: ["features","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import ttr from "/public/img/blog/ttr.png";
+import tagalogue2 from "/public/img/blog/tagalogue2.png";
+import nieces from "/public/img/blog/nieces.png";
+
+OK, the Catalist is no Arkenstone, but it was dug from deep in the code mines at great expense (no balrogs yet, though).
+When I blogged about 3 weeks ago that I was going to do it next I wasn't really clear what it was going to look like or how it would work.
+So some of the three weeks was spent figuring that out, and then the remainder of the three weeks was spent cleaning up the mess I made before I knew where I was going.
+
+The Catalist is a feature for logged-in users.
+It appears in the Users menu.
+
+The purpose of the Catalist is to let you find games for any given situation.
+In particular it works with the Tagalogue to meld your user-defined tags with other metadata about games.
+Let's work through an example.
+
+I've been using the Tagalogue to mark games with tags to suggest who I might play them with.
+I've recently started attending a new game group called "Ticket to Ryde" (which is of course held at Ryde).
+I love my other game group but my dog is allowed to come to Ticket to Ryde, and going anywhere basically requires his permission.
+
+Anyway, I am getting to know those people and wondering what games to take along of the 350 or so that I have (the pre-eminent factor here is whether I remember the rules well enough to teach).
+Whenever I think "oh I should take that", I mark it with the tag "TtRyde".
+So the Tagalogue has this sort of data:
+
+<Image src={tagalogue2} alt="The Tagalogue in Action" width={896} />
+<br/>
+<caption>The Tagalogue in use</caption>
+<p/>
+
+That's a half-decent classification system, but the Tagalogue only facilitates adding and removing tags.
+It's not a query mechanism - that's what the Catalist is for.
+
+So I go to the Catalist and I ask it to "tell me all the games I've got that I thought I might want to take to Ticket to Ryde".
+And using the magic of <a href="/doco/selectors.html" target="_blank">selectors</a> it can find the results.
+
+<Image src={ttr} alt="The Catalist in Action" width={896} />
+<br/>
+<caption>The Catalist in use</caption>
+<p/>
+
+But before we get to the results, let's look at what's in the Catalist.
+
+* the Chooser - this is where you can choose the basic selectors
+* the Store - this is where you can store selectors you've previously created
+* the Composer - this is where the selector you're specifying gets built up.
+
+I'm not going to put a full explanation of the Catalist in ths blog post as it will get its own Doco page
+(The entry page for the Doco is in the menu under Blog).
+I just invented the Doco section this morning as I need a more organised and less chit-chatty place to describe features, so I've only had time to write the Selectors page.
+I think if you understand selectors the Catalist will make sense.
+
+So, back to the results.
+Maybe I just found that my nieces Ankita and Antara are coming to play games as well.
+They are happy to play what the other is playing, so I can take games that either of them knows and they will teach the other.
+Furthermore, they are very helpful with looking after the dog in case he suddenly has to go for a walk.
+
+<Image src={nieces} alt="What games should I take if the nieces are coming too?" width={896} />
+<br/>
+<caption>The Catalist answering a query</caption>
+<p/>
+
+The Catalist provides a rudimentary query facility on the same page, mostly so you can test that the selector is working like you think it should, or maybe so you can get quick answers.
+If you want better results you can open the results in a new window - that's called the Query page and its features are briefly mentioned in the selectors doco.
+
+Well, this is the first cut of the Catalist.
+More features, and documentation, will be added over time.
+In the meantime I'd be happy to hear any user feedback.

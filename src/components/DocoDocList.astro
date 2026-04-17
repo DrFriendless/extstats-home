@@ -1,0 +1,11 @@
+---
+import {DocoDoc} from "../code/DocoDoc";
+
+interface Props {
+    docs: DocoDoc[];
+}
+const { docs } = Astro.props;
+---
+<ul>
+    {docs.map((doc: DocoDoc) => <li> <a href={doc.url + ".html"}>{doc.title}</a><br><i>{doc.description}</i></li>)}
+</ul>

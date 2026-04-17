@@ -11,5 +11,13 @@ const blog = defineCollection({
         tags: z.array(z.string())
     })
 });
+const doco = defineCollection({
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/doco" }),
+    schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        tags: z.array(z.string())
+    })
+});
 
-export const collections = { blog };
+export const collections = { blog, doco };

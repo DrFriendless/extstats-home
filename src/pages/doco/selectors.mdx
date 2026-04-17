@@ -1,0 +1,92 @@
+---
+title: 'Selectors'
+description: "Introduction to Selectors"
+tags: ["selectors","query page","catalist","tagalogue"]
+layout: ../../layouts/DocoLayout.astro
+---
+import { Image } from 'astro:assets';
+import indian from "/public/img/doco/indian games.png";
+
+A selector is a rule for selecting board games.
+They are fundamental to the construction of the site, and users can use them too.
+Selectors are written to look like formulas so that both people and computers can understand them.
+
+### Types of Selectors
+
+Each type of selector is implemented by some code in the back-end of Extended Stats
+(specifically <a href="https://github.com/DrFriendless/ExtendedStatsServerless/blob/master/api/src/selector.mts">here</a>).
+More will be added as people have genius ideas about things to do.
+
+#### Geek Data
+
+These selectors select data based upon the BGG data collected for a user of this site.
+In the Catalist, these selectors are coloured blue.
+
+* rated(USER) - all games rated by the user. For example, for all games rated by me the selector would be 'rated("Friendless")'. <a href='/query.html?selector=rated("Friendless")&mode=geekgames&name=Rated%20by%20Friendless' target="_blank">Try it out.</a>
+* played(USER) - all games played by the user. <a href='/query.html?selector=played("Friendless")&mode=games&name=Played%20by%20Friendless' target="_blank">Try it out.</a>
+* owned(USER) - all games owned by the user. <a href='/query.html?selector=owned("Friendless")&mode=games&name=Owned%20by%20Friendless' target="_blank">Try it out.</a>
+* wtb(USER) - all games marked as want to buy by the user. <a href='/query.html?selector=wtb("Friendless")&mode=geekgames&name=Friendless%20wants%20to%20buy' target="_blank">Try it out.</a>
+* wit(USER) - all games marked as want in trade by the user. <a href='/query.html?selector=wit("Friendless")&mode=geekgames&name=Friendless%20wants%20in%20trade' target="_blank">Try it out.</a>
+* wtp(USER) - all games marked as want to play by the user. <a href='/query.html?selector=wtp("Friendless")&mode=geekgames&name=Friendless%20wants%20to%20play' target="_blank">Try it out.</a>
+
+#### Game Data
+
+These selectors select data based on features of the games.
+In the Catalist, these selectors are coloured black.
+
+* ids(GAME_IDS) - select games by specifying BGG's IDs for those games. <a href='/query.html?selector=ids(1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10)&mode=geekgames&name=The%20First%2010' target="_blank">Try it out.</a>
+Note that not all numbers still correspond to games.
+* expansions() - select all games which are expansions. <a href='/query.html?selector=expansions()&mode=games&name=Expansions' target="_blank">Try it out.</a>
+* books() - select all games which are books. <a href='/query.html?selector=books()&mode=games&name=Books' target="_blank">Try it out.</a>
+* designer(DESIGNER) - select all games by a given designer. <a href='/query.html?selector=designer(8347)&mode=games&name=Phil' target="_blank">Try it out.</a>
+* publisher(PUBLISHER) - select all games by a given publisher. <a href='/query.html?selector=publisher(27311)&mode=games&name=Grail%20Games' target="_blank">Try it out.</a>
+* category(CATEGORY) - select all games which have a given category. <a href='/query.html?selector=category(%22Word%20Game%22)&mode=games&name=Word%20Games' target="_blank">Try it out.</a>
+* mechanic(MECHANIC) - select all games have a given mechanic. <a href='/query.html?selector=mechanic("Deck%2C%20Bag%2C%20and%20Pool%20Building")&mode=games&name=Deck%20Building' target="_blank">Try it out.</a>
+
+Note that there's no selector for all games (which is a shame because it'd be algebraically lovely).
+As of writing the ExtStats database hold 108,686 games which would be a lot of data for the server to return and you wouldn't read it all anyway.
+So to minimise costs and stay sane inside insanity, I don't have that.
+
+#### Tags
+
+Tags are a feature of Extended Stats.
+To define what tags you use, log in to the site and go to the Tagalogue (in the Users menu).
+I treat tags as private data so you can't see other users' tags, which means for these selectors to do anything for you you need to create your own tags.
+In the Catalist, these selectors are coloured green.
+
+When I was working on tags I discovered that it was almost possible to use emojis in tags, which seemed like a really fun thing to do.
+So I made it completely possible to use emojis in tag names!
+(On the other hand, typing emojis remains a challenge for the reader.)
+
+* tagged() - select all games you have given tags to.
+* tag(TAG) - select all games you have given the relevant tag to. For example, the Indian games in my collection have the tag "🇮🇳", so to select all Indian games I can use 'tag("🇮🇳")'.
+Here's what that looks like:
+
+<Image src={indian} alt="List of Friendless's Indian games" width={854} />
+<br/>
+<caption>My Indian games</caption>
+<p/>
+
+#### Composite Selectors
+
+Composite selectors are where things get hairy!
+A composite selector is a selector which combines the results of other selectors.
+If you've studied set theory or algebra these ideas will be familiar to you.
+In the Catalist, these selectors are coloured pink.
+
+* all(SELECTORS) - to appear in the result, the game must appear in all of the given selectors, i.e. this is the intersection operation.
+* any(SELECTORS) - to appear in the result, the game must appear in any of the given selectors, i.e. this is the union operation.
+* minus(SELECTORS) - to appear in the result, the game must appear in the first selector but not in any of the others.
+
+So to see which games I own that aren't books or expansions, I can use the selector 'minus(owned("Friendless"),any(books(),expansions()))', or equivalently 'minus(owned("Friendless"),expansions(),books())'.
+<a href='/query.html?selector=minus(owned("Friendless")%2Cany(books()%2Cexpansions()))&mode=geekgames&name=Owned%20Games%20that%20are%20games' target="_blank">Try it out.</a>
+
+### The Query Page
+
+The Query Page is a page which shows you the results of a selector.
+The 'Try it out' examples above all link to it with different parameters.
+The base URL is https://extstats.drfriendless.com/query.html but the page needs some parameters as well:
+* selector - the selector to be run. As that selector is passed directly to the back-end, it can use features not yet supported by the Catalist or other interfaces.
+* mode - the mode controls what sort of data is to be retrieved for the games. Current options are "games" and "geekgames".
+* name - the title to be displayed for the page. This parameter is not required.
+

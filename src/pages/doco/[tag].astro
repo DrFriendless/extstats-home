@@ -1,0 +1,16 @@
+---
+import {allDocoDocs, allDocoTags, DocoDoc} from "../../code/DocoDoc";
+import DocoLayout from "../../layouts/DocoLayout.astro";
+import DocoDocList from "../../components/DocoDocList.astro";
+
+export async function getStaticPaths() {
+    return allDocoTags().map(t => { return { params: { tag: t } } });
+}
+
+const { tag } = Astro.params;
+const rawPosts = allDocoDocs().filter(p => p.hasTag(tag));
+const docs = rawPosts.sort((p1: DocoDoc, p2: DocoDoc) => p1.compareByTitle(p2));
+---
+<DocoLayout content={ { title: tag, tags: [ tag ], description: `Documentation with the tag ${tag}` } }>
+    <DocoDocList docs={docs}/>
+</DocoLayout>
