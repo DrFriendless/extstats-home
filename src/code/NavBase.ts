@@ -44,6 +44,7 @@ export const userMenu: SubMenu = { name: "Users", style: 'nav-dataprot', link: "
         { link: "/dataprotection.html", name: "Privacy" },
         { link: "/blog/passwords.html", name: "Advice on Passwords" },
         { id: "geekupdates", link: "/updates.html", name: "Updates"},
+        { id: "preferences", link: "/preferences.html", name: "Preferences"},
         { id: "tagalogue", link: "/tagalogue.html", name: "Tagalogue"},
         { id: "catalist", link: "/catalist.html", name: "Catalist"},
     ]};

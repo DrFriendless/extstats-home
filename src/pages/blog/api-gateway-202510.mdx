@@ -51,7 +51,7 @@ Luckily there's an entry there for API Gateway, so you choose that and the AWS c
 And then when you try to access anything through https://extstats.drfriendless.com/api, you get a 403 Forbidden error.
 
 Well it seems obvious in hindsight, but the problem is that https://jum813dn0n53n5e.execute-api.region.amazonaws.com doesn't work any more.
-When you set uo the custom hostname for API Gateway, you have to disable the default endpoint (https://jum813dn0n53n5e.execute-api.region.amazonaws.com), because the console tells you to.
+When you set up the custom hostname for API Gateway, you have to disable the default endpoint (https://jum813dn0n53n5e.execute-api.region.amazonaws.com), because the console tells you to.
 So in the CloudFront origin, your Origin domain needs to be api.drfriendless.com, and not jum813dn0n53n5e.execute-api.region.amazonaws.com, despite AWS really helpfully filling that in for you.
 
 Yeah, it took me a while.

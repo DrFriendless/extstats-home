@@ -26,7 +26,8 @@ const GEEK_SUB_MENUS = [
 <script type="text/javascript">
 function showHideGeekButton() {
     let geek = getQueryVariable("geek");
-    if (!geek) geek = getCookieData("extstatsid");
+    const loggedIn = getCookieData("extstatsid");
+    if (!geek) geek = loggedIn;
     if (geek) {
         document.getElementById("geekmenu").classList.remove("hidden");
         document.getElementById("geeklink").setAttribute("href", "geek.html?geek=" + geek);
@@ -43,8 +44,11 @@ function showHideGeekButton() {
     } else {
         document.getElementById("geekmenu").classList.add("hidden");
         document.getElementById("geekupdates").classList.add("hidden");
+    }
+    if (!loggedIn) {
         document.getElementById("tagalogue").classList.add("hidden");
         document.getElementById("catalist").classList.add("hidden");
+        document.getElementById("preferences").classList.add("hidden");
     }
 }
 
