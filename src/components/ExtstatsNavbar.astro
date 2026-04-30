@@ -6,12 +6,15 @@ import {bggMenu, devMenu, type SubMenu, userMenu, patreonMenu} from "../code/Nav
 const blogMenu: SubMenu = { name: 'Blog', style: 'nav-blog', link: "/blog.html", items: [
         { name: "Doco", link: "/doco.html" }
     ]};
+const rankingsMenu: SubMenu = { name: 'Rankings', style: 'nav-ranking', link: "/rankings.html", items: [
+        { name: "Popular Games", link: "/popular.html" }
+]};
 ---
 <div role="navigation" class="extstats-navbar">
     <a class="go-button" href="/" role="button"><img src={'/img/go.png'}  height="28px" alt="GO logo from Monopoly" title="Go directly to the Home Page"/></a>
     <GeekMenu/>
     <a class="navbar-button nav-wartable clickable" href="/wartable.html">War Table</a>
-    <a class="navbar-button nav-ranking clickable" href="/rankings.html">Rankings</a>
+    <Menu link={rankingsMenu}/>
     <Menu link={blogMenu}/>
     <Menu link={userMenu}/>
     <Menu link={bggMenu}/>
