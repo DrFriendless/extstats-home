@@ -1,0 +1,47 @@
+---
+title: 'Visions of the Future'
+pubDate: 2026-04-30
+description: ' Sure enough, the lift had shot right up through the roof of the factory and was now rising into the sky like a rocket, and the sunshine was pouring in through the glass roof. '
+author: 'DrFriendless'
+tags: ["meta"]
+layout: ../../layouts/BlogLayout.astro
+---
+When I started the Extended Stats project, cloud version, in 2017, the goal was basically reproduce the existing (Python, server-based) version.
+People liked that version.
+When I resumed the project in 2025 that was still my goal.
+But it turns out in those years, I changed, and that is affecting the project.
+
+In those 8 years I did a lot of work, and played a lot of MMORPGs, but didn't play many board games.
+As I live in a small house, I couldn't even buy many board games (which is of course an entirely separate hobby from playing board games).
+So I lost track of what was happening in the board game world.
+
+Now times have changed - I have no work to do, I have a second niece to play games with, and I've found a games group that I can attend with the ubiquitous dog.
+So I need appropriate games.
+I need classic games to show the nieces classic mechanics, I need games that support large numbers of players for the new group,
+I need games that can make the hobby enjoyable for me in the situation I find myself in.
+
+So I am doing a lot of looking for games, and whenever I think "how do I find out what games might be relevant to my situation?" I think of how I can
+add a feature to the site to help with the search.
+
+The Tagalogue was the first big feature - it allows me to mark a game so I remember it later.
+The Catalist was the second big feature - it allows me to build searches based on BGG info and my own notes.
+I feel the next step is the Query page.
+
+The Query page currently exists as an innocuous assistant to the Catalist - when you run a selection in another page, the Query page is the one that appears.
+When I was writing that page I had to confront the problem - when you get back a list of games, what information comes with them?
+The current answer is that I return your relationship with the game - data represented by your rating, whether you own it, whether you have it marked as want in trade,
+want to buy, want to play.
+But there are other possible answers - you may want the metadata about the game, e.g. player count, to help you decide.
+You may want to know what your geek buddies think of the game.
+You may want the Tagalogue view where you can quickly tag and untag games.
+Or you may want some of the graphical views that the site has on other pages.
+
+This concept is the complement to the selector.
+Let's call it a view.
+The selector says which games, the view says how to look at them.
+The Query page should support multiple views.
+
+I've also been working on the usual feature pages being able to take different selectors - that's why I added those combo boxes to the tops of some pages.
+In that case, the page is implementing the view and supports changing the selector.
+
+I'll continue noodling with the site with these thoughts in mind, and see where I get to.
