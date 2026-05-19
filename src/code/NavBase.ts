@@ -47,5 +47,6 @@ export const userMenu: SubMenu = { name: "Users", style: 'nav-dataprot', link: "
         { id: "preferences", link: "/preferences.html", name: "Preferences"},
         { id: "tagalogue", link: "/tagalogue.html", name: "Tagalogue"},
         { id: "catalist", link: "/catalist.html", name: "Catalist"},
+        { id: "query", link: "/query.html?selector=owned(ME)&mode=geekgames&name=Owned", name: "Query"}
     ]};
 

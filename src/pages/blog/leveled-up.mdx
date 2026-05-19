@@ -1,0 +1,76 @@
+---
+title: 'Leveled Up'
+pubDate: 2026-05-06
+description: "+1 Angular AND -1 kilogram!"
+author: 'DrFriendless'
+tags: ["Angular","features"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import query from "/public/img/blog/query-angular.png"
+import shelf from "/public/img/blog/shelfofshame.png"
+import appcomponent from "/public/img/blog/appcomponent.png"
+
+Progress has been slow for the last week, as I caught some dread lurgy and spent a lot of time shivering, sweating, and sleeping.
+Basil's dad at the dog park claims responsibility for infecting me.
+Oh well, it's nice for a change I guess.
+
+Anyway since I've been recovering a bit I've been working on the Query page.
+That's the page that "Run In New Window" on the Catalist takes you to.
+It previously took its parameters from the URL, but now there are controls to let you change the selector and the view.
+I've discussed selectors previously, but if you want to see what they are, look at the Catalist.
+The new thing here is the view.
+
+Angular has a few ways to deal with changing what appears in a given space - say for the case where you have several areas on your pages, and interacting with the page changes what appears in each.
+The most discussed method is using a router, which links URL parts to Angular component classes.
+The more I use the router the less I understand why I would want to.
+The ActivatedRoute class just doesn't seem to be relevant to my needs... so rather than bitch about it I just accept that it must be for some use case I haven't encountered yet, and I ignore it.
+
+The router is easily replaced by a series of IF statements.
+If this conditions holds true, put this content in that space, or else use this other content.
+It's very easy to read what's happening.
+That's how I usually do things, but it has the architectural downside of having to tell the container what it's going to be holding.
+
+<Image src={query} alt="Query widget source" width={768} /><br/>
+<caption>Angular template for the Query widget</caption>
+<p/>
+
+For the updates to the query page, I decided to do something more advanced.
+What you're looking at in the picture above is mostly just two combo boxes - one for selectors and one for the view.
+If you <a href="/query.html?selector=owned(ME)&mode=geekgames&name=Owned&geek=Friendless" target="_blank">open this page</a> you'll see them.
+When the data for the page is loaded you'll get a big table at the bottom.
+
+The choice of view, i.e. "Geek Games", has sent the selector "owned(ME)" as a query to the server,
+then displayed the results in a way that it thinks is appropriate.
+If you change the View, the new view runs a different query to retrieve data according to the selector, and displays it in a different table.
+
+<Image src={shelf} alt="John's shelf of shame" width={848} /><br/>
+<caption>Actually it is much more shameful than that</caption>
+<p/>
+
+In this example, there are two places where content is being inserted - the one called "controls" in the code is populated by "Tag Group" and a combo box to select a tag group.
+The place called "outlet" in the source code is where the table has been inserted.
+
+And now here's the TypeScript that connects it all together.
+
+<Image src={appcomponent} alt="The TypeScript that connects all the bits together" width={848} /><br/>
+<caption>It was really hard to make it this easy</caption>
+<p/>
+
+I never used Angular signals until a couple of weeks ago, now I want to marry them.
+They solve the problem of bits of data arriving in the wrong order.
+And of what happens when that data changes.
+
+The exciting part of this code is the bit that starts with "effect" so I'll give you a summary of what that does.
+It says <i>get the selector and the view mode. if you have both clear both outlets. ask the view what it wants in those outlets and put it there. then tell that view to reload its data.</i>
+
+And because all of that is in the effect, it will do it exactly whenever selector or mode changes, i.e. whenever the user makes a selection in the combo boxes.
+
+The only place where this code knows about what views are available is in the constructor.
+So if I think of another view to add I just have to code it and then tell the query page code that it exists.
+
+So I am very pleased with how this code has turned out, and with the functionality.
+Since the Angular change to signals the documentation has become even more fragmented than before - there are four ways to do everything,
+and each only works with one of the four ways you could have done the previous thing, so if you don't follow the changes like a soap opera you won't be able to keep up.
+
+Let's hope they dont invent any more better ways to do things for a while.

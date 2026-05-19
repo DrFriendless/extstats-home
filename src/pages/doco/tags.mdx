@@ -1,0 +1,48 @@
+---
+title: 'Tags'
+description: "What are Tags and Why Do I Care?"
+tags: ["tags","tagalogue"]
+layout: ../../layouts/DocoLayout.astro
+---
+A tag is a a tiny piece of text which can be added to a game.
+You can use it to mean whatever you want.
+
+Let's consider my game collection, because I know nothing about yours.
+I have games for these reasons:
+* in case we have a party and someone wants to play a game
+* in case I am friendless and have no one to play with
+* because we found the game in a shop in India
+* because the game is about India
+* because my wife told me to keep it
+* because I like to play with my gamer friends
+* because it's a word game and we have to try all word games
+
+If a game doesn't fit into my collection for one of those reasons, I would consider getting rid of it.
+BGG doesn't really help with this sort of analysis, so I've added it to my site.
+
+The way I would implement this would be:
+* login to Extended Stats - this gives you access to the Tagalogue, Catalist, and Query pages
+* go to the Tagalogue, create a tag group, and add the tags you need one by one
+* allocate tags to games (see below).
+
+Here are the rules about tag groups:
+* tag groups are only used to specify what tags you are shown at a particular time
+* the same tag can appear in multiple tag groups
+* you can remove a tag from a tag group if it is also in another tag group, or if no games have that tag.
+
+Here are the rules about tags:
+* they can have any text you can type, including spaces, emojis, Chinese, Klingon, Elvish, I don't care
+* I haven't tested Chinese, Klingon or Elvish but if you find bugs let me know
+* a game can have each tag once
+* a game has no direct relationship with a tag group.
+
+If you are logged in (so the site can identify you and retrieve your tags from the Extstats database),
+on almost all tables where games are listed, just to the right of the game name is an invisible button called the Tag Popup.
+When you hover over it it will appear, and you can click it to be able turn on and off tags for the game.
+More details including a screenshot are <a href="/blog/tagalogue.html">in a blog post</a>.
+
+Once you have some tags defined, you will be able to go to the Catalist to do searches involving them.
+Details of that are <a href="/doco/selectors.html">in the selector doco.</a>
+
+Once you can work the Catalist to do queries, you can use your stored queries in the Catalist to run those queries with multiple views (including one for tagging)
+on the Query page.

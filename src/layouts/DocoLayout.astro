@@ -4,7 +4,7 @@ import Footer from "../components/Footer.astro";
 import DocoTagList from "../components/DocoTagList.astro";
 import CommentsWidget from "../components/CommentsWidget.astro";
 import Configure from "./Configure.astro";
-import Tag from "../components/Tag.astro";
+import Doco from "../components/Doco.astro";
 import RssHeader from "../components/RssHeader.astro";
 import RecentComments from "../components/RecentComments.astro";
 
@@ -49,7 +49,7 @@ const slug = url ? url.substring(6) : "";
         <h1 class="blog-title">{content.title}</h1>
         <p class="blog-description">{content.description}</p>
         <p style=`display: block`>
-            {content.tags.map(t => <Tag value={t}/>)}
+            {content.tags.map(t => <Doco value={t}/>)}
         </p>
         <slot />
     </div>
