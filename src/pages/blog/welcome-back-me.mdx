@@ -1,0 +1,87 @@
+---
+title: 'Welcome Back, Me'
+pubDate: 2026-06-19
+description: Also a feature to help with maths trades
+author: 'DrFriendless'
+tags: ["features","Angular"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import utility from "/public/img/blog/utility.png"
+import wants from "/public/img/blog/wants.png"
+import wantsgrid from "/public/img/blog/wantsgrid.png"
+import wantsfilled from "/public/img/blog/wantsfilled.png"
+import wantslist from "/public/img/blog/wantslist.png"
+import zbugs from "/public/img/blog/zbugs.png"
+
+Phew.
+I have been AFK for a while, playing in an Ingress anomaly, then being dragged off on family holidays, then getting some overdue medical treatment.
+I have really been out of the swing of things.
+
+While I was on holiday the BGGers in Sydney announced a no-ship maths trade, and for a pleasant change I am ready to participate and have some games to dispose of.
+The last time there was a maths trade I wrote a tool to help me find games in the 1000+ items which I might be interested in.
+It's on the Geek page (rainbow button) if you are logged in.
+It looks like this:
+
+<Image src={utility} alt="The check geeklist utility" width={854} /><br/>
+<caption>The check geeklist utility</caption>
+<p/>
+
+What it does is downloads the geeklist, then compares the items there to what you own, what you want in trade, etc.
+That was as far as it got until this week, and BTW it turned out to be very useful for the <a href="https://boardgamegeek.com/geeklist/318181/small-box-game-jackets" target="_blank">Small Box Game Jackets</a> geeklist.
+
+But this time I had a few games for trade, and a few that I wanted, so I had to do a proper wants list.
+The OLWLG doesn't work for Aussie maths trades (we are special, because we have our own programmers),
+and although there is an Aussie tool it seemed very contorted and I didn't know how to make it work.
+So I decided I had to do my own.
+But first I quickly got a wants list assembled by hand because I didn't know whether I would get what I wanted done in time!
+
+When you ask the tool to check a geeklist, the results look like this:
+<Image src={wants} alt="Results of checking a geeklist" width={854} /><br/>
+<caption>Selected lines from checking a geeklist</caption>
+<p/>
+
+You can scroll through that list to check whether there's anything you think you might have missed.
+
+Then below that list is the wants grid.
+The fundamental question the wants grid is asking you is "would you accept this game in trade for that other game?"
+
+<Image src={wantsgrid} alt="The wants grid" width={854} /><br/>
+<caption>The Wants Grid</caption>
+<p/>
+
+I find it easier to do this if I sort the games I have and the games I want in order of value.
+That saves me thinking about whether I would offer "Roads and Boats" for "The Great Dalmutti" over and over.
+So the grid has facilities to reorder rows and columns, enter cash amounts, and check or uncheck spaces.
+So it might look like this:
+
+<Image src={wantsfilled} alt="The wants grid, filled in" width={854} /><br/>
+<caption>The Wants Grid, Filled In</caption>
+<p/>
+
+While you're doing that, in the panel below, the wants list is being generated for you:
+
+<Image src={wantslist} alt="The generated wants list" width={854} /><br/>
+<caption>The Wants List</caption>
+<p/>
+
+And that's the bit that you need to submit to the trade organiser.
+
+I think this is a pretty neat design, in that the UI follows pretty closely how I'd like to do it manually.
+However the simplicity didn't come without development cost.
+The checkmarks sit on top of the text describing the trade, the dollar amounts sit on top of the text describing what the money is for,
+and the secretish widgets to reorder the rows and columns sit on top of the corner of the boxes saying what the item is.
+The Z-axis stacking of components interferes with their sizing, and the logic that's actually happening doesn't seem to be quite what the
+W3C doco says it is.
+There are still some problems with the column headers that start scrolled off the side of the page.
+Note that the boxes for World Wonders and Spirit Island have wandered off somewhere:
+
+<Image src={zbugs} alt="Badly aligned dotted boxes" width={854} /><br/>
+<caption>Badly aligned dotted boxes</caption>
+<p/>
+
+The good news is that the boxes still work, if you can figure out which one to use.
+I guess the problem is something to do with trying to align the little box to be on top of something which isn't on the page.
+I hope the browser guys figure it out one day.
+
+So anyway, the trade resolves in a couple of days, let's hope I get lots of new games!
