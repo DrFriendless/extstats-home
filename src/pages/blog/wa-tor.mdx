@@ -1,0 +1,69 @@
+---
+title: 'The Wishy-Washy World of Wa-Tor'
+pubDate: 2026-07-03
+description: More like a fish tank than a cellular automaton
+author: 'DrFriendless'
+tags: ["meta","CSS","Angular"]
+layout: ../../layouts/BlogLayout.astro
+---
+Way back in 1984 (it wasn't as bad as George Orwell said), Alexander Dewdney used to write a column in Scientific American called "Computer Recreations", which young nerds like me read avidly.
+One of his favourite topics was cellular automata, and I spent hours coding various experiments in Turbo-Pascal to discover these wonders for myself.
+One such experiment was the world of <a href="https://en.wikipedia.org/wiki/Wa-Tor" target="_blank">Wa-Tor</a>.
+
+Wa-Tor is a toroidal water world, inhabited by sharks and fish.
+The sharks eat fish and what the fish eat is beyond the scope of the experiment.
+The world is a torus because a torus is topologically the same as a square page where if you go off the top you come back on the bottom, or if you go off one side you come back on the other side.
+
+Strictly, Wa-Tor is regulated by a clock.
+Every tick of the clock, a fish can possibly have a baby and move, and a shark can eat a fish and move.
+If the sharks eat all the fish then all the sharks starve to death.
+If there aren't many sharks then the fish can increase in number more rapidly.
+
+Thus the relationship between the numbers of sharks and fish varies in accordance with some differential equations called
+<a href="https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations" target="_blank">the Lotka-Volterra equations</a>.
+
+I have coded implementations of Wa-Tor more times than I can remember, so I decided to do it again.
+This time though, as I was doing it for the web, I used Angular.
+That didn't take much time and I quietly slipped it onto the site a few months ago, but I didn't post about it because it wasn't very interesting or useful.
+
+What particularly annoyed me about my Wa-Tor in Angular was the chunkiness of the movement, i.e. the fact that the sharks and fish moved only on ticks.
+That's not how fish move!
+And as I needed to learn CSS animations, I decided to use those to make my fishies move around nicely.
+
+The fish can move in 8 directions, and at the HTML level they live in a CSS Grid.
+When a fish moves it ends up in a different cell of the grid to where it started.
+The really obvious way to implement that would be to animate the position of the fish from the start cell to the end cell.
+
+However the torus screws us up there.
+If a fish goes off the east side of the grid, it comes in on the west side.
+If I were to animate that, it would look like the fish zipped all the across the screen, which is totally wrong.
+Other paths like going out one corner of the grid would be similarly atrocious, so it seemed I would need two animations per movement -
+one for leaving the start cell, and one for arriving at the destination cell.
+So I implemented that: when the fish starts to move I play the first animation at the start cell, and half a tick later I play the second animation at the destination cell.
+This was fine in theory but there were many problems with it.
+
+The first was that fish no longer moved on a tick, they took the whole tick to meander along.
+For the cellular automaton bit of the code, that made it really awkward to keep track of where a fish was for purposes of being eaten or colliding with another fish.
+I possibly could have got around that by cloning the grid and animating what happened in the past, but I decided to embrace the asynchronicity fully.
+That meant that fish would be allowed to be in the same spot as each other as they passed by, which *really* is not how cellular automata work.
+So now this Wa-Tor is sort of an aquarium simulation rather than a cellular automaton!
+
+The second problem with the animations was the "half a tick later".
+The obvious way to do that in JavaScript is with setTimeout, but I noticed that once I had more than about 500 fish in movement some of them would stop.
+It seems that if there are too many scheduled tasks, not all of them get executed.
+
+Obviously 500+ asynchronous tasks is a stupid design anyway, and it seems browsers aren't built to support it, so I had to rewrite that code.
+I now have a queue of tasks, and I execute the ones whose time has come, or I wait until their time comes.
+Rather than losing actions, all of the asynchronous tasks execute in a couple of milliseconds.
+
+There are still some things I don't understand going on.
+Although I do two animations per second for half a second each, the fish still stop and wait.
+I'm wondering whether Angular or the browser is taking some time to process all of the changes.
+
+So I guess by now you are all screaming "SHOW ME THE FISHIES!"
+The fish have been here all along - there's <a href="/wator.html" target="_blank">a link</a> in the Patreon menu.
+You need to click on the world to create the initial fish.
+
+That's where Wa-Tor is at at the moment.
+I don't have any particular plans for it, but if I think of something cool, or need to fiddle with some technology, I'll revisit it and break everything again.
+It may not yet be a replacement for a giant aquarium in my office, but it's enough for the moment.
