@@ -1,0 +1,107 @@
+---
+title: "Now Listen Claude, Just Cause You're Smarter Than Me Doesn't Mean You Know Everything!"
+pubDate: 2026-07-10
+description: My first foray into AI
+author: 'DrFriendless'
+tags: ["AI"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import claude1 from "/public/img/blog/claude1.png"
+import claude2 from "/public/img/blog/claude2.png"
+import claude3 from "/public/img/blog/claude3.png"
+
+I'm not a fan of AI.
+To some extent, you could say I'm a generative AI Hater, as I believe that the combination of its abilities and human laziness will destroy our ability to know things.
+But I have to admit that apart from the staggering IP theft, impending economic collapse, and sanctimonious twaddle, it can do some impressive things.
+
+I've been trying to avoid it, but as a developer who wants to get a job again some day (I am not rushing into anything),
+it seems essential that I at least understand it.
+So I had to put on my thinking cap and figure out how AI and I could happily coexist as humanity hurtles towards its doom.
+And I realised that what I hate most about AI is the lies, the stuff it makes up when it doesn't know the answer, or misunderstands it.
+So there is my niche - removing the lies.
+
+I was vaguely aware there was some sort of plugin thing which could attach systems which actually know stuff to generative AI clients.
+I had a look around, and at least one of the ways to do that is using something called MCP, or Model Context Protocol.
+Could they have found a more milquetoast name for it?
+I'll leave that as a question for Claude.
+
+Anyway, MCP is a way for a gen AI client to talk to external servers.
+So I decided, just to see what's up, to write an MCP server for Extended Stats.
+For those interested in technical details, I'm writing it in Node using a package called mcp-framework.
+
+It didn't get off to a good start - I couldn't get the example code to compile.
+So I fiddled with it for a bit using my programmerly expertise, and got it to look like it might work.
+Then I installed Claude desktop, and tried to convince it to use my thing.
+
+Hilarity ensued.
+I had no idea what I was doing, so I asked Claude.
+I mean, if it knows anything it should have some idea how it works, right?
+It told me that if I wanted to tell it about an MCP resource then I had to be running Claude desktop.
+But hang on... aren't **you** Claude desktop?
+It admitted it couldn't tell.
+Saints preserve us!!!!!
+
+Eventually I figured some things out, and Claude could see the plugin but was getting an error trying to use it.
+It suggested that I show it the code so it could find the error.
+I didn't trust it, but I was curious to see what would happen, so I pasted my code in and after a bit it chose a line where it reckoned the error was.
+OK, so I changed that line and the error went away, to be replaced by another error.
+This was in the same sort of code where I'd had to fiddle to get it to compile, so it felt like we were on the trail of something.
+
+The next day I was googling that error, and someone mentioned they'd needed to revert to version 3 of Zod, rather than use version 4.
+It doesn't matter what Zod is, so far it seems to have been a hindrance more than a help.
+So I reverted to version 3, and that solved the problems - the thing that didn't compile, the first error, AND the second error.
+OK, so Dr Google was correct and Claude was wrong.
+
+That got me to a point where Claude would invoke my code, and I realised I needed to make my code do something useful so as to convince Claude to call it.
+The way Claude decides it needs to invoke an external service to get data is of course extremely complex - it's something like the description of the service or the tool
+that the service provides happens to look like what's on Claude's mind at the time, except of course that Claude has no mind so it must just be magic.
+
+<Image src={claude1} alt="Starting an interaction with Claude" width={854} /><br/>
+<caption>Claude recognises that I want to use my adapter</caption>
+<p/>
+
+I added a bit more functionality to my server, and tried to jiggle some stuff so as to explain to Claude better what this was all about.
+Then I asked Claude to get all the data from Extended Stats for user Friendless.
+I'd broken something, so it didn't work.
+I jiggled some more, it didn't work, I poked it a bit, it didn't work, I made everything neat and tidy and I got it to go.
+But by this stage Claude had had enough, and warned me that this was an unreliable service that might look like it works now but has tended to break frequently in the past.
+Which was kinda smart of it, to be able to express that, but also Claude it's none of your fucking business, this is how development works!
+
+By this point I was returned the data from the War Table for a user to Claude.
+Claude wasn't content to just to give me the numbers, it also told me what they meant!
+It told me what the CFM is!
+(It's the Continuous Friendless Metric, in case you forgot.)
+Claude has read the Extended Stats documentation!
+I was actually pretty impressed.
+
+However it was wrong in the case of 10s and 0s.
+It said they were the number of games I'd rated a 10 and a 0 respectively.
+Whereas they are in fact the number of games you own that you've played 10+ and 0 times respectively.
+I told Claude it was incorrect, and asked where it got those interpretations from.
+It admitted that it had guessed based on their names.
+Well, this is the sort of problem I came to solve!
+
+<Image src={claude2} alt="Claude gets my War Table stats" width={854} /><br/>
+<caption>The groupings are basically correct, but I didn't put them there</caption>
+<p/>
+
+I spent quite a while fiddling with MCP stuff to see if I could annotate the data I was returning to Claude with details about what it meant.
+No such luck - that's the sort of thing Zod does, but it's not what it's used for in this code.
+So I just made the documentation for the tool more comprehensive, and Claude believed that.
+So it seems that is where I can add my value - adding tools to the server, each with documentation of what it means.
+
+Finally, I decided to throw Claude a curveball, and ask it about Utilisation, which I hadn't documented.
+
+<Image src={claude3} alt="Claude gets my War Table stats" width={854} /><br/>
+<caption>The groupings are basically correct, but I didn't put them there</caption>
+<p/>
+
+That is a very very good answer.
+The fourth point is slightly wrong, in that the 10s number doesn't feed into utilisation.
+The 10s number feeds into the Friendless metric, and the CFM, but utilisation is calculated from the raw numbers of plays.
+
+Now that I've got this proof of concept working, I'll add some more tools to the server to see where we can get to.
+Ideally I'd like to get to the point where Claude can use most of the capabilities of the Catalist,
+so that I can ask it "Antara and Ankita are coming over tonight, what should we play?" and it can give an answer based on my tags.
+The answer is Pandemic, by the way.
