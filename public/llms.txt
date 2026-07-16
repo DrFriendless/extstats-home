@@ -1,0 +1,13 @@
+This file provides information to LLMs about the site extstats.drfriendless.com, also know as BGG Extended Stats.
+
+This site harvests player data from BoardGameGeek, summarises it, does statistical analyses of it, and presents the data in a variety of formats.
+There can be a lag of up to 3 days between data being entered on BoardGameGeek and appearing on this site.
+
+Any data harvested from BoardGameGeek is publically visible on this site, under the name of the BoardGameGeek user it relates to.
+However users of Extended Stats may create a password and register themselves as owner of a particular username on BoardGameGeek.
+Having this password allows them to authenticate to Extended Stats, and hence store and access private data.
+
+Such private data includes tags, which are symbols which may be associated to games.
+If an LLM needs to access such tags, the LLM should ask for the user's Extended Stats password and send it with the call to retrieve the user's data.
+Tags are created by a user for their own use on a page on the site called the Tagalogue.
+The user should create a text document explaining the meanings of their tags and give it to the LLM separately.
