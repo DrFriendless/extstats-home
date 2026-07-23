@@ -1,0 +1,53 @@
+---
+title: 'Another Collection Audit'
+pubDate: 2026-07-22
+description: 'Now with shiny new fun auditing technology'
+author: 'DrFriendless'
+tags: ["features","AI"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import audit1 from "/public/img/blog/audit1.png";
+import audit2 from "/public/img/blog/audit2.png";
+import audit3 from "/public/img/blog/audit3.png";
+import audit4 from "/public/img/blog/audit4.png";
+
+With all of my recent board-gaming activity, my shelves have been shuffled and sorted and scrambled,
+and I'd like to do another audit to make sure I know where everything is.
+Of course I don't rush into these sorts of chores, so while I was thinking about it I had the idea that I could use the Extstats tagging system to help me.
+I hit upon the idea of using locations as tags, and tagging each game with one of those locations.
+
+<Image src={audit1} alt="Tagging setup for an audit" width={854} /><br/>
+<caption>S1 is shelf 1, SB/3 means on the shelf between the book case and shelf 3, etc.</caption>
+<p/>
+
+So the plan is give each game one of these tags.
+Then I realised I really needed to know which games had not been found in the audit - that speeds up the location of games in my lists.
+So I created a "taggroup" selector which returns all games tagged with a tag from the nominated tag group.
+I can then use the Catalist to compose a query for games which have not been found in the audit.
+
+<Image src={audit3} alt="A query for finding which games have not been located" width={854} /><br/>
+<caption>This will give me all the games without any of those tags</caption>
+<p/>
+
+If I run that query in a new window, I get a page where I can just click on a tag when I find a game.
+
+<Image src={audit4} alt="The page for filling in where all the games are" width={854} /><br/>
+<caption>It clicks on one tag per game or it gets the hose again</caption>
+<p/>
+
+As a side-effect, this location-based tagging means that Claude can understand where my games are stored, once I explain it.
+
+<blockquote className={'claude'}>
+    The tag "S1" means the games are on Shelf 1. The tag "S2" means the games are on Shelf 2. The tag "S3" means the games are on Shelf 3. The tag "BC" means the games are on the bookcase. The tag "S/1" means the games are on the left side of Shelf 1. The tag "S1/2" means the games are between Shelves 1 and 2. The tag "S2/B" means the gamaes are between Shelf 2 and the book case. The tag "SB/3" means the games are between Shelf 3 and the book case. The tag "S3/" means the tag is on the right hand side of Shelf 3. The tag "D1" means the game is in Drawer 1. The tag "D2" means the game is in "Drawer 2". The tag "D3" means the game is in Drawer 3. The tag "Other" means the game is stored somewhere out of the ordinary. The tag "???" means I can't find the game. The tag "4x6" means the game is in the 4" x 6" plastic boxes.
+
+    My boardgamegeek username is Friendless and my password for Extended Stats is *****.
+</blockquote>
+
+<Image src={audit2} alt="Asking Claude where my games are" width={854} /><br/>
+<caption>Claude thinks he's so smart</caption>
+<p/>
+
+I just wish Claude would be a little less intrusive and a little more cheap, as he wastes a lot of compute trying to second-guess me.
+Shelf 1 has 5 layers so it's not next to Domaine at all.
+I've also taught Claude how to add tags to games for me, but at the price he charges it would be cheaper to hire my wife for that work.

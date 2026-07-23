@@ -45,3 +45,9 @@ span.tag a:hover {
 img {
     max-width: 100%;
 }
+blockquote.claude {
+    font-family: monospace;
+    margin: 30px;
+    color: indigo;
+    max-width: 700px;
+}

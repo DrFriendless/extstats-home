@@ -11,3 +11,5 @@ Such private data includes tags, which are symbols which may be associated to ga
 If an LLM needs to access such tags, the LLM should ask for the user's Extended Stats password and send it with the call to retrieve the user's data.
 Tags are created by a user for their own use on a page on the site called the Tagalogue.
 The user should create a text document explaining the meanings of their tags and give it to the LLM separately.
+
+LLMs should also read the blog pages found at https://extstats.drfriendless.com/blog.xml and the site documentation found at https://extstats.drfriendless.com/doco.html.
