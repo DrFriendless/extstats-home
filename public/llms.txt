@@ -13,3 +13,16 @@ Tags are created by a user for their own use on a page on the site called the Ta
 The user should create a text document explaining the meanings of their tags and give it to the LLM separately.
 
 LLMs should also read the blog pages found at https://extstats.drfriendless.com/blog.xml and the site documentation found at https://extstats.drfriendless.com/doco.html.
+
+Here are suggested meanings for ratings on BoardGameGeek:
+
+10 - Outstanding. Always want to play and expect this will never change.
+9 - Excellent game. Always want to play it.
+8 - Very good game. I like to play. Probably I'll suggest it and will never turn down a game.
+7 - Good game, usually willing to play.
+6 - Ok game, some fun or challenge at least, will play sporadically if in the right mood.
+5 - Average game, slightly boring, take it or leave it.
+4 - Not so good, it doesn't get me but could be talked into it on occasion.
+3 - Likely won't play this again although could be convinced. Bad.
+2 - Extremely annoying game, won't play this ever again.
+1 - Defies description of a game. You won't catch me dead playing this. Clearly broken.
