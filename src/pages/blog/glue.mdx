@@ -1,0 +1,96 @@
+---
+title: 'Stuck in Some Glue'
+pubDate: 2026-08-11
+description: "Let's poke this AWS product and see what happens"
+author: 'DrFriendless'
+tags: ["AWS","MySQL","Athena","Glue","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import visual from "/public/img/blog/glue-visual.png";
+import source from "/public/img/blog/glue-source.png";
+import target from "/public/img/blog/glue-target.png";
+import athena from "/public/img/blog/athena-query.png";
+
+I was talking to someone the other day about their AWS problem, and on the same day AWS mentioned their product Athena,
+which is a tool for doing queries over data stored on S3 (and other places).
+And I thought "huh, that might be a tool that could be used to solve that problem."
+So I did some research, because I am trying to be the sort of person who knows these things.
+
+So yes, Athena *can* run queries on S3 files, but it's much better if that data is stored in Parquet format rather than CSV or something like that.
+Parquet stores the tables column by column, i.e. a file on S3 contains all of one column, rather than all data for some rows.
+The explanation for why this was advantageous put me to sleep so I can't tell you, but certainly if you're using only a small number of columns from each row in your WHERE clause it makes intuitive sense that searches are faster.
+
+Cool, so where's the button I click to export my database to Parquet format?
+There's a button, right?
+RIGHT?????
+
+There is no button, but there are a variety of third-party products.
+I couldn't convince any of them to just write the files to my hard drive, and let me upload to S3 myself, so I was reluctant to use them.
+There was an option to use a pre-authorised S3 URL to write the files to, but there's no button to make that URL, so it didn't seem like the simple solution I was hoping for.
+
+In fact it became clear that there wasn't a really simple solution, but the name Glue popped up, so I wondered if that might be relevant.
+AWS Glue is a product for taking big lumps of data, transforming them, and putting them somewhere else.
+That was what I wanted to do, at a high level, so I took a look at Glue to see if it could help.
+
+Glue has a nice visual editor (like Step Functions), so this is what I told it I wanted to do:
+
+<Image src={visual} alt="AWS visual representation of taking some data from MySQL and putting it into S3" width={384} /><br/>
+<caption>Extremely complicated diagram of the data transformation process</caption>
+<p/>
+
+I could tell I was on the right track, because here were the properties for the S3 target.
+I could choose Parquet from a dropdown, so I was in the right place.
+I called my database "bob2" because I didn't know what the database was even for, and I already used "bob" for some other thing that I didn't know what it was for.
+
+<Image src={target} alt="Options for writing data to S3" width={768} /><br/>
+<caption>It's saying the same words as the doco, this is a good sign</caption>
+<p/>
+
+I then got a bit stuck, because Glue has Names For Things, and AWS's names for things inevitably lead to the problem of "I have heard all those words before but I don't know what they mean in that order."
+So I took some time out to read the Glue chapter in <a href="https://www.oreilly.com/library/view/system-design-on/9781098146887/" target="_blank" referrer="none">my AWS reference</a> and sort of started to cope.
+* a Connection is a data source
+* a Table is a table-like object provided by a data source
+* a Database (looking at you, bob2) is the metadata gathered from all the tables, e.g. by looking in the Parquet files
+* in Athena, you run a query against a Glue Database.
+
+So I defined a Connection object to go to the Extended Stats database, and clicked the Run button.
+
+<Image src={source} alt="Options for reading data from MySQL" width={768} /><br/>
+<caption>Options for reading data from MySQL</caption>
+<p/>
+
+Glue was not happy.
+I had permissions issues.
+Permissions issues are an absolute pain in a situation like this, because I'm not sure how Glue works, and what permissions each part gets given, or even what parts there are.
+This was the hardest part of the project.
+
+I had to create a NAT Gateway, which I hate doing because those things are expensive.
+And I had to create an S3 Endpoint, which is totally different to an S3 Access Point - end points are defined in the VPC product.
+The end point and the NAT gateway are both used to solve the problem that some of this task runs inside a VPC and some of it runs out on the wild internet.
+But the NAT Gateway was required only while the data transformation was running, and the S3 endpoint is free (I think).
+
+I got so desperate I even clicked on the "AI Help" button.
+What I really wanted was for the AI to tell me "this bit is wrong", but it didn't.
+On the other hand it did tell me "you need to do this and it looks like you've done it", so I was able to narrow where to look for wrong things.
+
+But then, after much faffing, it worked.
+Data appeared in my S3 bucket, and it looked possibly like it was the right amount of data.
+And after that, it was not plain sailing, but it was heading in the right direction, and I got a table in bob2.
+There were supposed to be 4 tables in bob2, so I figured out what I'd done wrong there and sorted it out.
+
+And then finally I was able to run the SQL query with Athena, and it returned apparently correct data.
+
+<Image src={athena} alt="Athena query run against S3" width={768} /><br/>
+<caption>Athena query run against S3</caption>
+<p/>
+
+So what use is this?
+For me, not much, as my database is so small and underutilised that I don't need to be handing queries off to other mechanisms.
+For a bigger operation with a data warehouse, it's quite a wonderful thing.
+S3 is a very cheap way to store data, and Athena costs only when you run a query against it, so the major costs would be the process of getting the data into the warehouse - all the Glue stuff.
+I've checked my costs for how much all this mucking about has cost me over the last couple of days, and I see no increase at all.
+But again, I am a small operation.
+
+So that's a nice thing to get experience with.
+If I must muck around with greek goddesses I'd prefer to play Attika, but Athena isn't bad.
