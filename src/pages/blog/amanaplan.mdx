@@ -1,0 +1,63 @@
+---
+title: "A Man, A Can, A Planamanamanal"
+pubDate: 2026-08-12
+description: "Revisiting my favourite clusterfuck"
+author: 'DrFriendless'
+tags: ["features","puzzles"]
+layout: ../../layouts/BlogLayout.astro
+---
+<link rel="stylesheet" href="/public/PanamaCanal/styles.css"/>
+<script is:inline src="/public/PanamaCanal/polyfills.js" type="module"/>
+<script is:inline src="/public/PanamaCanal/main.js" type="module"/>
+<link rel="stylesheet" href="/public/BullPen/styles.css"/>
+<script is:inline src="/public/BullPen/polyfills.js" type="module"/>
+<script is:inline src="/public/BullPen/main.js" type="module"/>
+
+<a href="panama-canal.html" target="_blank">A long time ago I wrote a blog post</a> about the rather haphazard way the site develops, which
+was totally-not-like well actually rather-too-similar to the way the Panama Canal was developed.
+I ported that post over to the new blog within living memory, so when I was flicking through
+<a href="https://www.goodreads.com/book/show/4787650-sliding-piece-puzzles">a puzzle book</a> and found a Panama Canal puzzle,
+I thought to myself "I should make that".
+
+So here it is:
+
+<puzzle-panama-canal></puzzle-panama-canal>
+
+The puzzle really has nothing to do with the site at all, other than puzzles being tangentially related to games.
+Are there any Euros that require sliding pieces?
+I have an inkling there might have been one where you can choose a tile if you can slide it out of the grid it started in,
+or something like that.
+
+The code for this had some similarities to the code for <a href="wa-tor.html" target="_blank">Wa-Tor</a>,
+in that bits of the display slide around.
+In Wa-Tor, I implemented the ocean as a HTML table and slid the fish around in it, which didn't work so well because at some point the fish had to changed the cell they were contained in,
+and that made the animation complicated.
+So for this puzzle I decided to not insert the tiles into the DOM tree, but to just slide them around the board.
+There are locations, which are places invisible places tiles can go to, and tiles, which are the things you move around.
+And the tiles have to use some hacky JS to find the location of the tile to move to.
+It's not ideal, but it mostly gets the job done.
+
+Then I read the puzzle book some more, and I found another puzzle which looked interesting, and I thought "well that's not too different to what I've got"
+so I coded that up as well.
+As it turned out, it was quite different.
+But here, play it first.
+This is Bull Pen:
+
+<puzzle-bull-pen></puzzle-bull-pen>
+
+The tricky bit of this was the border.
+It seems so innocuous!
+I thought, "yeah, I can just draw borders where I need to on the locations".
+But no I can not.
+
+The tiles go on the locations, so that would result in the tiles being right up against the border.
+In the Canama Panal puzzle the border is completely separate to the locations, so it goes where I say.
+In Bull Pen the locations have to have internal padding to make the tiles look like they are in the right place.
+Oh well, surely now I have implemented all the possible ways to place tiles?
+
+Well I would love to add a third puzzle here which proves how traumatically wrong I am, but I haven't got to it yet as I got involved in the Athena stuff (see previous blog post).
+One day I'll take another look at the Sliding Piece Puzzle book and find something else to torment myself with.
+
+Note: when the page size changes, the puzzles sometimes don't notice and leave the tiles in the wrong place.
+I'm sure there'll be something I can wire up so they don't do such silly stuff,
+but if you notice it happening you just need to reload the page and everything should go to the right place.
