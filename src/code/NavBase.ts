@@ -9,13 +9,6 @@ export interface MenuItem {
     name: string;
 }
 
-export interface Link {
-    style: string;
-    link: string;
-    name: string;
-    items: Link[];
-}
-
 export const bggMenu: SubMenu = { name: 'BGG', style: "nav-bgg", link: "", items: [
         { link: "https://boardgamegeek.com/guild/2938", name: "Guild" },
         { link: "https://www.boardgamegeek.com/microbadge/6964", name: "Microbadge" },

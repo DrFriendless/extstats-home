@@ -13,14 +13,14 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@astrojs/mdx": "^4.3.8",
-    "astro": "^5.16.0",
-    "@astrojs/rss": "^4.0.15",
+    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/rss": "^4.0.19",
+    "astro": "^7.2.7",
     "http-proxy-middleware": "^3.0.5"
   },
   "devDependencies": {
-    "aws-cdk-lib": "^2.229.0",
     "@aws-sdk/client-lambda": "^3.901.0",
+    "aws-cdk-lib": "^2.229.0",
     "constructs": "^10.4.2",
     "typescript": "^5.9.3"
   }

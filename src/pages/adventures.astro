@@ -1,0 +1,13 @@
+---
+import {Adventure, allAdventures} from "../code/Adventure";
+import AdventureList from "../components/AdventureList.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const rawDocs = await allAdventures();
+const adventures = rawDocs.sort((p1: Adventure, p2: Adventure) => p1.compareByTitle(p2));
+---
+<BaseLayout pageTitle="Random Adventures" showAccounts="false" featuresPage="false">
+    <h2>Random Adventures by Title</h2>
+    <AdventureList adventures={adventures}/>
+</BaseLayout>
+

@@ -1,0 +1,46 @@
+{
+  "tags": ["kingdom", "south", "swamp"],
+  "name": "The Southlands",
+  "description": "The Southlands is a flat region, broken only by the cores of ancient volcanoes. There is frequent rain, and due to slow drainage and fertile soil there are many swamp and marsh regions. Roads are few, and towns infrequent.",
+  "adventures": [
+    {
+      "name": "Robbery",
+      "description": "The heroes are travelling along a Path. Some Attackers attack the heroes. The heroes chase the attackers and find them at a Ruin.",
+      "variables": ["Path", "Attacker", "Ruin", "Object"],
+      "scenes": [
+        { "description": "describe the Path and something that may suggest an ambush is about to happen" },
+        { "description": "describe how the Attackers ambush the heroes and steal an Object" },
+        { "description": "describe the terrain that the heroes chase the attackers across" },
+        { "description": "describe what the Ruin is like" },
+        { "description": "describe what valuables the Attackers keep in the Ruin" }
+      ]
+    }
+  ],
+  "bindings": {
+    "Path": [
+      "a long and winding road",
+      "a muddy trail alongside a river",
+      "a difficult path through the marsh",
+      "a paved but uneven road through a swampy forest"
+    ],
+    "Attacker": [
+      "rough bearded men, speaking a guttural foreign language",
+      "savage goblins screaming war chants",
+      "a flock of shrieking harpies",
+      "a giant lizard"
+    ],
+    "Ruin": [
+      "a fortress that was burnt down years ago and has fallen into disrepair",
+      "a lonely wooden hut on an island in the swamp",
+      "a partially dismantled inn",
+      "a valley hidden between some rocky outcrops"
+    ],
+    "Object": [
+      "a sack of gold",
+      "the wizard's backpack",
+      "a particular weapon",
+      "a keg of wine",
+      "an item the heroes were asked to transport"
+    ]
+  }
+}

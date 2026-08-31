@@ -1,5 +1,4 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import { allBlogPosts } from "../code/BlogPost.ts";
 
 export async function GET(context: { site: string }) {

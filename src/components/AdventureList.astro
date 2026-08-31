@@ -1,0 +1,11 @@
+---
+import {Adventure} from "../code/Adventure";
+
+interface Props {
+    adventures: Adventure[];
+}
+const { adventures } = Astro.props;
+---
+<ul>
+    {adventures.map((adv: Adventure) => <li> <a href={adv.url}>{adv.title}</a><br></li>)}
+</ul>

@@ -1,0 +1,16 @@
+---
+import AdventureList from "../../components/AdventureList.astro";
+import {Adventure, allAdventures, allAdventureTags} from "../../code/Adventure";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+    return (await allAdventureTags()).map(t => { return { params: { tag: t } } });
+}
+
+const { tag } = Astro.params;
+const rawPosts = (await allAdventures()).filter(p => p.hasTag(tag));
+const adventures = rawPosts.sort((p1: Adventure, p2: Adventure) => p1.compareByTitle(p2));
+---
+<BaseLayout pageTitle={tag} showAccounts="false" featuresPage="false">
+    <AdventureList adventures={adventures}/>
+</BaseLayout>

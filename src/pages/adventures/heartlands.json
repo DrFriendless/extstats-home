@@ -1,0 +1,25 @@
+{
+  "name": "The Heartlands",
+  "tags": ["hobbits","kingdom","heartlands"],
+  "description": "The Heartlands is a region of rolling hills, with wide slow rivers and expansive forests. There are many villages about a day's journey apart, and where roads meet or rivers are crossed there are larger towns. The inhabitants are often halflings, humans, or other gregarious peace-loving folk.",
+  "adventures": [
+    {
+      "name": "Monster Attack",
+      "description": "There is a Monster. The Monster attacked a Place inhabited by people. The people got some heroes to go to the Lair where the Monster lives to defeat it. When the heroes defeated the Monster they found some Treasure.",
+      "variables": ["Monster", "Place", "Lair", "Treasure", "Personage"],
+      "scenes": [
+        { "description": "describe the Place and how it was before this story happened, including mention of a local Personage" },
+        { "description": "describe what happened when the Monster attacked the Place and what the Personage did at the time" },
+        { "description": "describe what heroes see as the approach the Lair" },
+        { "description": "describe the interior of the Lair and what the treasure is" }
+      ]
+    }
+  ],
+  "bindings": {
+    "Monster": ["a hill giant", "a tribe of lizard people", "two ninjas"],
+    "Place": ["a town by a bridge", "a farming town straddling the main road", "a large market town"],
+    "Personage": ["a dithering young hobbit", "a wise old woman", "the drunk who sleeps outside the inn", "a child of exceptional talent"],
+    "Treasure": ["something worth keeping", "something intriguing", "something to decipher", "a rare book", "an item of historical significance"],
+    "Lair": ["a ruin in a dark forest", "a sheltered place near some standing stones", "a burial barrow", "a desecrated church"]
+  }
+}

@@ -1,0 +1,12 @@
+---
+interface Props {
+    milieu: string;
+}
+
+const { milieu } = Astro.props;
+---
+<link rel="stylesheet" href="/AdvGenApp/styles.css">
+<p>Use this generator to create a prompt. Copy and paste the prompt into the generative AI client of your choice to quickly generate an adventure.</p>
+<app-advgen milieu={milieu}></app-advgen>
+<script is:inline src="/AdvGenApp/polyfills.js" type="module"/>
+<script is:inline src="/AdvGenApp/main.js" type="module"/>

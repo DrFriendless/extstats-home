@@ -1,5 +1,3 @@
-import {allBlogPosts} from "./BlogPost.ts";
-
 export class DocoDoc {
     url: string;
     title: string;

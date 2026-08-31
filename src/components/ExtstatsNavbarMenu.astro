@@ -1,12 +1,12 @@
 ---
 import ExtstatsNavbarDropdown from "./ExtstatsNavbarDropdown.astro";
 const { link } = Astro.props;
+const noLink = !link.link;
 ---
 <div class="navbar-menu">
-    {link.link ?
-            <a class={`navbar-button clickable ${link.style}`} href={`${link.link}`}>{link.name}</a>
-        :
-            <a class={`navbar-button ${link.style}`}>{link.name}</a>
+    {noLink ?
+        (<a class={`navbar-button ${link.style}`}>{link.name}</a>) :
+        (<a class={`navbar-button clickable ${link.style}`} href={link.link}>{link.name}</a>)
     }
-    <ExtstatsNavbarDropdown items={link.items} style={link.style} />
+    <ExtstatsNavbarDropdown items={link.items} style={link.style}/>
 </div>

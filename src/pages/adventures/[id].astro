@@ -1,0 +1,20 @@
+---
+import {Adventure, allAdventures} from "../../code/Adventure";
+import AdventureLayout from "../../layouts/AdventureLayout.astro";
+import AdvGen from "../../components/AdvGen.astro";
+
+interface Props {
+    adventure: Adventure;
+}
+
+export async function getStaticPaths() {
+    return (await allAdventures()).map(adventure => { return { params: { id: adventure.id }, props: { adventure } } });
+}
+
+const { id } = Astro.params;
+const { adventure } = Astro.props;
+const milieu = JSON.stringify(adventure.milieu);
+---
+<AdventureLayout title={adventure.title} slug={id} tags={adventure.tags}>
+    <AdvGen milieu={milieu}></AdvGen>
+</AdventureLayout>
