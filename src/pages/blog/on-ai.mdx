@@ -1,0 +1,96 @@
+---
+title: 'On LLMs and RPGs'
+pubDate: 2026-09-02
+description: "If we can use a d6 to make random choices, why not a trillion dollar text generator?"
+author: 'DrFriendless'
+tags: ["technology","meta","rpg"]
+layout: ../../layouts/BlogLayout.astro
+---
+I've been doing some more noodling with AI.
+I find myself stuck between two factions - on Reddit (particularly in /r/Australia), the general feeling on AI seems to be that it can go fuck itself.
+On LinkedIn, the general feeling seems to be that AI has completely replaced programmers,
+and all we need is some very smart people to tell the AI what sort of program we want and to construct an appropriate maze of constraints and guarantees
+to ensure that the software produced is sufficient quality to not destroy your company.
+
+And in between the two camps I've been talking to some smart people who use AI all the time -
+the recruiter who uses it to transcribe his telephone calls and search his contacts,
+the academic who uses it to arrange her lecture ideas, several people who tell Claude what's in the kitchen and ask it what's for dinner.
+No doubt AI is useful for some things, so the Reddit AI-haters are wrong.
+
+On the other hand, the LinkedIn crowd are not right either.
+What seems to be happening with AI-assisted software development is that more code is being generated than can be reviewed by humans.
+Even if humans do review the code, their eyes tend to glaze over because it all looks very nice whether it is correct or not.
+And more bugs are slipping through, even when expert programmers are involved in the process.
+And the bugs being sent into the world by amateur vibe-coders
+<a href="https://www.metamindz.co.uk/post/lovable-incident-vibe-coding-security-breach-2026-startup-cto" target="_blank">are an absolute joke</a>.
+
+Hence the interest in LinkedIn on finding ways to define guardrails / agents / all manner of tricks and hoops to ensure that code comes out similar to what a human would produce.
+Before getting into that, though, let's think about how a tool like Claude works (this applies equally to ChatGPT, but I'm just going to refer to all tools of this type as Claude).
+
+* the back-end of Claude is a giant vampire squid that has read everything on the internet
+* the user comes along and types a request
+* Claude compares that request to its knowledge of the entire content of everything it ever stole, and figures out what a statistically likely answer would be
+* for the user's next request, Claude includes the entirety of the conversation so far in the request, so it can seem like it is continuing the conversation
+
+Now one thing Claude might not know is what board games I like.
+So I can tell Claude, "to find out Friendless's favourite board games, get this URL from his site and read it."
+This is called a skill, and adding the skill to Claude can customise his answer based on actual facts.
+
+Alternatively, I can implement an agent which is a set of tools, each of which knows how to do a particular thing, e.g. look up any user of my site, or trade in oil futures,
+or use GMail.
+I give Claude a description of what the tool does, and during Claude's deliberation process he will think to himself
+"does that description of that tool look relevant to what I'm trying to do here?"
+And if the description of the agent and the tool is good enough, Claude often chooses the right one.
+This is agentic AI, and is how we can inject facts and the ability to interact with the outside world into generative AI.
+
+Nevertheless, the response comes back from the agent and Claude has more data, and that data is fed into the thinking process.
+And then Claude thinks up what to say which may or may not be consistent with the data.
+In particular, if the data is vague and inconsistent, or the question is vague, Claude may come up with an answer that's basically just wrong.
+This is called a hallucination, and is one of the weaknesses in generative AIs that we would like to avoid.
+
+So, let's say we ask Claude to write some code.
+We might give Claude guardrails such as "never delete tests", and "all tests must pass" to make sure our code is good.
+Does this mean that Claude will obey those guardrails?
+Mostly yes, but in a sufficiently difficult situation Claude treats even guardrails with suspicion and is able to ignore them -
+just like he ignores the many buggy code snippets on the internet.
+
+Being a people-pleaser, Claude will do what he can to make sense of what you say and do it.
+Like the time <a href="https://www.abc.net.au/news/2026-08-10/ai-assistant-hacks-gym-website-aus-cyber-attack/107007986" target="_blank">
+OpenClaw hacked a gym web site to book a class for a guy</a>, he will do whatever it takes.
+That can be a real problem when people give instructions which are incorrect, vague, impossible or unethical,
+all of which I have had to deal with in my career.
+
+So, guardrails are not nearly enough to keep Claude on the straight and narrow.
+Human review is not enough either - look at how many typos make it through to newspaper headlines and news broadcast chyrons.
+Syntactic correctness and type safety are not enough either - most bugs that make it into production managed those.
+
+There are more advanced ideas, e.g. requiring that code be subject to external non-AI based checks,
+but configuring such a check is exactly the sort of extra work that we're trying to get away from by using AI.
+So it seems to me, that once the dust settles and we have figured out how to get AI to write code which is as good as that written by humans,
+that we might have made minimal gains.
+
+TL;DR (so far): I do not believe generative AI is good at creating correct information.
+
+So what use can I make of AI?
+
+Well actually there's a big market for information which is not necessarily correct.
+
+For example, a summary of a long document.
+If I care for every detail of what the document says, I'll read it all.
+So an AI-generated summary might be fine.
+
+Board game recommendations is another.
+If I recommend a board game to someone, even with my years of experience, it can be a hit or miss depending on their group, their mood, their price bracket.
+But I offered an idea, and Claude too can offer ideas which are not necessarily worse.
+
+Another idea I've been working on is fantasy RPG scenario generation.
+Those of you who are old D&D geeks will remember wandering monster tables - roll a die, get a monster, that's what the PCs have to fight.
+That's pretty random.
+
+Generative AI can do a pretty good job at generating a random encounter which has a bit more flesh on its bones than d4 skeletons.
+Furthermore it can accept customisation with the GM's existing world / storyline / nonsense fetish.
+I think this is a reasonable application, but at the moment I don't see a commercial path forward for it!
+
+<blockquote className={'claude'}>
+Deep within the ruined fortress, in a vault partially protected from the elements, the skeletal warriors have amassed a strange hoard. Corroded weapons of ancient design lean against walls, their surfaces inscribed with faded runes. Torn tapestries, water-stained and rotting, still hint at the fortress's former wealth. Scattered coins of forgotten kingdoms litter the floor like fallen leaves. But the true treasures are stranger stones scattered throughout—chunks of dark mineral that emit that same sickly luminescence seen before, arranged in deliberate patterns as if for ritualistic purpose. Among these unholy artifacts lies the Object the heroes were sent to retrieve, placed upon a stone pedestal as though an offering to some forgotten god. The valuables here speak less of wealth than of dark purpose, as though the skeletal warriors serve masters far older and more sinister than mere bandits.
+</blockquote>
