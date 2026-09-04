@@ -1,0 +1,11 @@
+Hello Stats Fan! Some time ago, possibly several months ago, I received a request from you to add your boardgamegeek account to my BGG Extended Stats site.
+I probably added you very quickly and then filed the email without replying, because I am really slack about that sort of thing.
+But now you have been added and your stats are available.
+
+If you go to https://extstats.drfriendless.com/ there will be a search box under the subheading "Where's My Page?"
+You can type your BGG username in there, and if everything has gone according to plan the page will give you a URL to follow to get to your personal page.
+
+The site is working solidly now (as opposed to the disaster between 2020 and 2024) so you should enjoy uninterrupted service.
+
+
+John

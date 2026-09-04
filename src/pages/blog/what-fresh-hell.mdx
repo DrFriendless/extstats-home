@@ -17,7 +17,7 @@ The good news is that costs are very low, although there was no sign of a decrea
 However there was this mysterious green lump in the graph.
 It was only a lump of about $2 per day, but as I didn't ask for it I needed to investigate.
 
-<Image src={fresh1} alt="Graph of AWS costs per service per day" width={854} />
+<Image src={fresh1} alt="Graph of AWS costs per service per day" width={854} /><br/>
 <caption>Big green lumps belong on Shrek, not in my costs</caption>
 <p/>
 
@@ -26,7 +26,7 @@ A bit of investigation suggested that it was due to excess CPU usage.
 Standard CPU usage for the EC2 (I only have one) is about 1%, so it was unusual that it was at about 50% for a few days.
 I don't really get why I would be charged extra for using my CPU 50% of the time when I'm already paying for it, but I'm sure such things make sense in the AWS world.
 
-<Image src={fresh2} alt="Graph of various EC2 server performance metrics" width={854} />
+<Image src={fresh2} alt="Graph of various EC2 server performance metrics" width={854} /><br/>
 <caption>The high green line caused the blue line to fall down, so the purple line kicked in which cost me money</caption>
 <p/>
 

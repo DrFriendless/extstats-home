@@ -1,0 +1,127 @@
+---
+title: 'Hard Problems in Serverless Computing - Rate Limiting'
+pubDate: 2026-09-04
+description: "Even the Panama Canal has rate-limiting"
+author: 'DrFriendless'
+tags: ["AWS","technology","costs"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import chugging from "/public/img/blog/chugging.png";
+
+It's Finances Friday and there is nothing to report.
+The system is chugging away as designed and costs are stable except if I do something stupid like use AWS Glue or
+load up a mate's MSSQL database to try to extract his data or something.
+Nevertheless, the system has architectural weaknesses that are pretty hard to solve, so I'm going to talk through them to try to make sense of them for myself.
+As I think these are issues common to many serverless systems, the thought process needs to be in a blog post.
+
+<Image src={chugging} alt="Graph of daily costs per AWS Service" width={896} /><br/>
+<caption>I like nice predictable costs</caption>
+<p/>
+
+However the bit that worries me is the EC2-Instances section.
+That's where the downloader lives.
+The cost is pretty low, so that's not what I'm worried about, I'm worried that because it's a server it might crash.
+(Note that it has not done so for a very long time, although there was a nasty bug in January.)
+In particular, if I were to get involved in some other project, like a job, I would want the system to be completely bulletproof.
+
+The EC2 server has these responsibilities:
+* InsideQ
+* the Express server
+* Spawning downloader tasks
+
+I'll explain what these are.
+
+## InsideQ
+
+The Inside Queue is a replacement for the old "Inside" component, which was the part of the server-side infrastructure inside the VPC.
+Its job is to update the data in the database, almost always as a consequence of having retrieved new data from BoardGameGeek.
+The Inside component had the flaw that it ran in concurrent Lambdas, and the database could not cope with so many concurrent writes.
+That led to the Great Crash of 2020 - 2024.
+
+InsideQ is a similar component, but write tasks are added to an SQS queue and handled one at a time, keeping the database busy but never overwhelmed.
+It works beautifully.
+
+This functionality doesn't necessarily need to be on an EC2 - I could have a Lambda with restricted concurrency servicing the queue to do the writes.
+
+## The Express Server
+
+There's a small Express server (Express is the standard Node web server).
+It handles responses to the autocomplete fields, and counting of page loads for observability purposes.
+I introduced Express a long time ago because the cold start time for Lambdas was really ruining the autocomplete field usability.
+My recent experience with Lambdas has suggested that that would still be the case.
+
+However when I had the cold start problem recently, I fixed it by combining 8 API calls into one Lambda.
+Those were login, logout, and basically all of the ones to do with authentication.
+That did improve performance, though the system can still be a bit sluggish when you wake it up.
+I don't really like that solution - if I have to change my code to paper over flaws in the hardware virtualisation,
+well that tells me that the hardware virtualisation isn't completely there yet.
+
+## Spawning Downloader Tasks
+
+This is where we really hit the rate-limiting problem.
+At any point in time there's some number of tasks the downloader needs to do - could be 0, could be 100K (updating all the games).
+BGG has rate-limiting on its API, and requests that I do only about one request per 5 seconds.
+If I told AWS to download the API data for 100,000 games all at once, it would happily do so and Aldie would send ninjas after me.
+And even worse, my API key would be revoked.
+So I can't do that.
+
+Instead what happens is that the downloader looks at the SQS queue (see above) and notices that it didn't receive anything to write.
+From this it infers that we haven't got any tasks in progress, and hence we are not hitting BGG.
+So then I find a small number of the most overdue tasks, and tell the downloader to do them.
+When those return I see that we've been busy, and let BGG have a rest.
+If BGG complains that I'm hammering it, I let it have a bigger rest.
+
+This heuristic process seems to work, as I haven't had complaints from BGG and the downloader is pretty much up to date.
+It has flaws though, in that it's possible for me to do more than 1 request every 5 seconds, and sometimes I wait more than 5 seconds between requests even if I don't want to.
+
+Downloading user plays is a particular problem.
+When I update a user's plays, I download them for an entire calendar year.
+BGG has pagination on these requests, and only returns 100 plays per request.
+For some players, there can be 50 pages.
+So my Lambda needs to retrieve 50 pages, 5 seconds apart, then assemble the data into a lump to send to the Inside Queue.
+It can be that the Lambda runs for 5 minutes, most of which time is spent doing sitting around.
+This is not what Lambdas are designed for.
+
+Furthermore, even though those Lambdas are not doing much, I can't run more than one of them at a time as they would blow BGG's rate limit.
+What I'd really like would be something like:
+* Plays Lambda enqueues a request to a centralised BGG-API queue, then hibernates
+* BGG-API queue runs one request every 5 seconds, then wakes up the task that's waiting for that data
+* I do not have to hack my code beyond recognition and comprehension to achieve this, e.g. I don't particularly want to deal with saving and restoring state during hibernation.
+
+## Durable Execution
+
+It seems AWS is thinking about these sorts of problems with the <a href="https://docs.aws.amazon.com/durable-execution/" target="_blank">Lambda Durable Execution API</a>.
+When I last read about that product it wasn't available in Sydney so it wasn't useful to me.
+However it seems it's available now, so let's think through how it might work.
+
+* there is a queue of URLs to retrieve from BGG, <a href="https://docs.aws.amazon.com/durable-execution/sdk-reference/operations/callback/" target="_blank">each with a callback ID</a>
+* that queue has a single handler Lambda whose job is to go to make API requests to BGG.
+    * when it succeeds, it <a href="https://docs.aws.amazon.com/lambda/latest/api/API_SendDurableExecutionCallbackSuccess.html" target="_blank">sends the data to the callback</a>
+    * this queue needs to observe the 5 second rate limit - it can store the last request time in AWS Parameter Store,
+      <a href="https://docs.aws.amazon.com/lambda/latest/dg/durable-invoking-esm.html" target="_blank">It can also be a durable function</a>
+      so that if it's too soon to call BGG again it can sleep quietly for free.
+* the downloader Lambdas all use durable execution, there is a common method used to retrieve data from BGG which:
+    * creates a callback (which gives you a promise)
+    * sends the BGG URL and the callback ID to the queue
+    * awaits the promise (which puts it to sleep until that happens)
+
+If it can work that way, it might not be too bad.
+The first time I read the Durable Execution doc it seemed like everything had to be wrapped in awkward callbacks,
+but it seems now that preservation of the context of the calling Lambda is handled pretty much invisibly.
+
+Oh well, I guess the way to find out will be to suck it and see - I've been looking for some interesting code to write.
+The Durable Execution API has costs of its own, but Lambdas cost as much as grains of sand weigh - almost nothing until the wind blows in the wrong direction.
+
+## Summary
+
+This sounds kinda viable.
+Step 1 in getting rid of the EC2 would be trialling the use of Lambda Durable Execution on the Plays downloader.
+If that works, I could expand it to the other downloader functions.
+At that point I am still in danger of having enormous amounts of parallelism, which could cause problems like requests to the BGG downloader queue timing out.
+
+If I can get past that, it's easy to move the Express functionality out into a Lambda, and possibly use some jiggery-pokery to keep that Lambda warm.
+And then I could make the database write queue an event source for a single-instance Lambda, and run the downloader checking on a timer.
+
+It's all very complicated.
+I await further tech advances from AWS that do these things for me.
