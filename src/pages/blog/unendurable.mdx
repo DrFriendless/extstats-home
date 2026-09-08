@@ -1,0 +1,70 @@
+---
+title: 'Unendurable'
+pubDate: 2026-09-08
+description: 'How much can a koala bear?'
+author: 'DrFriendless'
+tags: ["AWS","technology"]
+layout: ../../layouts/BlogLayout.astro
+---
+import { Image } from 'astro:assets';
+import durable0 from "/public/img/blog/durable0.png";
+
+I posted a few days ago about rate-limiting, and how it was really hard to do with serverless computing,
+but that there's a new tech called Lambda Durable Execution that might help.
+I have since had a play with it as a proof of concept, and I've come to the conclusions that:
+* yeah it'll probably work
+* but boy, it's ugly.
+
+As with many AWS products, there are many fine details to this technology which either AWS does not document at all,
+or are so swamped in an a landslide of simplistic marketing bullshit that you can't find them.
+I was able to get by with the friendly folks of Reddit and
+<a href="https://dev.to/gunnargrosch/aws-lambda-durable-functions-building-long-running-workflows-in-code-1ad3" target="_blank">a great post by Gunnar Grosch</a>.
+
+As Gunnar Grosch explains, durable functions use a checkpoint / replay system, which I would summarise as "possibly the most deranged execution model ever invented."
+A normal execution model goes like this:
+* your code runs from start to finish
+* you can write to the log file if you like.
+
+However the durable function model system is like this:
+* AWS runs your code over and over, until it happens to complete
+* anything you do that must be done just once, you've got to hide to tell AWS not to repeat it
+* all of your logging gets thrown away
+* in the end you're not really sure it's the end because maybe AWS will just keep running your code.
+
+I'm not saying that this is a useless feature, or a wrong feature, I'm just saying that compared to something like async / await in JavaScript,
+it's really obtuse and hard to work with.
+And that I hope something better comes along.
+
+I *was* going implement the download function as a queue handler which could retrieve multiple URLs from BGG in one execution.
+However the way AWS wants to re-run my function over and over, trying to do multiple things in a loop sounded like a recipe for disaster.
+Oh well, there goes *that* fundamental programming construct, I'll try something else.
+I can just tell AWS to only deliver one task to the function at a time.
+
+<Image src={durable0} alt="Durable function execution log" width={896} /><br/>
+<caption>Molehill, you are now a Mountain!</caption>
+<p/>
+
+The first step is to figure out when I'm allowed to talk to BGG next, by retrieving the timestamp of when I last did from the AWS Parameter Store.
+Then, if that time is in the future, wait until then.
+
+Right now is supposed to be the time when durable functions shine - it is free to wait for a bit.
+Unlike a normal Lambda function where you have to pay while the function does nothing.
+But in this case there is no waiting to be done, as we have not spoken to BGG in the last 5 seconds.
+
+So it's now time to go talk to BGG, but before we do that we write back to the Parameter Store that we last talked to BGG at NOW.
+And then we go BGG and get the data.
+Then we go back to the queue that told us to do this, and tell it to delete the request to do this because it has been done.
+And finally, we invoke the callback back to the requesting process, saying "here is your data from BGG."
+
+And all of this takes 6.305 seconds to do.
+Remember that what we are trying to do is not call BGG more often than every 5 seconds.
+With all of this palaver and hoohah going on, I don't think BGG is going to be bothered.
+
+So although I think this *is* a solution, it's like if you decided it would be better to catch the bus down to the shops than drive, so you bought your own bus and drove that.
+
+One option would be to learn to code in Rust, as the Rust VM starts up very quickly for Lambdas - maybe by eliminating a big chunk of the 3 second startup time I could run fast enough to have to wait.
+Another option would be to handle multiple requests in a loop so I didn't need to deal with the parameter store so much,
+but then I wouldn't be able to use durable execution and I wouldn't get the waiting for free.
+
+I'm not really pleased with any of those solutions, though the idea of implementing the autocomplete functionality in Rust does appeal to me.
+I shall have to think about this some more.
