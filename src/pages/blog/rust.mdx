@@ -1,0 +1,127 @@
+---
+title: 'Gettin Rusty Wit It'
+pubDate: 2026-09-23
+description: "Cargo cults are still a bad thing"
+author: 'DrFriendless'
+tags: ["technology","Rust","AWS"]
+layout: ../../layouts/BlogLayout.astro
+---
+
+
+When I was doing the work with the Lambda Durable Execution API, I read somewhere that Lambdas written in Rust have phenomenal cold-start times -
+the claim was double-digit milliseconds.
+As mentioned in <a href="rate-limiting.html" target="_blank">the post on rate-limiting</a>, I have an Express server specifically for the purpose
+of hosting some functions which *must* respond quickly - particularly those which implement autocomplete fields.
+That server solves the problem of cold-start times, but it introduces the problem that it can conceivably crash.
+I would very much like my site to not crash, unless the AWS zone is targeted in a war or something (it happens! 😢).
+But OMG, what a pain it would be to learn Rust and get my code running in that!?
+
+**We do these things not because they are easy, but because we want to know whether they were worth doing.**
+Of course I got my Lambda running in Rust.
+Of course it was a pain.
+Of course I'm going to tell you about it.
+
+Rust is a pretty wild programming language, in that most of its divergence from "normal" programming languages is due
+to a problem that a new programmer doesn't really consider - use of memory.
+Rust is very much a programming language that you turn to when you've made enough mistakes in easier languages.
+Luckily for me, I've seen a few programming languages and get what it's trying to do,
+and for this simple case I didn't need to do a whole lot of that.
+
+To start with, I followed <a href="https://aws.amazon.com/blogs/compute/building-serverless-applications-with-rust-on-aws-lambda/" target="_blank">this example</a>
+in the AWS doco for how to get a Lambda going with Rust.
+It says I need to install a thing called Cargo, which is Rust's equivalent of maven / gradle / pip / npm - it downloads packages for you and does other magic stuff.
+
+Following that example I was able to get some code written which may or may not have done something - after writing the code I needed to put it into a Lambda
+and attach it to a URL.
+That was when I hit the first problem - I wanted to attach that Rust code to a CloudFormation stack which was mostly Node code (in particular, the rest of my API).
+But the CDK code which attaches Rust code to Lambda assumes that it's in a Cargo project, and that you've created your project in a very Rusty way.
+And I really didn't have the insight into what it was doing to mangle the two together, so I decided not to.
+
+[INTERMISSION: My friends at the dog park gave me a nasty cold and I spent 3 or 4 days, not sure, particularly about Wednesday,
+doing nothing but walking the dog, sleeping and blowing my nose. It made coding in a new language quite hard.]
+
+I conceded defeat to Cargo and made a Rust-only stack.
+I got a Lambda created and went to test it in the AWS Console.
+It crashed, saying that my test event didn't look like it came from Api Gateway.
+No problem, I invoked the URL which was attached to API Gateway that would call the function.
+It said "Internal Server Error", and there was no log file in CloudWatch.
+Eww, nasty.
+
+I had the idea to steal a test event from another function and hack it so that I could get past the error about my test event not being any good.
+That surprisingly worked, and I was able to get my Rust code going using the hacked-up test event.
+However if I invoked it from the URL I still got the internal server error.
+
+I've been doing AWS stuff for long enough that I felt I should be able to figure this out, and I found a setting in API Gateway that said
+"use version 2 of the way to invoke Lambda when resolving this URL".
+So I changed that to only allow version 1, and it worked.
+But that is not the answer, that was just telling me that my code was behaving as if it was written 5 years ago - I had a lot of these sorts of problems in 2018.
+
+So I poked around the internet a bit, and found <a href="https://github.com/aws/aws-lambda-rust-runtime" target="_blank">a totally different example</a> from 3 weeks ago.
+The first code used "lambda_http" and the new code uses "lambda_runtime".
+The new code looked more like the sort of thing I wanted to do, and I was able to get it running relatively quickly.
+Best of all, when I had to change the Rust I got the feeling that sometimes I knew what I was doing.
+
+So how quick is it?
+Well to fairly test that I needed the old Node code back again, and I deleted that months ago.
+So I had to copy the code from the Express server back into a new Lambda!
+Then I did 10 trials of each of the 3 implementations, and recorded the round-trip time for the request from the browser.
+The table looks a bit potato, this is my first table in Astro.
+
+* "Express" is the Express server running on an EC2. There is no cold start time for this implementation as it is always running.
+* "Node" is the Lambda written in Node.
+* "Rust" is the same Lambda written in Rust.
+* Units are milliseconds.
+* The average does not include cold starts.
+
+| Trial       | Express  | Node     | Rust     |
+|:------------|:--------:|:--------:|:--------:|
+|Cold start:  | n/a      |    800ms |    145ms |
+|            1|        53|       114|       111|
+|            2|        49|       101|        55|
+|            3|        71|        79|        62|
+|            4|        49|        82|        84|
+|            5|        56|        63|        51|
+|            6|        54|        83|        69|
+|            7|        53|        71|        58|
+|            8|        54|        98|        58|
+|            9|        64|        68|        69|
+|           10|        48|        66|        59|
+| **Average** | **55ms** | **83ms** | **68ms** |
+
+<br/>
+
+The performance log lines emitted by the Lambdas tell the story of what's happening once the execution path hits the Lambda. This is for the Rust code.
+
+`Duration: 19.77 ms Billed Duration: 20 ms Memory Size: 128 MB Max Memory Used: 21 MB`
+
+`Duration: 18.63 ms Billed Duration: 19 ms Memory Size: 128 MB Max Memory Used: 21 MB`
+
+`Duration: 25.29 ms Billed Duration: 26 ms Memory Size: 128 MB Max Memory Used: 21 MB`
+
+`Duration: 21.70 ms Billed Duration: 22 ms Memory Size: 128 MB Max Memory Used: 21 MB`
+
+and this is for the Node code:
+
+`Duration: 23.21 ms Billed Duration: 24 ms Memory Size: 128 MB Max Memory Used: 112 MB`
+
+`Duration: 23.65 ms Billed Duration: 24 ms Memory Size: 128 MB Max Memory Used: 112 MB`
+
+`Duration: 65.20 ms Billed Duration: 66 ms Memory Size: 128 MB Max Memory Used: 112 MB`
+
+`Duration: 34.82 ms Billed Duration: 35 ms Memory Size: 128 MB Max Memory Used: 112 MB`
+
+So the Node code runs a little slower, but uses a whole lot more memory.
+Unfortunately it's not possible to tell AWS to allocated less memory for the Lambda - 128M is the minimum.
+Despite Rust's very good effort, that won't save me running costs.
+
+The better cold start time though does make it viable to use the Rust implementation rather than the Express implementation.
+And that's a good thing because the Express server can crash and the Rust Lambda can't
+(on the other hand, the Express server hasn't crashed in the last 6 months, and Lambdas can have a problem of AWS abandoning support for the platform).
+
+I think the way forward for this line of research might be to completely rewrite the Express server in Rust - it's only hundreds of lines of code - and package it all as a single Lambda.
+Then I can route multiple API Gateway routes into that same Lambda, and look at the URL to find out what I'm doing when I get in there.
+Multi-purposing the Lambda like that decreases the number of cold starts, so performance will be impressive more of the time.
+
+After that, I am still left with the complex problem of handling the 270,000 URLs I download from BGG, and how to do that every 5 seconds without waiting very much
+and without paying a fortune for complicated AWS constructs.
+It's an interesting problem.
